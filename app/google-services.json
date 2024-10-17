@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "335558803825",
+    "project_id": "stylo-a5e01",
+    "storage_bucket": "stylo-a5e01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335558803825:android:0fe3be3233386c27ff36d0",
+        "android_client_info": {
+          "package_name": "com.example.stylo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "335558803825-hq8qni888668k7snoupdupnqgfc8qa7f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stylo",
+            "certificate_hash": "a7dfefd4add26a56832a76d7bee2fa59a26e9853"
+          }
+        },
+        {
+          "client_id": "335558803825-dd6mguchu74omerhb9ln3bki6e9mpveh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkEpVjZG9ZjQjsHStEsP_I_LhkDLuvoJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "335558803825-dd6mguchu74omerhb9ln3bki6e9mpveh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
