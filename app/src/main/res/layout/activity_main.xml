@@ -20,7 +20,7 @@
         android:text="Stylo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="140dp"
-        android:fontFamily="@font/Miama"
+        android:fontFamily="@font/miama"
         android:textSize="50sp"
         android:textColor="@color/white"
         />
@@ -31,7 +31,7 @@
         android:text="SAY WHO\nYOU ARE WITHOUT\nSPEAKING"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="300dp"
-        android:fontFamily="@font/CormorantUnicase_Medium"
+        android:fontFamily="@font/cormorantunicase_medium"
         android:textSize="30sp"
         android:textColor="@color/white"
         android:textAlignment="center"
@@ -39,12 +39,12 @@
 
     <Button
         android:id="@+id/btn_main"
-        android:layout_height="80px"
+        android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_width="689px"
         android:layout_marginTop="550dp"
         android:textColor="@color/black"
-        android:fontFamily="@font/TenorSans_Regular"
+        android:fontFamily="@font/tenorsans_regular"
         android:background="@drawable/btn_main"
         android:textSize="16dp"
         android:text="Discover Your Style"/>

@@ -2,4 +2,5 @@
 <resources>
 
     <style name="Theme.Stylo" parent="android:Theme.Material.Light.NoActionBar" />
+
 </resources>
