@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity2">
+
+<!--    begron-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/img1"
+        android:id="@+id/img_1"
+        />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="140dp"
+        android:fontFamily="@font/miama"
+        android:text="Stylo"
+        android:textColor="@color/white"
+        android:textSize="50sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SAY WHO\nYOU ARE WITHOUT\nSPEAKING"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="300dp"
+        android:fontFamily="@font/cormorantunicase_medium"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        />
+
+    <Button
+        android:id="@+id/btn_main"
+        android:layout_height="80px"
+        android:layout_centerHorizontal="true"
+        android:layout_width="689px"
+        android:layout_marginTop="550dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/tenorsans_regular"
+        android:background="@drawable/btn_main"
+        android:textSize="16sp"
+        android:text="Discover Your Style"/>
+
+
+    <!--    navbar atas-->
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:background="@drawable/rectangle_top_navbar"
+
+
+        />
+
+    <!--    text stylo yg emas di atas-->
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="55dp"
+        android:background="@drawable/stylo_gold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        />
+
+<!--    burger di navbar-->
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/burger_icon"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="5dp"
+        android:contentDescription="burger button"
+        />
+
+<!--    icon user-->
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/user_icon"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="362dp"
+        android:contentDescription="user icon button"
+        />
+
+</RelativeLayout>
