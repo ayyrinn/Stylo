@@ -102,7 +102,7 @@
 
 
     <!--    login button-->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:layout_width="360dp"
         android:layout_height="48dp"
         android:background="@drawable/login_button"
@@ -127,7 +127,7 @@ android:layout_centerHorizontal="true"
         />
 
 <!--google login-->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_marginTop="550dp"
@@ -142,6 +142,6 @@ android:layout_centerHorizontal="true"
         android:drawableEnd="@drawable/google_logo_1"
 
         >
-    </Button>
+    </androidx.appcompat.widget.AppCompatButton>
 
 </RelativeLayout>

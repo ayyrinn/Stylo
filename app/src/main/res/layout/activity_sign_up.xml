@@ -64,7 +64,7 @@
         android:id="@+id/phoneNumField"
         />
 
-<!--    text field pass-->
+    <!--    text field pass-->
     <com.google.android.material.textfield.MaterialAutoCompleteTextView
         android:layout_width="350dp"
         android:layout_height="38dp"
@@ -77,7 +77,7 @@
         android:id="@+id/passField"
         />
 
-<!--    text field confirm pass-->
+    <!--    text field confirm pass-->
     <com.google.android.material.textfield.MaterialAutoCompleteTextView
         android:layout_width="350dp"
         android:layout_height="38dp"
@@ -90,16 +90,15 @@
         android:id="@+id/confirmPassField"
         />
 
-
     <!--    sign in(up) button-->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:layout_width="360dp"
         android:layout_height="48dp"
-        android:background="@drawable/login_button"
         android:layout_marginTop="530dp"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/cormorantunicase_medium"
         android:text="Sign up"
+        android:background="@drawable/login_button"
         android:textSize="20sp"
         android:textColor="@color/white"
         />

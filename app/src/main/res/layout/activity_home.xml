@@ -38,7 +38,7 @@
         android:textAlignment="center"
         />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_main"
         android:layout_height="80px"
         android:layout_centerHorizontal="true"
@@ -56,39 +56,39 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="63dp"
-        android:background="@drawable/rectangle_top_navbar"
+        android:background="@drawable/rectangle_top_navbar">
+        <TextView
+            android:id="@+id/textViewStyloLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-1dp"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/miama"
+            android:text="Stylo"
+            android:textColor="@color/gold"
+            android:textSize="45sp" />
+
+        <!--    burger di navbar-->
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/burger_icon"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="5dp"
+            />
+
+        <!--    icon user-->
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/user_icon"
+            android:backgroundTint="@color/black"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="362dp"
+            />
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 
-        />
 
-    <!--    text stylo yg emas di atas-->
-
-    <ImageView
-        android:layout_width="70dp"
-        android:layout_height="55dp"
-        android:background="@drawable/stylo_gold"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="6dp"
-        />
-
-<!--    burger di navbar-->
-    <Button
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/burger_icon"
-        android:layout_marginTop="12dp"
-        android:layout_marginStart="5dp"
-        android:contentDescription="burger button"
-        />
-
-<!--    icon user-->
-    <Button
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/user_icon"
-        android:layout_marginTop="12dp"
-        android:layout_marginStart="362dp"
-        android:contentDescription="user icon button"
-        />
 
 </RelativeLayout>
