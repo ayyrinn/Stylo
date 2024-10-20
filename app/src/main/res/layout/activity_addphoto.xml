@@ -7,48 +7,48 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-<!--    begron-->
+    <!--    begron-->
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/img1"
         android:id="@+id/img_1"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_brown" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="140dp"
-        android:fontFamily="@font/miama"
-        android:text="Stylo"
+        android:layout_marginTop="90dp"
+        android:fontFamily="@font/cormorantunicase_medium"
+        android:text="ADD YOUR\nCOLLECTIONS"
         android:textColor="@color/white"
-        android:textSize="50sp" />
+        android:textAlignment="center"
+        android:textSize="30sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SAY WHO\nYOU ARE WITHOUT\nSPEAKING"
+        android:text="Take a photo of your item."
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="300dp"
-        android:fontFamily="@font/cormorantunicase_medium"
-        android:textSize="30sp"
+        android:layout_marginTop="200dp"
+        android:fontFamily="@font/tenorsans_regular"
+        android:textSize="20sp"
         android:textColor="@color/white"
         android:textAlignment="center"
         />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_main"
-        android:layout_height="80px"
+        android:layout_height="100px"
         android:layout_centerHorizontal="true"
         android:layout_width="689px"
-        android:layout_marginTop="550dp"
+        android:layout_marginTop="670dp"
         android:textColor="@color/black"
         android:fontFamily="@font/tenorsans_regular"
         android:background="@drawable/btn_main"
         android:textSize="16sp"
-        android:text="Discover Your Style"/>
+        android:text="Next"/>
 
 
     <!--    navbar atas-->

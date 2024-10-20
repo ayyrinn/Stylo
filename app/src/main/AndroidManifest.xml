@@ -24,6 +24,9 @@
             android:name=".MainActivity2"
             android:exported="false" />
         <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
@@ -34,10 +37,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".AddPhotoActivity"
+            android:exported="false" />
+
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3961691913457862~8081093661"/> <!-- Replace with your AdMob App ID -->
+            android:value="ca-app-pub-3961691913457862~8081093661"/>
 
     </application>
 

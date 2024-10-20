@@ -33,7 +33,9 @@ class ProfileActivity : ComponentActivity() {
 
         findViewById<MaterialButton>(R.id.logout).setOnClickListener {
             mGoogleSignInClient.signOut().addOnCompleteListener {
-                val intent = Intent(this, MainActivity::class.java)
+                auth.signOut()
+
+                val intent = Intent(this, RegisterActivity::class.java)
                 Toast.makeText(this, "Logging Out", Toast.LENGTH_SHORT).show()
                 startActivity(intent)
                 finish()
