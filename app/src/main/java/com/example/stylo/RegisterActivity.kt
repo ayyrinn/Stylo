@@ -17,6 +17,13 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.android.material.button.MaterialButton
 
 class RegisterActivity : ComponentActivity() {
+    //ini buat tes aja
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContentView(R.layout.activity_register)
+//
+//    }
+
     lateinit var mGoogleSignInClient: GoogleSignInClient
     val Req_Code: Int = 123
     private lateinit var firebaseAuth: FirebaseAuth

@@ -2,6 +2,7 @@ package com.example.stylo
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -24,26 +25,12 @@ class MainActivity : ComponentActivity() {
         setContentView(R.layout.activity_main)
 
         // Initialize the button and set the click listener
-        findViewById<WidgetButton>(R.id.btn_main).setOnClickListener {
+        val btnMain = findViewById<Button>(R.id.btn_main)
+
+        btnMain.setOnClickListener {
             // Create an Intent to start RegisterActivity
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    StyloTheme {
-        Greeting("Android")
     }
 }
