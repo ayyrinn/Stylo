@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity2">
 
 <!--    begron-->
     <ImageView
@@ -79,7 +79,6 @@
 
         <!--    icon user-->
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/userProfileButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/user_icon"
@@ -90,6 +89,178 @@
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 
+<!--            your clothes extension ea ea-->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="850dp"
+                android:layout_marginStart="70dp"
+                android:textColor="@color/white"
+                android:background="@drawable/extension_of_personality_text"
+               />
+
+<!--            next button-->
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/next_icon"
+                android:layout_marginTop="1450dp"
+                android:layout_marginStart="340dp"
+            />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="More"
+                android:fontFamily="@font/tenorsans_regular"
+                android:textSize="20sp"
+                android:layout_marginTop="1500dp"
+                android:layout_marginLeft="339dp"
+                />
+            <GridLayout
+                android:layout_width="330dp"
+                android:layout_height="330dp"
+                android:columnCount="2"
+                android:rowCount="2"
+                android:layout_marginTop="1100dp"
+                android:layout_marginStart="40dp"
+            >
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/homeCard1"
+                    app:cardCornerRadius="40dp"
+                    app:cardElevation="0dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginBottom="30dp"
+
+                    >
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:background="@drawable/icon_card_img"
+                            android:scaleType="fitXY"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/homeCard2"
+                    app:cardCornerRadius="40dp"
+                    app:cardElevation="0dp"
+
+
+                    >
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:background="@drawable/icon_card_img"
+                            android:scaleType="fitXY"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/homeCard3"
+                    app:cardCornerRadius="40dp"
+                    app:cardElevation="0dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:background="@drawable/icon_card_img"
+                            android:scaleType="fitXY"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/homeCard4"
+                    app:cardCornerRadius="40dp"
+                    app:cardElevation="0dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:background="@drawable/icon_card_img"
+                            android:scaleType="fitXY"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+
+            </GridLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/slay"
+                android:layout_marginTop="2450dp"
+                android:layout_marginStart="90dp"
+                />
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2620dp"
+                android:layout_marginStart="60dp">
+                <ImageView
+                    android:layout_width="300dp"
+                    android:layout_height="400dp"
+                    android:background="@drawable/todays_pick_frame">
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="220dp"
+                    android:layout_height="300dp"
+                    android:background="@drawable/pick_image"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="center_horizontal"
+                    />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!--            next button-->
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/next_icon"
+                android:layout_marginTop="3060dp"
+                android:layout_marginLeft="340dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Go To Outfit Calendar"
+                android:fontFamily="@font/tenorsans_regular"
+                android:textSize="20sp"
+                android:layout_marginTop="3120dp"
+                android:layout_marginLeft="170dp"
+                />
+
+        </RelativeLayout>
+    </ScrollView>
 
 
 </RelativeLayout>
