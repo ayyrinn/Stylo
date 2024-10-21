@@ -143,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/next_icon"
                 android:layout_marginTop="1450dp"
-                android:layout_marginLeft="340dp"
+                android:layout_marginStart="340dp"
             />
 
             <TextView
