@@ -5,91 +5,130 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity2">
+    tools:context=".HomeActivity">
 
-<!--    begron-->
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/img1"
-        android:id="@+id/img_1"
-        />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="140dp"
-        android:fontFamily="@font/miama"
-        android:text="Stylo"
-        android:textColor="@color/white"
-        android:textSize="50sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SAY WHO\nYOU ARE WITHOUT\nSPEAKING"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="300dp"
-        android:fontFamily="@font/cormorantunicase_medium"
-        android:textSize="30sp"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_main"
-        android:layout_height="80px"
-        android:layout_centerHorizontal="true"
-        android:layout_width="689px"
-        android:layout_marginTop="550dp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/tenorsans_regular"
-        android:background="@drawable/btn_main"
-        android:textSize="16sp"
-        android:text="Discover Your Style"/>
-
-
-    <!--    navbar atas-->
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="63dp"
-        android:background="@drawable/rectangle_top_navbar">
-        <TextView
-            android:id="@+id/textViewStyloLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-1dp"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/miama"
-            android:text="Stylo"
-            android:textColor="@color/gold"
-            android:textSize="45sp" />
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <!--    burger di navbar-->
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/burger_icon"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="5dp"
-            />
+            <!--    begron-->
+            <!--            img 1-->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="800dp"
 
-        <!--    icon user-->
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/user_icon"
-            android:backgroundTint="@color/black"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="362dp"
-            />
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+                android:background="@drawable/img1"
+                android:id="@+id/img_1"
+                />
+            <!--            img 2-->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="800dp"
+                android:layout_marginTop="800dp"
+
+                android:background="@drawable/home_img_2"
+                android:layout_alignParentStart="true"
+                />
+
+            <!--            img 3-->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="800dp"
+                android:layout_marginTop="1590dp"
+
+                android:background="@drawable/home_img_3"
+                android:layout_alignParentStart="true"
+                />
+
+            <!--            img 4-->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="800dp"
+                android:layout_marginTop="2390dp"
+
+                android:background="@drawable/home_img_4"
+                android:layout_alignParentStart="true"
+                />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="140dp"
+                android:fontFamily="@font/miama"
+                android:text="Stylo"
+                android:textColor="@color/white"
+                android:textSize="50sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SAY WHO\nYOU ARE WITHOUT\nSPEAKING"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="300dp"
+                android:fontFamily="@font/cormorantunicase_medium"
+                android:textSize="30sp"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_main"
+                android:layout_height="100px"
+                android:layout_centerHorizontal="true"
+                android:layout_width="689px"
+                android:layout_marginTop="550dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/tenorsans_regular"
+                android:background="@drawable/btn_main"
+                android:textSize="16sp"
+                android:text="Discover Your Style"/>
 
 
-<!--            your clothes extension ea ea-->
+            <!--    navbar atas-->
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:layout_width="match_parent"
+                android:layout_height="63dp"
+                android:background="@drawable/rectangle_top_navbar">
+                <TextView
+                    android:id="@+id/textViewStyloLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-1dp"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/miama"
+                    android:text="Stylo"
+                    android:textColor="@color/gold"
+                    android:textSize="45sp" />
+
+                <!--    burger di navbar-->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/burger_icon"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="5dp"
+                    />
+
+                <!--    icon user-->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/userProfileButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/user_icon"
+                    android:backgroundTint="@color/black"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="362dp"
+                    />
+            </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
+            <!--            your clothes extension ea ea-->
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -97,16 +136,16 @@
                 android:layout_marginStart="70dp"
                 android:textColor="@color/white"
                 android:background="@drawable/extension_of_personality_text"
-               />
+                />
 
-<!--            next button-->
+            <!--            next button-->
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/next_icon"
                 android:layout_marginTop="1450dp"
                 android:layout_marginStart="340dp"
-            />
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -124,7 +163,7 @@
                 android:rowCount="2"
                 android:layout_marginTop="1100dp"
                 android:layout_marginStart="40dp"
-            >
+                >
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/homeCard1"
