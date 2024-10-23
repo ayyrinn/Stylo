@@ -5,6 +5,7 @@
     android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white1"
     tools:context=".MainActivity">
 
     <!--    begron-->
@@ -22,7 +23,7 @@
         android:layout_marginTop="90dp"
         android:fontFamily="@font/cormorantunicase_medium"
         android:text="ADD YOUR\nCOLLECTIONS"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textAlignment="center"
         android:textSize="30sp" />
 
@@ -34,9 +35,21 @@
         android:layout_marginTop="200dp"
         android:fontFamily="@font/tenorsans_regular"
         android:textSize="20sp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textAlignment="center"
         />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/camera"
+        android:layout_height="900px"
+        android:layout_centerHorizontal="true"
+        android:layout_width="689px"
+        android:layout_marginTop="250dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/tenorsans_regular"
+        android:background="@color/white"
+        android:textSize="16sp"
+        android:text="Choose Image"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_main"
@@ -57,12 +70,13 @@
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:background="@drawable/rectangle_top_navbar">
+
         <TextView
             android:id="@+id/textViewStyloLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-1dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="-1dp"
             android:fontFamily="@font/miama"
             android:text="Stylo"
             android:textColor="@color/gold"
@@ -72,21 +86,19 @@
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/burger_icon"
-            android:layout_marginTop="12dp"
             android:layout_marginStart="5dp"
-            />
+            android:layout_marginTop="12dp"
+            android:background="@drawable/burger_icon" />
 
         <!--    icon user-->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/userProfileButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/user_icon"
-            android:backgroundTint="@color/black"
-            android:layout_marginTop="12dp"
             android:layout_marginStart="362dp"
-            />
+            android:layout_marginTop="12dp"
+            android:background="@drawable/user_icon"
+            android:backgroundTint="@color/black" />
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 

@@ -74,7 +74,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
     implementation("androidx.core:core-splashscreen:1.0.0")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
-
+    implementation("com.google.accompanist:accompanist-permissions:0.24.7-alpha")
 }

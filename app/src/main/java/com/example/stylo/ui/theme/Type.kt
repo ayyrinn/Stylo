@@ -2,9 +2,11 @@ package com.example.stylo.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.stylo.R
 
 // Set of Material typography styles to start with
 val Typography = Typography(
@@ -31,4 +33,17 @@ val Typography = Typography(
         letterSpacing = 0.5.sp
     )
     */
+)
+
+val cormorantFontFamily = FontFamily(
+    Font(R.font.cormorantunicase_medium, FontWeight.Medium),
+    Font(R.font.cormorantunicase_semibold, FontWeight.SemiBold),
+)
+
+val tenorFontFamily = FontFamily(
+    Font(R.font.tenorsans_regular, FontWeight.Normal),
+)
+
+val miamaFontFamily = FontFamily(
+    Font(R.font.miama, FontWeight.Normal),
 )
