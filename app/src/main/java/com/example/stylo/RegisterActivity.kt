@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.stylo
 
 import android.content.Intent
@@ -16,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.android.material.button.MaterialButton
 
+@Suppress("OverrideDeprecatedMigration")
 class RegisterActivity : ComponentActivity() {
     //ini buat tes aja
 //    override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +56,7 @@ class RegisterActivity : ComponentActivity() {
         startActivityForResult(signInIntent, Req_Code)
     }
 
+    @Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n      with the appropriate {@link ActivityResultContract} and handling the result in the\n      {@link ActivityResultCallback#onActivityResult(Object) callback}.")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Req_Code) {
@@ -88,7 +92,7 @@ class RegisterActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
         if (GoogleSignIn.getLastSignedInAccount(this) != null) {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }
     }

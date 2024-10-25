@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.gms.google.services)
 }
 
@@ -78,4 +80,6 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.0")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
     implementation("com.google.accompanist:accompanist-permissions:0.24.7-alpha")
+    implementation("androidx.navigation:navigation-compose:2.8.3")
+    implementation(libs.kotlinx.serialization.json)
 }
