@@ -8,79 +8,122 @@
     android:background="@color/white1"
     tools:context=".MainActivity">
 
-    <!--    begron-->
-    <ImageView
-        android:id="@+id/img_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_brown" />
 
-    <TextView
-        android:id="@+id/textView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selected_outfit"
+            tools:layout_editor_absoluteX="83dp"
+            tools:layout_editor_absoluteY="85dp">
+
+        <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="90dp"
-        android:fontFamily="@font/cormorantunicase_medium"
-        android:text="ADD YOUR\nCOLLECTIONS"
-        android:textColor="@color/black"
-        android:textAlignment="center"
-        android:textSize="30sp" />
+        >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Take a photo of your item."
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="200dp"
-        android:fontFamily="@font/tenorsans_regular"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textAlignment="center"
-        />
+        <androidx.appcompat.widget.AppCompatButton
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/camera"
-        android:layout_height="900px"
-        android:layout_centerHorizontal="true"
-        android:layout_width="689px"
-        android:layout_marginTop="250dp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/tenorsans_regular"
-        android:background="@color/white"
-        android:textSize="16sp"
-        android:text="Choose Image"/>
+            android:layout_width="350px"
+            android:layout_height="390px"
+            android:background="@drawable/kotak_oren"
+            tools:layout_editor_absoluteX="48dp"
+            tools:layout_editor_absoluteY="161dp" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_main"
-        android:layout_height="100px"
-        android:layout_centerHorizontal="true"
-        android:layout_width="689px"
-        android:layout_marginTop="670dp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/tenorsans_regular"
-        android:background="@drawable/btn_main"
-        android:textSize="16sp"
-        android:text="Next"/>
+        <!-- foto atas kiri -->
+        <androidx.appcompat.widget.AppCompatButton
+
+            android:id="@+id/camera_left"
+            android:layout_width="350px"
+            android:layout_height="390px"
+            android:layout_marginTop="136dp"
+            android:background="@drawable/foto_jas"
+            android:fontFamily="@font/tenorsans_regular"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@id/camera_right"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    <!--    navbar atas-->
+        <!-- foto atas kanan  -->
+        <androidx.appcompat.widget.AppCompatButton
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="63dp"
-        android:background="@drawable/rectangle_top_navbar">
+            android:layout_width="350px"
+            android:layout_height="390px"
+            android:background="@drawable/kotak_oren"
+            tools:layout_editor_absoluteX="230dp"
+            tools:layout_editor_absoluteY="161dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/camera_right"
+            android:layout_width="350px"
+            android:layout_height="390px"
+            android:layout_marginTop="136dp"
+            android:background="@drawable/foto_jas"
+            android:fontFamily="@font/tenorsans_regular"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/camera_left"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+
+            android:layout_width="350px"
+            android:layout_height="390px"
+            android:background="@drawable/kotak_oren"
+            tools:layout_editor_absoluteX="48dp"
+            tools:layout_editor_absoluteY="341dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/camera_left_bottom"
+            android:layout_width="350px"
+            android:layout_height="390px"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/foto_jas"
+            android:fontFamily="@font/tenorsans_regular"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@id/camera_right_bottom"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/camera_left" />
+
+        <androidx.appcompat.widget.AppCompatButton
+
+            android:layout_width="350px"
+            android:layout_height="390px"
+            android:background="@drawable/kotak_oren"
+            tools:layout_editor_absoluteX="230dp"
+            tools:layout_editor_absoluteY="341dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/camera_right_bottom"
+            android:layout_width="350px"
+            android:layout_height="390px"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/foto_jas"
+            android:fontFamily="@font/tenorsans_regular"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/camera_left_bottom"
+            app:layout_constraintTop_toBottomOf="@id/camera_right" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/textViewStyloLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="-1dp"
             android:fontFamily="@font/miama"
             android:text="Stylo"
             android:textColor="@color/gold"
-            android:textSize="45sp" />
+            android:textSize="45sp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true" />
+
 
         <!--    burger di navbar-->
         <androidx.appcompat.widget.AppCompatButton
@@ -90,18 +133,8 @@
             android:layout_marginTop="12dp"
             android:background="@drawable/burger_icon" />
 
-        <!--    icon user-->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/userProfileButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="362dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/user_icon"
-            android:backgroundTint="@color/black" />
+
     </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-
 
 
 </RelativeLayout>

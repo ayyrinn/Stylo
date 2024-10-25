@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddPhotoActivity"
+            android:name=".AddPicsActivity"
             android:exported="false" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
