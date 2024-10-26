@@ -24,82 +24,10 @@ import com.example.stylo.ui.theme.miamaFontFamily
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            HomeScreen(context = this) // Pass the context to HomeScreen
+        setContent{
+            window.statusBarColor = getColor(R.color.black)
+            PhotoActivity()
         }
+
     }
-}
-
-@Composable
-fun HomeScreen(context: HomeActivity) { // Accept the context as a parameter
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "Stylo",
-            fontSize = 45.sp,
-            color = Color(0xFF776B5D),
-            fontFamily = miamaFontFamily,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(),
-        )
-
-        Text(
-            text = "SAY WHO\nYOU ARE WITHOUT\nSPEAKING",
-            modifier = Modifier.padding(top = 100.dp),
-            fontSize = 30.sp,
-            color = Color.White,
-            textAlign = TextAlign.Center,
-            fontFamily = cormorantFontFamily
-        )
-
-        Button(
-            onClick = {
-                val intent = Intent(context, AddPhotoActivity::class.java) // Use the context
-                context.startActivity(intent) // Use context to start activity
-            },
-            modifier = Modifier
-                .padding(top = 50.dp)
-                .width(300.dp)
-                .height(50.dp)
-        ) {
-            Text(text = "Discover Your Style")
-        }
-//        Image(
-//            painter = painterResource(id = R.drawable.img1), contentDescription = null
-//        )
-    }
-    Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-        Image(
-            painter = painterResource(id = R.drawable.burger_icon),
-            contentDescription = "Burger Icon",
-            modifier = Modifier
-                .size(50.dp)
-                .fillMaxSize()
-                .clickable {  }
-                .padding(top = 10.dp)
-            // .padding(start = 160.dp, top = 16.dp)
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        Text(
-            text = "Stylo",
-            fontSize = 45.sp,
-            color = Color(0xFF776B5D),
-            fontFamily = miamaFontFamily,
-            //textAlign = TextAlign.Center,
-            modifier = Modifier.padding(end = 35.dp),
-            )
-        Spacer(modifier = Modifier.weight(1f))
-    }
-}
-
-@Preview
-@Composable
-fun PreviewHome() {
-    // You can pass a dummy context or remove context-related code in previews
-    HomeScreen(context = HomeActivity()) // Just for preview, may not work directly
 }

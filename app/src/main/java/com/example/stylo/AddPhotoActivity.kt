@@ -1,11 +1,14 @@
 package com.example.stylo
 
+import RemoveBackgroundActivity
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -20,14 +23,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,7 +36,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -65,17 +65,18 @@ fun PhotoActivity() {
     val context = LocalContext.current
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
     var showDialog by remember { mutableStateOf(false) }
+    var resultBitmap by remember { mutableStateOf<Bitmap?>(null) }
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         uri?.let {
-            bitmap = if (Build.VERSION.SDK_INT < 28){
-                MediaStore.Images.Media.getBitmap(context.contentResolver, it)
-            }
-            else {
+            bitmap = if (Build.VERSION.SDK_INT >= 30) {
                 val source = ImageDecoder.createSource(context.contentResolver, it)
                 ImageDecoder.decodeBitmap(source)
+            } else { // Fallback for older versions
+                @Suppress("DEPRECATION")
+                MediaStore.Images.Media.getBitmap(context.contentResolver, it)
             }
         }
     }
@@ -127,7 +128,8 @@ fun PhotoActivity() {
                     fontSize = 20.sp,
                     fontFamily = tenorFontFamily,
                     textAlign = TextAlign.Left,
-                    modifier = Modifier.padding(end = 65.dp),
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     //modifier = Modifier.padding(start = 15.dp)
                 )
 
@@ -160,17 +162,12 @@ fun PhotoActivity() {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         if (bitmap != null) {
                             Image(
-                                bitmap = bitmap?.asImageBitmap()!!,
+                                bitmap = bitmap!!.asImageBitmap(),
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier
-                                    .size(120.dp) // Adjusted size of the displayed image
-                                    .background(Color.LightGray)
-                                    .border(
-                                        width = 1.dp,
-                                        color = Color.Blue,
-                                        shape = CircleShape
-                                    )
+                                    .fillMaxSize()
+                                    .background(Color.LightGray),
                             )
                         } else {
                             Image(
@@ -196,7 +193,24 @@ fun PhotoActivity() {
                         .padding(top = 20.dp)
                         .align(Alignment.End)
                         .clickable {
-
+                            bitmap?.let { image ->
+                                removeBackground(image, "kYBubGppg1G3uoM7gxKBrSJQ") { result ->
+                                    if (result != null) {
+                                        resultBitmap = result
+                                        // Navigasi ke halaman hasil
+                                        context.startActivity(
+                                            Intent(context, RemoveBackgroundActivity::class.java)
+                                                .putExtra("bitmap", result)
+                                        )
+                                    } else {
+                                        Toast.makeText(
+                                            context,
+                                            "Failed to remove background",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                            }
                         }
                 )
             }
@@ -205,6 +219,7 @@ fun PhotoActivity() {
 
 
     }
+
     Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         Image(
             painter = painterResource(id = R.drawable.burger_icon),
@@ -212,7 +227,7 @@ fun PhotoActivity() {
             modifier = Modifier
                 .size(50.dp)
                 .fillMaxSize()
-                .clickable {  }
+                .clickable { }
                 .padding(top = 10.dp)
             // .padding(start = 160.dp, top = 16.dp)
         )
@@ -232,6 +247,7 @@ fun PhotoActivity() {
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
+            .fillMaxSize()
             .padding(bottom = 10.dp)
     ) {
         if (showDialog) {
@@ -296,8 +312,41 @@ fun PhotoActivity() {
                 }
             }
         }
+        // firebase
+//        val isUploading = remember { mutableStateOf(false) }
+//        Column (
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//            verticalArrangement = Arrangement.Center,
+//            modifier = Modifier
+//                .height(450.dp)
+//                .fillMaxWidth()
+//        ){
+//            if (isUploading.value){
+//                CircularProgressIndicator(
+//                    modifier = Modifier
+//                        .padding(16.dp),
+//                    color = Color.White
+//                )
+//            }
+//        }
     }
 }
+
+// buat upload ke firebase
+//fun uploadImageToFirebase(bitmap: Bitmap, context: ComponentActivity, callback: (Boolean) -> Unit){
+//    val storageRef = Firebase.storage.reference
+//    val imageRef = storageRef.child("images/${ bitmap }")
+//
+//    val baos = ByteArrayOutputStream()
+//    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+//    val imageData = baos.toByteArray()
+//
+//    imageRef.putBytes(imageData).addOnSuccessListener {
+//        callback(true)
+//    }.addOnFailureListener{
+//        callback(false)
+//    }
+//}
 
 @Preview
 @Composable

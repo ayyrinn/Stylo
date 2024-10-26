@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.auth)
     implementation(libs.mediation.test.suite)
+    implementation(libs.firebase.storage.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -82,4 +83,6 @@ dependencies {
     implementation("com.google.accompanist:accompanist-permissions:0.24.7-alpha")
     implementation("androidx.navigation:navigation-compose:2.8.3")
     implementation(libs.kotlinx.serialization.json)
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+
 }
