@@ -77,7 +77,7 @@
                 />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_main"
+                android:id="@+id/btn_discover"
                 android:layout_height="100px"
                 android:layout_centerHorizontal="true"
                 android:layout_width="689px"
