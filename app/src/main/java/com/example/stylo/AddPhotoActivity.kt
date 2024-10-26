@@ -1,6 +1,6 @@
 package com.example.stylo
 
-import RemoveBackgroundActivity
+//import RemoveBackgroundActivity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
