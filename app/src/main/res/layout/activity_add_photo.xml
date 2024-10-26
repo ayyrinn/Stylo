@@ -2,139 +2,83 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white1"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity2">
 
+    <!--    begron-->
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/selected_outfit"
-            tools:layout_editor_absoluteX="83dp"
-            tools:layout_editor_absoluteY="85dp">
-
-        <LinearLayout
+    <!--logo stylo di atas-->
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        >
+        android:background="@drawable/backround_login_register" />
 
-        <androidx.appcompat.widget.AppCompatButton
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/miama"
+        android:text="Stylo"
+        android:textColor="@color/white"
+        android:textSize="55sp" />
 
-            android:layout_width="350px"
-            android:layout_height="390px"
-            android:background="@drawable/kotak_oren"
-            tools:layout_editor_absoluteX="48dp"
-            tools:layout_editor_absoluteY="161dp" />
-
-        <!-- foto atas kiri -->
-        <androidx.appcompat.widget.AppCompatButton
-
-            android:id="@+id/camera_left"
-            android:layout_width="350px"
-            android:layout_height="390px"
-            android:layout_marginTop="136dp"
-            android:background="@drawable/foto_jas"
-            android:fontFamily="@font/tenorsans_regular"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toStartOf="@id/camera_right"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <!-- foto atas kanan  -->
-        <androidx.appcompat.widget.AppCompatButton
-
-            android:layout_width="350px"
-            android:layout_height="390px"
-            android:background="@drawable/kotak_oren"
-            tools:layout_editor_absoluteX="230dp"
-            tools:layout_editor_absoluteY="161dp" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/camera_right"
-            android:layout_width="350px"
-            android:layout_height="390px"
-            android:layout_marginTop="136dp"
-            android:background="@drawable/foto_jas"
-            android:fontFamily="@font/tenorsans_regular"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/camera_left"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatButton
-
-            android:layout_width="350px"
-            android:layout_height="390px"
-            android:background="@drawable/kotak_oren"
-            tools:layout_editor_absoluteX="48dp"
-            tools:layout_editor_absoluteY="341dp" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/camera_left_bottom"
-            android:layout_width="350px"
-            android:layout_height="390px"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/foto_jas"
-            android:fontFamily="@font/tenorsans_regular"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toStartOf="@id/camera_right_bottom"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/camera_left" />
-
-        <androidx.appcompat.widget.AppCompatButton
-
-            android:layout_width="350px"
-            android:layout_height="390px"
-            android:background="@drawable/kotak_oren"
-            tools:layout_editor_absoluteX="230dp"
-            tools:layout_editor_absoluteY="341dp" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/camera_right_bottom"
-            android:layout_width="350px"
-            android:layout_height="390px"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/foto_jas"
-            android:fontFamily="@font/tenorsans_regular"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/camera_left_bottom"
-            app:layout_constraintTop_toBottomOf="@id/camera_right" />
+    <!--tulisan sign up di atas field-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FORGOT\nPASSWORD"
+        android:layout_marginTop="230dp"
+        android:layout_marginStart="30dp"
+        android:fontFamily="@font/cormorantunicase_medium"
+        android:textSize="50sp"
+        android:textColor="@color/white"
+        />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/textViewStyloLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/miama"
-            android:text="Stylo"
-            android:textColor="@color/gold"
-            android:textSize="45sp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true" />
+    <!--    text field pass-->
+    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+        android:layout_width="350dp"
+        android:layout_height="38dp"
+        android:scaleType="centerInside"
+        android:background="@drawable/text_field"
+        android:layout_marginTop="390dp"
+        android:layout_centerHorizontal="true"
+        android:hint="  Password"
+        android:textColorHint="@color/black"
+        android:id="@+id/passField"
+        />
+
+    <!--    text field confirm pass-->
+    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+        android:layout_width="350dp"
+        android:layout_height="38dp"
+        android:scaleType="centerInside"
+        android:background="@drawable/text_field"
+        android:layout_marginTop="440dp"
+        android:layout_centerHorizontal="true"
+        android:hint="  Confirm Password"
+        android:textColorHint="@color/black"
+        android:id="@+id/confirmPassField"
+        />
 
 
-        <!--    burger di navbar-->
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/burger_icon" />
-
-
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+    <!--    i forgor button-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="360dp"
+        android:layout_height="48dp"
+        android:background="@drawable/login_button"
+        android:layout_marginTop="530dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/cormorantunicase_medium"
+        android:text="Forgot Password"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        />
 
 
 </RelativeLayout>
