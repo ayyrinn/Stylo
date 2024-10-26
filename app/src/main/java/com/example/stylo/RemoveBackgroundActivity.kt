@@ -1,3 +1,7 @@
+import android.graphics.Bitmap
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -21,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -35,8 +40,18 @@ import com.example.stylo.ui.theme.tenorFontFamily
 
 
 
+class RemoveBackgroundActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            val bitmap: Bitmap? = intent.getParcelableExtra<Bitmap>("bitmap")
+            RemoveBackground(bitmap)
+        }
+    }
+}
+
 @Composable
-fun RemoveBackground() {
+fun RemoveBackground(bitmap: Bitmap?) {
 
     //header stylo
     Column(
@@ -76,9 +91,7 @@ fun RemoveBackground() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-//                .padding(10.dp) // Add padding to prevent content from touching edges
                 .background(Color.Transparent), // Background for the inner Column
-//            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(50.dp))
@@ -93,13 +106,14 @@ fun RemoveBackground() {
             )
 
             Spacer(modifier = Modifier.height(50.dp))
-            Image(
-                painter = painterResource(id = R.drawable.foto_jas),
-                contentDescription = "Remove Background Icon",
-                modifier = Modifier
-                    .size(width = 350.dp, height = 400.dp) // Set specific width and height
-
-            )
+            bitmap?.let {
+                Image(
+                    bitmap = it.asImageBitmap(),
+                    contentDescription = "Image without background",
+                    modifier = Modifier
+                        .size(width = 350.dp, height = 400.dp)
+                )
+            } ?: Text("No image to display")
 
             //submit button
             Spacer(modifier = Modifier.height(40.dp))
@@ -169,5 +183,5 @@ fun RemoveBackground() {
 @Preview
 @Composable
 fun PreviewsRemoveBG(){
-    RemoveBackground()
+//    RemoveBackground()
 }
