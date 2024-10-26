@@ -14,11 +14,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
@@ -115,6 +117,7 @@ fun SelectPhotos() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(185.dp)
+                            .clip(RoundedCornerShape(40.dp))
                     )
 
                 }
@@ -139,6 +142,7 @@ fun SelectPhotos() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(185.dp)
+                            .clip(RoundedCornerShape(40.dp))
                     )
 
                 }
@@ -167,6 +171,7 @@ fun SelectPhotos() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(185.dp)
+                            .clip(RoundedCornerShape(40.dp))
                     )
 
                 }
@@ -191,6 +196,7 @@ fun SelectPhotos() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(185.dp)
+                            .clip(RoundedCornerShape(40.dp))
                     )
 
                 }
@@ -233,6 +239,7 @@ fun SelectPhotos() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(185.dp)
+                            .clip(RoundedCornerShape(40.dp))
                     )
 
                 }
@@ -285,6 +292,7 @@ fun SelectPhotos() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(185.dp)
+                            .clip(RoundedCornerShape(40.dp))
                     )
 
                 }
@@ -309,6 +317,7 @@ fun SelectPhotos() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(185.dp)
+                            .clip(RoundedCornerShape(40.dp))
                     )
 
                 }
@@ -350,6 +359,7 @@ fun SelectPhotos() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(185.dp)
+                            .clip(RoundedCornerShape(40.dp))
                     )
 
                 }
@@ -374,6 +384,7 @@ fun SelectPhotos() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(185.dp)
+                            .clip(RoundedCornerShape(40.dp))
                     )
 
                 }
@@ -402,6 +413,7 @@ fun SelectPhotos() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(185.dp)
+                            .clip(RoundedCornerShape(40.dp))
                     )
 
                 }
@@ -426,6 +438,7 @@ fun SelectPhotos() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(185.dp)
+                            .clip(RoundedCornerShape(40.dp))
                     )
 
                 }
@@ -467,6 +480,7 @@ fun SelectPhotos() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(185.dp)
+                            .clip(RoundedCornerShape(40.dp))
                     )
 
                 }
@@ -491,6 +505,7 @@ fun SelectPhotos() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(185.dp)
+                            .clip(RoundedCornerShape(40.dp))
                     )
 
                 }
@@ -519,6 +534,7 @@ fun SelectPhotos() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(185.dp)
+                            .clip(RoundedCornerShape(40.dp))
                     )
 
                 }
@@ -543,6 +559,7 @@ fun SelectPhotos() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(185.dp)
+                            .clip(RoundedCornerShape(40.dp))
                     )
 
                 }
