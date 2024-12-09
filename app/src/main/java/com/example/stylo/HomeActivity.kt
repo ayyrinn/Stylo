@@ -9,7 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
+//import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -18,10 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.layout.ContentScale
+//import androidx.compose.ui.graphics.RectangleShape
+//import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
+//import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,16 +41,17 @@ class HomeActivity : ComponentActivity() {
 
 @Composable
 fun HomeScreen(context: HomeActivity) { // Accept the context as a parameter
-
+//    val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .verticalScroll(rememberScrollState()),
+//            .verticalScroll(state = scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
 
     ) {
-        Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Image(
                 painter = painterResource(id = R.drawable.burger_icon),
                 contentDescription = "Burger Icon",
@@ -74,6 +75,7 @@ fun HomeScreen(context: HomeActivity) { // Accept the context as a parameter
 
         }
 
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
@@ -81,6 +83,7 @@ fun HomeScreen(context: HomeActivity) { // Accept the context as a parameter
                     painter = painterResource(id = R.drawable.home_img_1),
                 )
         ) {
+
             Column(
                 modifier = Modifier
                     .padding(top = 220.dp)
@@ -298,7 +301,7 @@ fun HomeScreen(context: HomeActivity) { // Accept the context as a parameter
             modifier = Modifier
                 .height(800.dp)
                 .paint(
-                    painter = painterResource(id = R.drawable.home_img_4),
+                    painter = painterResource(id = R.drawable.home_img_5),
                 )
         ) {
             Column(
