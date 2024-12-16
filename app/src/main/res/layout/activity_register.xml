@@ -9,121 +9,126 @@
     tools:context=".RegisterActivity">
 
     <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/backround_login_register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Logo Stylo -->
+    <TextView
+        android:id="@+id/logoStylo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/backround_login_register" />
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/miama"
+        android:text="Stylo"
+        android:textColor="@color/white"
+        android:textSize="55sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Logo Stylo -->
-        <TextView
-            android:id="@+id/logoStylo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:fontFamily="@font/miama"
-            android:text="Stylo"
-            android:textColor="@color/white"
-            android:textSize="55sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+    <!-- Judul SIGN UP -->
+    <TextView
+        android:id="@+id/titleSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/cormorantunicase_medium"
+        android:text="SIGN UP"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoStylo" />
 
-        <!-- Judul SIGN UP -->
-        <TextView
-            android:id="@+id/titleSignUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SIGN UP"
-            android:textSize="50sp"
-            android:textColor="@color/white"
-            android:fontFamily="@font/cormorantunicase_medium"
-            app:layout_constraintTop_toBottomOf="@id/logoStylo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
+    <!-- Field Email -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/emailField"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/text_field"
+        android:hint="Email"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleSignUp"
+        app:layout_constraintWidth_percent="0.9" />
 
-        <!-- Field Email -->
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/emailField"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:hint="Email"
-            android:background="@drawable/text_field"
-            android:textColorHint="@color/black"
-            android:textColor="@color/black"
-            app:layout_constraintTop_toBottomOf="@id/titleSignUp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.9"
-            android:layout_marginTop="24dp" />
-
-        <!-- Field Password -->
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/passField"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:hint="Password"
-            android:background="@drawable/text_field"
-            android:textColorHint="@color/black"
-            android:textColor="@color/black"
-            app:layout_constraintTop_toBottomOf="@id/emailField"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.9"
-            android:layout_marginTop="16dp" />
+    <!-- Field Password -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/passField"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/text_field"
+        android:hint="Password"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/emailField"
+        app:layout_constraintWidth_percent="0.9" />
 
     <!-- Forgot Password TextView -->
     <TextView
         android:id="@+id/forgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Forgot Password?"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:fontFamily="@font/cormorantunicase_medium"
-        android:textStyle="italic"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/passField"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/cormorantunicase_medium"
+        android:text="Forgot Password?"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="24dp" />
+        app:layout_constraintTop_toBottomOf="@id/passField" />
 
-        <!-- Remember Me Checkbox -->
-        <CheckBox
-            android:id="@+id/checkBoxRememberMe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Remember Me"
-            android:textSize="18sp"
-            android:textColor="@color/white"
-            android:buttonTint="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/passField"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="24dp" />
+    <!-- Remember Me Checkbox -->
+    <CheckBox
+        android:id="@+id/checkBoxRememberMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:buttonTint="@color/white"
+        android:text="Remember Me"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/passField" />
 
-        <!-- Button Log In -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnLogIn"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:text="Log In"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:background="@drawable/login_button"
-            android:fontFamily="@font/cormorantunicase_medium"
-            app:layout_constraintTop_toBottomOf="@id/checkBoxRememberMe"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.9"
-            android:layout_marginTop="24dp" />
+    <!-- Button Log In -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogIn"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/login_button"
+        android:fontFamily="@font/cormorantunicase_medium"
+        android:text="Log In"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/checkBoxRememberMe"
+        app:layout_constraintWidth_percent="0.9" />
 
-        <!-- Teks OR -->
+    <!-- Teks OR -->
 
 
     <TextView
         android:id="@+id/textOr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/cormorantunicase_medium"
         android:text="OR"
         android:textColor="@color/white"
@@ -138,22 +143,21 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="136dp"
+        android:fontFamily="@font/cormorantunicase_medium"
+        android:text="Sign In with Google"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:backgroundTint="@color/white"
         app:icon="@drawable/googlelogo"
         app:iconGravity="start"
         app:iconPadding="4dp"
         app:iconSize="20dp"
         app:iconTint="@color/black"
-        android:text="Sign In with Google"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:fontFamily="@font/cormorantunicase_medium"
-        app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintWidth_percent="0.9"
-    />
+        app:layout_constraintWidth_percent="0.9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
