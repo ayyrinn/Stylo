@@ -97,10 +97,10 @@ fun ForgotPasswordScreen() {
                     .height(58.dp)
                     .clip(RoundedCornerShape(50.dp))
                     .background(Color.White),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Color(0xFFDD8560), // Warna pembatas ketika fokus
-                    unfocusedBorderColor = Color.Gray // Warna pembatas ketika tidak fokus
-                )
+//                colors = TextFieldDefaults.outlinedTextFieldColors(
+//                    focusedBorderColor = Color(0xFFDD8560), // Warna pembatas ketika fokus
+//                    unfocusedBorderColor = Color.Gray // Warna pembatas ketika tidak fokus
+//                )
             )
 
 
