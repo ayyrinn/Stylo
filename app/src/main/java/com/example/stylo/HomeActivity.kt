@@ -43,7 +43,7 @@ class HomeActivity : ComponentActivity() {
         }
     }
 }
-//
+
 @Composable
 fun HomeScreen(context: HomeActivity) { // Accept the context as a parameter
 //    val scrollState = rememberScrollState()
