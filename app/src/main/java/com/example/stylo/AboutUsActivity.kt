@@ -55,8 +55,8 @@ fun AboutUsPage(){
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFF3EEEA))
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp),
+            .verticalScroll(rememberScrollState()),
+            //.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally // Center aligns all items horizontally
     ){
         Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
@@ -90,9 +90,9 @@ fun AboutUsPage(){
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(150.dp) // Atur ukuran kotak
-                    .border(2.dp, Color.Black) // Menambahkan border hitam
-                   // .padding(8.dp) // Memberikan jarak antara border dan gambar
+                    .height(200.dp) // Atur ukuran kotak
+                    .padding(top = 15.dp)
+
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.home_img_4), // Ganti dengan nama foto
@@ -113,7 +113,7 @@ fun AboutUsPage(){
             textAlign = TextAlign.Center,
             letterSpacing = 1.21.sp,
             modifier = Modifier
-                .padding(top = 20.dp)
+                .padding(top = 25.dp)
         )
 //        //font 20, Line height, 31, align kiri
         Text(
@@ -126,7 +126,20 @@ fun AboutUsPage(){
             textAlign = TextAlign.Left,
             lineHeight = 31.sp,
             modifier = Modifier
+                .padding(top = 15.dp)
+                .padding(horizontal = 20.dp)
+        )
+
+        Text(
+            text = "REACH OUT",
+            fontFamily = tenorFontFamily, fontWeight = FontWeight.Normal, // Use your custom font here
+            fontSize = 20.sp,
+            color = Color.Black,
+            textAlign = TextAlign.Left,
+            lineHeight = 31.sp,
+            modifier = Modifier
                 .padding(top = 20.dp)
+                .padding(horizontal = 20.dp)
         )
         //line height 35, spacing 1.21
 
@@ -136,20 +149,6 @@ fun AboutUsPage(){
     }
 }
 
-@Composable
-fun ContactInfo1() {
-    Text(
-        text = "REACH OUT",
-        fontFamily = cormorantFontFamily,
-        fontWeight = FontWeight.Normal, // Use your custom font here
-        fontSize = 20.sp,
-        color = Color.Black,
-        textAlign = TextAlign.Center,
-        letterSpacing = 1.21.sp,
-        modifier = Modifier
-            .padding(top = 20.dp)
-    )
-}
 
 @Composable
 fun ContactInfo(){

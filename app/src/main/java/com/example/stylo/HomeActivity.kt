@@ -9,19 +9,22 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-//import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
-//import androidx.compose.ui.graphics.RectangleShape
-//import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-//import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,6 +32,8 @@ import androidx.compose.ui.unit.sp
 import com.example.stylo.ui.theme.cormorantFontFamily
 import com.example.stylo.ui.theme.miamaFontFamily
 import com.example.stylo.ui.theme.tenorFontFamily
+
+
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,13 +108,21 @@ fun HomeScreen(context: HomeActivity) { // Accept the context as a parameter
                         context.startActivity(intent)
                     },
                     modifier = Modifier
-                        .padding(top = 50.dp)
-                        .width(300.dp)
-                        .height(50.dp)
-
+                        .padding(top = 50.dp) // Margin atas 50 dp
+                        .width(300.dp)        // Lebar tombol
+                        .height(50.dp),       // Tinggi tombol
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFB0A695) // Warna background tombol
+                    )
                 ) {
-                    Text(text = "Discover Your Style")
+                    Text(
+                        text = "Discover your Style",
+                        color = Color.Black, // Warna teks tombol
+                        fontSize = 16.sp,
+                        fontFamily = TenorSansRegular
+                    )
                 }
+
             }
         }
 
