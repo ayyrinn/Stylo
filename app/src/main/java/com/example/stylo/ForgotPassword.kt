@@ -55,11 +55,11 @@ fun ForgotPasswordScreen() {
             contentDescription = null,
             modifier = Modifier.fillMaxSize()
         )
-
+        //aaaaaaaa
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 16.dp),
+                .fillMaxSize(),
+
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Logo Text
@@ -96,7 +96,7 @@ fun ForgotPasswordScreen() {
                     .fillMaxWidth(0.9f)
                     .height(58.dp)
                     .clip(RoundedCornerShape(50.dp))
-                    .background(Color.White),
+                    .background(Color(0xB0A695).copy(alpha = 0.9f)),
 //                colors = TextFieldDefaults.outlinedTextFieldColors(
 //                    focusedBorderColor = Color(0xFFDD8560), // Warna pembatas ketika fokus
 //                    unfocusedBorderColor = Color.Gray // Warna pembatas ketika tidak fokus
