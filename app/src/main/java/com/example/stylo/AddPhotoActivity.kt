@@ -164,7 +164,7 @@ fun PhotoActivity() {
                             Image(
                                 bitmap = bitmap!!.asImageBitmap(),
                                 contentDescription = null,
-                                contentScale = ContentScale.Crop,
+                                contentScale = ContentScale.Fit,
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .background(Color.LightGray),
@@ -331,22 +331,6 @@ fun PhotoActivity() {
 //        }
     }
 }
-
-// buat upload ke firebase
-//fun uploadImageToFirebase(bitmap: Bitmap, context: ComponentActivity, callback: (Boolean) -> Unit){
-//    val storageRef = Firebase.storage.reference
-//    val imageRef = storageRef.child("images/${ bitmap }")
-//
-//    val baos = ByteArrayOutputStream()
-//    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-//    val imageData = baos.toByteArray()
-//
-//    imageRef.putBytes(imageData).addOnSuccessListener {
-//        callback(true)
-//    }.addOnFailureListener{
-//        callback(false)
-//    }
-//}
 
 @Preview
 @Composable
