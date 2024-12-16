@@ -26,6 +26,9 @@
         <activity
             android:name=".HomeActivity"
             android:exported="false" />
+        <activity android:name=".AddPhotoActivity" />
+        <activity android:name=".RemoveBackgroundActivity" />
+        <activity android:name=".AIGenerateActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
