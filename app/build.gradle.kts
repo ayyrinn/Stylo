@@ -84,5 +84,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.8.3")
     implementation(libs.kotlinx.serialization.json)
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.google.ai.client.generativeai:generativeai:0.7.0")
+
 
 }
