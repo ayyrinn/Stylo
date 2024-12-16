@@ -2,6 +2,7 @@ package com.example.stylo
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -33,17 +34,55 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.stylo.ui.theme.miamaFontFamily
 import com.example.stylo.ui.theme.tenorFontFamily
-
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.io.ByteArrayOutputStream
+import java.util.*
 
 
 class RemoveBackgroundActivity : ComponentActivity() {
+    private lateinit var storageReference: StorageReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        storageReference = FirebaseStorage.getInstance().reference
+
+        val bitmap: Bitmap? = intent.getParcelableExtra<Bitmap>("bitmap")
         setContent {
-            val bitmap: Bitmap? = intent.getParcelableExtra<Bitmap>("bitmap")
-            RemoveBackground(bitmap, onRetakeClick = { finish()}, onUseClick = { navigateToAIGeneratePhotos()})
+            RemoveBackground(
+                bitmap = bitmap,
+                onRetakeClick = { finish() },
+                onUseClick = { uploadImage(bitmap) }
+            )
         }
     }
+
+    private fun uploadImage(bitmap: Bitmap?) {
+        if (bitmap == null) {
+            Log.e("RemoveBackgroundActivity", "Bitmap is null, cannot upload.")
+            return
+        }
+
+        // Convert bitmap to byte array
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+
+        // Create a unique filename
+        val fileName = "images/${UUID.randomUUID()}.jpg"
+        val imageRef = storageReference.child(fileName)
+
+        // Upload the image
+        imageRef.putBytes(data)
+            .addOnSuccessListener {
+                Log.d("RemoveBackgroundActivity", "Image uploaded successfully.")
+                navigateToAIGeneratePhotos()
+            }
+            .addOnFailureListener { exception ->
+                Log.e("RemoveBackgroundActivity", "Upload failed: ${exception.message}")
+            }
+    }
+
     private fun navigateToAIGeneratePhotos() {
         val intent = Intent(this, AIGenerateActivity::class.java)
         startActivity(intent)
