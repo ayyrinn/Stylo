@@ -59,7 +59,6 @@ fun ForgotPasswordScreen() {
         Column(
             modifier = Modifier
                 .fillMaxSize(),
-
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Logo Text
@@ -80,7 +79,7 @@ fun ForgotPasswordScreen() {
                 color = Color.White,
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(start = 30.dp, top = 180.dp)
+                    .padding(start = 30.dp, top = 150.dp)
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -89,18 +88,13 @@ fun ForgotPasswordScreen() {
             OutlinedTextField(
                 value = "",
                 onValueChange = {},
-
                 label = { Text("Password") },
                 modifier = Modifier
-                    .padding(top = 30.dp)
+                    .padding(top = 20.dp)
                     .fillMaxWidth(0.9f)
-                    .height(58.dp)
+                    .height(48.dp)
                     .clip(RoundedCornerShape(50.dp))
                     .background(Color(0xB0A695).copy(alpha = 0.9f)),
-//                colors = TextFieldDefaults.outlinedTextFieldColors(
-//                    focusedBorderColor = Color(0xFFDD8560), // Warna pembatas ketika fokus
-//                    unfocusedBorderColor = Color.Gray // Warna pembatas ketika tidak fokus
-//                )
             )
 
 
@@ -114,12 +108,10 @@ fun ForgotPasswordScreen() {
                 label = { Text("Confirm Password") },
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
-                    .height(58.dp),
-//                colors = TextFieldDefaults.outlinedTextFieldColors(
-//                    containerColor = Color.White,
-//                    focusedBorderColor = colorResource(id = R.color.black),
-//                    unfocusedBorderColor = colorResource(id = R.color.black)
-//                )
+                    .height(48.dp)
+                    .clip(RoundedCornerShape(50.dp))
+                    .background(Color(0xB0A695).copy(alpha = 0.9f)),
+//
             )
 
             Spacer(modifier = Modifier.height(32.dp))

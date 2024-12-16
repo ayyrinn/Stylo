@@ -1,8 +1,10 @@
 package com.example.stylo
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,14 +27,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.drawable.toBitmap
 import com.example.stylo.ui.theme.StyloTheme
 import com.example.stylo.ui.theme.miamaFontFamily
 import com.example.stylo.ui.theme.tenorFontFamily
+import com.google.ai.client.generativeai.GenerativeModel
+import com.google.ai.client.generativeai.type.content
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.serialization.json.JsonNull.content
 
 
 class AIGenerateActivity : ComponentActivity() {
@@ -49,8 +58,12 @@ class AIGenerateActivity : ComponentActivity() {
     }
 }
 
+
+
 @Composable
 fun AIGeneratePhotos() {
+    val context = LocalContext.current
+    var AIresponse = " "
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -66,7 +79,7 @@ fun AIGeneratePhotos() {
         )
 
         Button(
-            onClick = {},
+            onClick = {AIresponse = visionModelCall(context)},
             modifier = Modifier
                 .padding(top = 16.dp)
                 .width(150.dp),
@@ -93,7 +106,7 @@ fun AIGeneratePhotos() {
 
         // Teks hasil generate
         Text(
-            text = "Upcycled Patchwork Jeans with Distressed Details - casual",
+            text = AIresponse,
             fontSize = 20.sp,
             textAlign = TextAlign.Center,
             fontFamily = tenorFontFamily,
@@ -137,4 +150,34 @@ fun AIGeneratePhotos() {
 fun PreviewAIGenerate() {
     // You can pass a dummy context or remove context-related code in previews
     AIGeneratePhotos()
+}
+
+fun visionModelCall(context: Context): String{
+    val bitmap = AppCompatResources.getDrawable(context, R.drawable.foto_jas)?.toBitmap()
+    var imageData = bitmap!!
+    var responseString = ""
+
+    val generativeModel = GenerativeModel(
+        modelName = "gemini-1.5-pro",
+        apiKey = "AIzaSyCKO7-qQBXsmPWHTn6f2aUzLRlX4-U6mnM"
+    )
+    println("vision model call3")
+
+    val inputContent = content {
+        image(imageData)
+        text("Give a good description on what clothing this is, including the color as the clothing's title. Specify which category this is among casual/semi-formal/formal/business casual/smart casual/athleisure/evening wear/cocktail/loungewear/sportswear/other. And specify a tag according if this is a top/bottom/footwear/accessories. write your answer down as Clothing:... Category:... Tag:..., the answer for clothing should be a sentence while category and tag should be a few words")
+    }
+    MainScope().launch {
+        val response = generativeModel.generateContent(inputContent)
+        responseString = response.toString()
+        println(responseString)
+    }
+
+    while(responseString == ""){
+        Thread.sleep(1_000)
+        if(responseString != ""){
+            break
+        }
+    }
+    return(responseString)
 }
