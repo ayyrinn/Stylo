@@ -6,19 +6,23 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.stylo.ui.theme.miamaFontFamily
 
 class ForgotPassword : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +32,15 @@ class ForgotPassword : ComponentActivity() {
         }
     }
 }
+val Miama = FontFamily(
+    Font(R.font.miama) // Nama file miama.ttf di `res/font`
+)
+
+val TenorSansRegular = FontFamily(
+    Font(R.font.tenorsans_regular) // Nama file tenorsans_regular.ttf di `res/font`
+)
+
+val backgroundColor = Color(0xB0A695).copy(alpha = 0.9f)
 
 @Composable
 fun ForgotPasswordScreen() {
@@ -42,17 +55,16 @@ fun ForgotPasswordScreen() {
             contentDescription = null,
             modifier = Modifier.fillMaxSize()
         )
-
+        //aaaaaaaa
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 16.dp),
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Logo Text
             Text(
                 text = "Stylo",
-                fontFamily = FontFamily.Cursive,
+                fontFamily = miamaFontFamily,
                 fontSize = 55.sp,
                 color = Color.White,
                 modifier = Modifier.padding(top = 16.dp)
@@ -61,32 +73,31 @@ fun ForgotPasswordScreen() {
             // Forgot Password Text
             Text(
                 text = "FORGOT\nPASSWORD",
-                fontFamily = FontFamily.Serif,
-                fontSize = 50.sp,
+                fontFamily = TenorSansRegular,
+                fontSize = 40.sp,
                 fontWeight = FontWeight.Medium,
                 color = Color.White,
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(start = 30.dp, top = 180.dp)
+                    .padding(start = 30.dp, top = 150.dp)
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Password Field
+             //Password Field
             OutlinedTextField(
                 value = "",
                 onValueChange = {},
                 label = { Text("Password") },
                 modifier = Modifier
-                    .padding(top = 30.dp)
+                    .padding(top = 20.dp)
                     .fillMaxWidth(0.9f)
-                    .height(58.dp),
-//                colors = TextFieldDefaults.outlinedTextFieldColors(
-//                    containerColor = Color.White,
-//                    focusedBorderColor = colorResource(id = R.color.black),
-//                    unfocusedBorderColor = colorResource(id = R.color.black)
-
+                    .height(48.dp)
+                    .clip(RoundedCornerShape(50.dp))
+                    .background(Color(0xB0A695).copy(alpha = 0.9f)),
             )
+
+
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -97,12 +108,10 @@ fun ForgotPasswordScreen() {
                 label = { Text("Confirm Password") },
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
-                    .height(58.dp),
-//                colors = TextFieldDefaults.outlinedTextFieldColors(
-//                    containerColor = Color.White,
-//                    focusedBorderColor = colorResource(id = R.color.black),
-//                    unfocusedBorderColor = colorResource(id = R.color.black)
-//                )
+                    .height(48.dp)
+                    .clip(RoundedCornerShape(50.dp))
+                    .background(Color(0xB0A695).copy(alpha = 0.9f)),
+//
             )
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -114,12 +123,13 @@ fun ForgotPasswordScreen() {
                     .fillMaxWidth(0.9f)
                     .height(48.dp),
                 colors = ButtonDefaults.buttonColors(
-//                    containerColor = colorResource(id = R.color.button_color)
+                    containerColor = Color(0xFFDD8560) // Warna tombol
                 )
             ) {
                 Text(
                     text = "Forgot Password",
                     fontSize = 20.sp,
+                    fontFamily = TenorSansRegular,
                     color = Color.White
                 )
             }

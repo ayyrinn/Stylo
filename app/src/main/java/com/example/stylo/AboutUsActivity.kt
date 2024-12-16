@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.stylo.ui.theme.miamaFontFamily
@@ -53,15 +55,10 @@ fun AboutUsPage(){
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFF3EEEA))
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp),
+            .verticalScroll(rememberScrollState()),
+            //.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally // Center aligns all items horizontally
     ){
-        // ABOUT US -- cormorantFontFamily (28)
-        // Text di bawahnya -- tenorFontFamily (20)
-        // REACH OUT -- cormorantFontFamily (22)
-        // hitstyloteam@gmail.com Malang, Indonesia   -- tenorFontFamily (18)
-        // Copyright © 2024 Stylo. All Rights Reserved. -- tenorFontFamily (16)
         Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Image(
                 painter = painterResource(id = R.drawable.burger_icon),
@@ -87,21 +84,25 @@ fun AboutUsPage(){
 
         Column(
             modifier = Modifier
-                .size(width = 415.dp, height = 215.dp)
+//                .size(width = 00.dp, height = 215.dp)
                 .fillMaxWidth()
-//                .padding(vertical = 16.dp)
-                .height(215.dp)
-
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.home_img_4), //ganti nama fotonya
-                contentDescription = "About Us Image",
+            Box(
                 modifier = Modifier
-//                    .fillMaxSize()
                     .fillMaxWidth()
+                    .height(200.dp) // Atur ukuran kotak
+                    .padding(top = 15.dp)
 
-            )
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.home_img_4), // Ganti dengan nama foto
+                    contentDescription = "About Us Image",
+                    contentScale = ContentScale.Crop, // Memastikan gambar memenuhi kotak
+                    modifier = Modifier.fillMaxSize() // Gambar mengisi seluruh kotak
+                )
+            }
         }
+
 
         //spacing 1,21, font 28
         Text(
@@ -112,7 +113,7 @@ fun AboutUsPage(){
             textAlign = TextAlign.Center,
             letterSpacing = 1.21.sp,
             modifier = Modifier
-                .padding(top = 20.dp)
+                .padding(top = 25.dp)
         )
 //        //font 20, Line height, 31, align kiri
         Text(
@@ -125,25 +126,29 @@ fun AboutUsPage(){
             textAlign = TextAlign.Left,
             lineHeight = 31.sp,
             modifier = Modifier
-                .padding(top = 20.dp)
+                .padding(top = 15.dp)
+                .padding(horizontal = 20.dp)
         )
-        //line height 35, spacing 1.21
+
         Text(
             text = "REACH OUT",
-            fontFamily = cormorantFontFamily, fontWeight = FontWeight.Normal, // Use your custom font here
-            fontSize = 22.sp,
+            fontFamily = tenorFontFamily, fontWeight = FontWeight.Normal, // Use your custom font here
+            fontSize = 20.sp,
             color = Color.Black,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Left,
             lineHeight = 31.sp,
-            letterSpacing = 1.21.sp,
             modifier = Modifier
-                .padding(top = 50.dp)
+                .padding(top = 20.dp)
+                .padding(horizontal = 20.dp)
         )
+        //line height 35, spacing 1.21
+
 
         ContactInfo()
         CopyrightFooter()
     }
 }
+
 
 @Composable
 fun ContactInfo(){
