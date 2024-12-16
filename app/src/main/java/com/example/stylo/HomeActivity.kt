@@ -56,7 +56,12 @@ fun HomeScreen(context: HomeActivity) { // Accept the context as a parameter
         verticalArrangement = Arrangement.Center
 
     ) {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0xFFF3EEEA)), // Menambahkan latar belakang dengan warna F3EEEA
+            horizontalArrangement = Arrangement.Center
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.burger_icon),
                 contentDescription = "Burger Icon",
@@ -64,9 +69,8 @@ fun HomeScreen(context: HomeActivity) { // Accept the context as a parameter
                     .size(50.dp)
                     .fillMaxSize()
                     .clickable { }
-                    .padding(top = 10.dp),
-
-                )
+                    .padding(top = 10.dp)
+            )
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = "Stylo",
@@ -77,8 +81,8 @@ fun HomeScreen(context: HomeActivity) { // Accept the context as a parameter
                     .padding(end = 35.dp)
             )
             Spacer(modifier = Modifier.weight(1f))
-
         }
+
 
 
         Column(
