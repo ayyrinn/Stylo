@@ -1,4 +1,5 @@
 package com.example.stylo
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,17 +25,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.stylo.AIPhotosScreen
-import com.example.stylo.R
-import com.example.stylo.ui.theme.cormorantFontFamily
 import com.example.stylo.ui.theme.miamaFontFamily
 import com.example.stylo.ui.theme.tenorFontFamily
 
@@ -46,13 +41,21 @@ class RemoveBackgroundActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val bitmap: Bitmap? = intent.getParcelableExtra<Bitmap>("bitmap")
-            RemoveBackground(bitmap)
+            RemoveBackground(bitmap, onRetakeClick = { finish()}, onUseClick = { navigateToAIGeneratePhotos()})
         }
+    }
+    private fun navigateToAIGeneratePhotos() {
+        val intent = Intent(this, AIGenerateActivity::class.java)
+        startActivity(intent)
     }
 }
 
 @Composable
-fun RemoveBackground(bitmap: Bitmap?) {
+fun RemoveBackground(
+    bitmap: Bitmap?,
+    onUseClick: () -> Unit,
+    onRetakeClick: () -> Unit
+) {
 
     //header stylo
     Column(
@@ -127,7 +130,7 @@ fun RemoveBackground(bitmap: Bitmap?) {
 
 
             ){
-
+                // retake button
                 Box(
                     modifier = Modifier
                         .width(110.dp)
@@ -141,7 +144,8 @@ fun RemoveBackground(bitmap: Bitmap?) {
                             color = Color(0xFFDD8560),  // Orange color for the outline
                             shape = RoundedCornerShape(45.dp) // Matches the background's shape
                         )
-                        .padding(16.dp),
+                        .padding(16.dp)
+                        .clickable { onRetakeClick() },
                     contentAlignment = Alignment.Center
                 ){
                     Text(
@@ -152,6 +156,7 @@ fun RemoveBackground(bitmap: Bitmap?) {
                     )
                 }
                 Spacer(modifier = Modifier.width(40.dp))
+                // use button
                 Box(
                     modifier = Modifier
                         .width(110.dp)
@@ -160,7 +165,8 @@ fun RemoveBackground(bitmap: Bitmap?) {
                             color = Color(0xFFDD8560),
                             shape = RoundedCornerShape(45.dp)
                         )
-                        .padding(16.dp),
+                        .padding(16.dp)
+                        .clickable { onUseClick() },
                     contentAlignment = Alignment.Center
                 ){
                     Text(
@@ -176,10 +182,6 @@ fun RemoveBackground(bitmap: Bitmap?) {
 
     }
 }
-
-
-
-
 
 @Preview
 @Composable

@@ -86,7 +86,7 @@ fun HomeScreen(context: HomeActivity) { // Accept the context as a parameter
 
             Column(
                 modifier = Modifier
-                    .padding(top = 220.dp)
+                    .padding(top = 200.dp)
             ) {
                 Text(
                     text = "SAY WHO\nYOU ARE WITHOUT\nSPEAKING",
@@ -99,8 +99,8 @@ fun HomeScreen(context: HomeActivity) { // Accept the context as a parameter
                 Spacer(modifier = Modifier.height(100.dp))
                 Button(
                     onClick = {
-                        val intent = Intent(context, AddPhotoActivity::class.java) // Use the context
-                        context.startActivity(intent) // Use context to start activity
+                        val intent = Intent(context, AddPhotoActivity::class.java)
+                        context.startActivity(intent)
                     },
                     modifier = Modifier
                         .padding(top = 50.dp)
