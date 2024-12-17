@@ -1,6 +1,7 @@
 package com.example.stylo
 
 //import RemoveBackgroundActivity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
@@ -49,6 +50,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.stylo.ui.theme.miamaFontFamily
 import com.example.stylo.ui.theme.tenorFontFamily
+import java.io.File
+import java.io.FileOutputStream
 
 class AddPhotoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +77,7 @@ fun PhotoActivity() {
             bitmap = if (Build.VERSION.SDK_INT >= 30) {
                 val source = ImageDecoder.createSource(context.contentResolver, it)
                 ImageDecoder.decodeBitmap(source)
-            } else { // Fallback for older versions
+            } else {
                 @Suppress("DEPRECATION")
                 MediaStore.Images.Media.getBitmap(context.contentResolver, it)
             }
@@ -83,10 +86,9 @@ fun PhotoActivity() {
 
     val cLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicturePreview()
-    ) {
-        bitmap = it
+    ) { imageBitmap ->
+        bitmap = imageBitmap
     }
-
 
 
     Column(
@@ -197,10 +199,11 @@ fun PhotoActivity() {
                                 removeBackground(image, "kYBubGppg1G3uoM7gxKBrSJQ") { result ->
                                     if (result != null) {
                                         resultBitmap = result
+                                        val imageUri = saveBitmapToFile(context, result)
                                         // Navigasi ke halaman hasil
                                         context.startActivity(
                                             Intent(context, RemoveBackgroundActivity::class.java)
-                                                .putExtra("bitmap", result)
+                                                .putExtra("imageUri", imageUri.toString())
                                         )
                                     } else {
                                         Toast.makeText(
@@ -210,7 +213,7 @@ fun PhotoActivity() {
                                         ).show()
                                     }
                                 }
-                            }
+                            }?: Toast.makeText(context, "Please select an image", Toast.LENGTH_SHORT).show()
                         }
                 )
             }
@@ -330,6 +333,13 @@ fun PhotoActivity() {
 //            }
 //        }
     }
+}
+private fun saveBitmapToFile(context: Context, bitmap: Bitmap): Uri {
+    val file = File(context.cacheDir, "image_${System.currentTimeMillis()}.png")
+    FileOutputStream(file).use { out ->
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+    }
+    return Uri.fromFile(file)
 }
 
 @Preview
