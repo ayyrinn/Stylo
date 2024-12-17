@@ -1,6 +1,7 @@
 package com.example.stylo
 
 //import RemoveBackgroundActivity
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -206,14 +207,25 @@ fun PhotoActivity() {
                                                 .putExtra("imageUri", imageUri.toString())
                                         )
                                     } else {
-                                        Toast.makeText(
-                                            context,
-                                            "Failed to remove background",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                        (context as? Activity)?.runOnUiThread {
+                                            Toast.makeText(
+                                                context,
+                                                "Failed to remove background",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
                                     }
                                 }
-                            }?: Toast.makeText(context, "Please select an image", Toast.LENGTH_SHORT).show()
+                            } ?: run {
+                                // Show a toast on the main thread
+                                (context as? Activity)?.runOnUiThread {
+                                    Toast.makeText(
+                                        context,
+                                        "Please select an image",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
                         }
                 )
             }
