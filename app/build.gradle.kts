@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.mediation.test.suite)
     implementation(libs.firebase.storage.ktx)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -84,5 +85,10 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.8.3")
     implementation(libs.kotlinx.serialization.json)
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation ("androidx.compose.material3:material3:1.0.0") // Use the latest version
+    implementation ("androidx.compose.ui:ui:1.0.0") // Core UI library
+    implementation ("androidx.compose.ui:ui-tooling-preview:1.0.0") // For previewing UI
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0") // Lifecycle support
+
 
 }
