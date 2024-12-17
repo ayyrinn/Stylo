@@ -1,7 +1,6 @@
 package com.example.stylo
 
 //import RemoveBackgroundActivity
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -197,7 +196,7 @@ fun PhotoActivity() {
                         .align(Alignment.End)
                         .clickable {
                             bitmap?.let { image ->
-                                removeBackground(image, "kYBubGppg1G3uoM7gxKBrSJQ") { result ->
+                                removeBackground(image, "B7NooV34KQa7QPFek39afMRR") { result ->
                                     if (result != null) {
                                         resultBitmap = result
                                         val imageUri = saveBitmapToFile(context, result)
@@ -207,25 +206,14 @@ fun PhotoActivity() {
                                                 .putExtra("imageUri", imageUri.toString())
                                         )
                                     } else {
-                                        (context as? Activity)?.runOnUiThread {
-                                            Toast.makeText(
-                                                context,
-                                                "Failed to remove background",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        }
+                                        Toast.makeText(
+                                            context,
+                                            "Failed to remove background",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     }
                                 }
-                            } ?: run {
-                                // Show a toast on the main thread
-                                (context as? Activity)?.runOnUiThread {
-                                    Toast.makeText(
-                                        context,
-                                        "Please select an image",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
+                            }?: Toast.makeText(context, "Please select an image", Toast.LENGTH_SHORT).show()
                         }
                 )
             }

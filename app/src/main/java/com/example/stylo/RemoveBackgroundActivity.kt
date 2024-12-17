@@ -1,4 +1,5 @@
 package com.example.stylo
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -85,6 +86,12 @@ class RemoveBackgroundActivity : ComponentActivity() {
                 Log.d("RemoveBackgroundActivity", "Image uploaded successfully.")
                 // Get the download URL
                 imageRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                    // Save the filename or download URL to SharedPreferences
+                    val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                    with(sharedPreferences.edit()) {
+                        putString("imageFileName", fileName) // Save the filename
+                        apply()
+                    }
                     navigateToAIGeneratePhotos(downloadUri)
                 }
             }
