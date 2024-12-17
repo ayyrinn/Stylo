@@ -102,6 +102,7 @@ fun SelectCategories(
                         modifier = Modifier
 //                            .weight(1f)
                             .align(Alignment.Center)
+                            .padding(top = 5.dp, bottom = 5.dp)
                     )
                 }
             }

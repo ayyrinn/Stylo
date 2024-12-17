@@ -373,4 +373,5 @@ fun AIPhotosScreen() {
 @Composable
 fun Previews(){
     AIPhotosScreen()
+
 }

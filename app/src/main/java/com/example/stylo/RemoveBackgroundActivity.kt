@@ -1,7 +1,10 @@
 package com.example.stylo
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -47,7 +50,12 @@ class RemoveBackgroundActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         storageReference = FirebaseStorage.getInstance().reference
 
-        val bitmap: Bitmap? = intent.getParcelableExtra<Bitmap>("bitmap")
+        val imageUriString = intent.getStringExtra("imageUri")
+        val imageUri = Uri.parse(imageUriString)
+        val bitmap: Bitmap? = imageUri?.let { uri ->
+            MediaStore.Images.Media.getBitmap(contentResolver, uri)
+        }
+
         setContent {
             RemoveBackground(
                 bitmap = bitmap,
@@ -65,26 +73,36 @@ class RemoveBackgroundActivity : ComponentActivity() {
 
         // Convert bitmap to byte array
         val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
         val data = baos.toByteArray()
 
         // Create a unique filename
-        val fileName = "images/${UUID.randomUUID()}.jpg"
+        val fileName = "images/${UUID.randomUUID()}.png"
         val imageRef = storageReference.child(fileName)
 
         // Upload the image
         imageRef.putBytes(data)
             .addOnSuccessListener {
                 Log.d("RemoveBackgroundActivity", "Image uploaded successfully.")
-                navigateToAIGeneratePhotos()
+                // Get the download URL
+                imageRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                    // Save the filename or download URL to SharedPreferences
+                    val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                    with(sharedPreferences.edit()) {
+                        putString("imageFileName", fileName) // Save the filename
+                        apply()
+                    }
+                    navigateToAIGeneratePhotos(downloadUri)
+                }
             }
             .addOnFailureListener { exception ->
                 Log.e("RemoveBackgroundActivity", "Upload failed: ${exception.message}")
             }
     }
 
-    private fun navigateToAIGeneratePhotos() {
+    private fun navigateToAIGeneratePhotos(imageUri: Uri) {
         val intent = Intent(this, AIGenerateActivity::class.java)
+        intent.putExtra("imageUri", imageUri.toString())
         startActivity(intent)
     }
 }

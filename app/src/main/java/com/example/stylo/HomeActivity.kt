@@ -48,7 +48,7 @@ class HomeActivity : ComponentActivity() {
         }
     }
 }
-//
+
 @Composable
 fun HomeScreen(context: HomeActivity, navController: NavController) {
 
@@ -113,7 +113,9 @@ fun HomeScreen(context: HomeActivity, navController: NavController) {
             ) {
                 Text(
                     text = "SAY WHO\nYOU ARE WITHOUT\nSPEAKING",
-                    modifier = Modifier.padding(top = 100.dp),
+                    modifier = Modifier
+                        .padding(top = 100.dp)
+                        .fillMaxWidth(), // Adjust this to align text horizontally to the center
                     fontSize = 30.sp,
                     color = Color.White,
                     textAlign = TextAlign.Center,
@@ -128,7 +130,8 @@ fun HomeScreen(context: HomeActivity, navController: NavController) {
                     modifier = Modifier
                         .padding(top = 50.dp) // Margin atas 50 dp
                         .width(300.dp)        // Lebar tombol
-                        .height(50.dp),       // Tinggi tombol
+                        .height(50.dp)
+                        .align(Alignment.CenterHorizontally),          // Tinggi tombol
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFB0A695) // Warna background tombol
                     )
