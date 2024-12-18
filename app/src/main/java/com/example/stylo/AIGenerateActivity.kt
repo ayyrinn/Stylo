@@ -160,6 +160,7 @@ fun AIGeneratePhotos(imageUri: String?) {
             fontSize = 20.sp,
             textAlign = TextAlign.Center,
             fontFamily = tenorFontFamily,
+            color = Color.Black,
             modifier = Modifier.padding(16.dp)
         )
         Divider(
@@ -169,6 +170,32 @@ fun AIGeneratePhotos(imageUri: String?) {
             color = Color.Black,
             thickness = 1.dp
         )
+
+        Button(
+            onClick = {
+                // Simpan hasil ke SharedPreferences
+                val sharedPreferences = context.getSharedPreferences("stylo_prefs", Context.MODE_PRIVATE)
+                sharedPreferences.edit().putString("saved_result", response).apply()
+
+                // Navigasi ke halaman berikutnya
+//                val intent = Intent(context, NextActivity::class.java)
+//                context.startActivity(intent)
+            },
+            modifier = Modifier
+                .padding(top = 16.dp)
+                .width(150.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFDD8560),
+                contentColor = Color.White
+            )
+        ) {
+            Text(
+                text = "SAVE",
+                fontSize = 16.sp,
+                fontFamily = tenorFontFamily
+            )
+        }
+
     }
 }
 @Preview
