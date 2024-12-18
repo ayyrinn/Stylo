@@ -130,11 +130,7 @@ class RegisterActivity : ComponentActivity() {
 
 @Composable
 fun RegisterScreen(onGoogleSignInClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Transparent)
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
         // Background image
         Image(
             painter = painterResource(id = R.drawable.backround_login_register),
