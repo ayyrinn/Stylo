@@ -398,7 +398,14 @@ fun AIPhotosScreen(top_image_url: String) {
                         shape = RoundedCornerShape(45.dp)  // Adjust corner radius here
                     ) // Thin orange outline
                     .padding(16.dp)
-            )
+            ){
+                Text(
+                    text = recsResponse,
+                    color = Color.Black,               // Adjust text color
+                    fontSize = 14.sp,                  // Adjust text size
+                    fontFamily = tenorFontFamily      // Optional: Change to a specific font family
+                )
+            }
 
             Row(
                 modifier = Modifier
