@@ -138,7 +138,10 @@ fun SelectPhotos() {
 
             Box(
                 modifier = Modifier
-                    .clickable { }
+                    .clickable {
+                        val intent = Intent(context, MoreBottomActivity::class.java)
+                        context.startActivity(intent)
+                    }
                     .width(155.dp)
                     .height(215.dp)
                     .background(Color.Transparent, shape = RectangleShape)
@@ -172,7 +175,10 @@ fun SelectPhotos() {
             // Left Button
             Box(
                 modifier = Modifier
-                    .clickable { }
+                    .clickable {
+                        val intent = Intent(context, MoreFootwearActivity::class.java)
+                        context.startActivity(intent)
+                    }
                     .width(155.dp)
                     .height(215.dp)
                     .background(Color.Transparent, shape = RectangleShape)
@@ -201,7 +207,10 @@ fun SelectPhotos() {
 
             Box(
                 modifier = Modifier
-                    .clickable { }
+                    .clickable {
+                        val intent = Intent(context, MoreAccessoriesActivity::class.java)
+                        context.startActivity(intent)
+                    }
                     .width(155.dp)
                     .height(215.dp)
                     .background(Color.Transparent, shape = RectangleShape)
@@ -216,7 +225,7 @@ fun SelectPhotos() {
                         .align(Alignment.Center)
                 )
                 Text(
-                    text = "ACCESORIES",
+                    text = "ACCESSORIES",
                     color = Color(0xFF776B5D),
                     fontSize = 20.sp,
                     fontFamily = tenorFontFamily,

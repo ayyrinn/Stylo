@@ -1,6 +1,7 @@
 package com.example.stylo
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -51,7 +52,13 @@ import kotlinx.coroutines.tasks.await
 class AIPhotosActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val top_image_url = intent.getStringExtra("top_image_url").toString()
+        val top_image_url: String
+
+        if (intent.getStringExtra("top_image_url").toString() != null){
+            top_image_url = intent.getStringExtra("top_image_url").toString()
+        }else{
+            top_image_url = ""
+        }
 
         setContent {
             AIPhotosScreen(top_image_url)
@@ -178,13 +185,24 @@ fun AIPhotosScreen(top_image_url: String) {
                         Image(
                             bitmap = it.asImageBitmap(),
                             contentDescription = "Processed Image",
-                            modifier = Modifier.size(362.dp, 362.dp)
+                            modifier = Modifier
+                                .size(362.dp, 362.dp)
+                                .clickable {
+                                    context.startActivity(
+                                        Intent(context, MoreTopActivity::class.java)
+                                    )
+                                }
                         )
                     } ?: Image(
                         painter = painterResource(id = R.drawable.foto_jas),
                         contentDescription = "Camera Left",
                         modifier = Modifier
                             .fillMaxWidth()
+                            .clickable {
+                                context.startActivity(
+                                    Intent(context, MoreTopActivity::class.java)
+                                )
+                            }
                             .height(185.dp)
                     )
                     Box(

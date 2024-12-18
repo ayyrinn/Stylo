@@ -104,7 +104,23 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                         Text(
                             "Profile", fontSize = 30.sp,
                             modifier = Modifier
-                                .clickable { /* Navigate to Profile */ }
+                                .clickable {
+                                    val intent = Intent(context, UserProfileActivity::class.java) // Use Intent to navigate
+                                    context.startActivity(intent)
+                                    showMenu = false
+                                    onDismiss()
+                                }
+                                .padding(8.dp)
+                        )
+                        Text(
+                            "Generate Outfit", fontSize = 30.sp,
+                            modifier = Modifier
+                                .clickable {
+                                    val intent = Intent(context, AIPhotosActivity::class.java) // Use Intent to navigate
+                                    context.startActivity(intent)
+                                    showMenu = false
+                                    onDismiss()
+                                }
                                 .padding(8.dp)
                         )
                         Text(
@@ -125,6 +141,7 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                                     val intent = Intent(context, AddPhotoActivity::class.java) // Use Intent to navigate
                                     context.startActivity(intent)
                                     showMenu = false
+                                    onDismiss()
                                 }
                                 .padding(8.dp)
                         )
@@ -135,6 +152,7 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                                     val intent = Intent(context, AboutUsActivity::class.java) // Use Intent to navigate
                                     context.startActivity(intent)
                                     showMenu = false
+                                    onDismiss()
                                 }
                                 .padding(8.dp)
                         )

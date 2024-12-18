@@ -55,52 +55,27 @@ class HomeActivity : ComponentActivity() {
 @Composable
 fun HomeScreen(context: HomeActivity) {
     var showMenu by remember { mutableStateOf(false) }
-    // Accept the context as a parameter
-//    val scrollState = rememberScrollState()
     Box(modifier = Modifier.fillMaxSize()) {
         // Main content
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState()),
-            //            .verticalScroll(state = scrollState),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
 
         ) {
-
-            //        c {
-            //            Image(
-            //                painter = painterResource(id = R.drawable.burger_icon),
-            //                contentDescription = "Burger Icon",
-            //                modifier = Modifier
-            //                    .size(50.dp)
-            //                    .fillMaxSize()
-            //                    .clickable { }
-            //                    .padding(top = 10.dp)
-            //            )
-            //            Spacer(modifier = Modifier.weight(1f))
-            //            Text(
-            //                text = "Stylo",
-            //                fontSize = 45.sp,
-            //                color = Color(0xFF776B5D),
-            //                fontFamily = miamaFontFamily,
-            //                modifier = Modifier
-            //                    .padding(end = 35.dp)
-            //            )
-            //            Spacer(modifier = Modifier.weight(1f))
-            //        }
-
+            // Top Bar
             StyloTopBar(onMenuClick = { showMenu = !showMenu })
-            Column(
 
+            // Main Content
+            Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .paint(
                         painter = painterResource(id = R.drawable.home_img_1),
                     )
             ) {
-
                 Column(
                     modifier = Modifier
                         .padding(top = 200.dp)

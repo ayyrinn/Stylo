@@ -26,6 +26,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -51,101 +55,89 @@ class AboutUsActivity : ComponentActivity() {
 
 @Composable
 fun AboutUsPage(){
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFF3EEEA))
-            .verticalScroll(rememberScrollState()),
-            //.padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally // Center aligns all items horizontally
-    ){
-        Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Image(
-                painter = painterResource(id = R.drawable.burger_icon),
-                contentDescription = "Burger Icon",
-                modifier = Modifier
-                    .size(50.dp)
-                    .fillMaxSize()
-                    .clickable {  }
-                    .padding(top = 10.dp),
-
-                // .padding(start = 160.dp, top = 16.dp)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Text(text = "Stylo",
-                fontSize = 45.sp,
-                color = Color(0xFF776B5D),
-                fontFamily = miamaFontFamily,
-                modifier = Modifier
-                    .padding(end = 35.dp)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-        }
-
+    var showMenu by remember { mutableStateOf(false) }
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Main content
         Column(
             modifier = Modifier
-//                .size(width = 00.dp, height = 215.dp)
-                .fillMaxWidth()
+                .fillMaxSize()
+                .background(Color(0xFFF3EEEA))
+                .verticalScroll(rememberScrollState()),
+            //.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally // Center aligns all items horizontally
         ) {
-            Box(
+            // Top Bar
+            StyloTopBar(onMenuClick = { showMenu = !showMenu })
+
+            // Main Content
+            Column(
                 modifier = Modifier
+                    //                .size(width = 00.dp, height = 215.dp)
                     .fillMaxWidth()
-                    .height(200.dp) // Atur ukuran kotak
-                    .padding(top = 15.dp)
-
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.home_img_4), // Ganti dengan nama foto
-                    contentDescription = "About Us Image",
-                    contentScale = ContentScale.Crop, // Memastikan gambar memenuhi kotak
-                    modifier = Modifier.fillMaxSize() // Gambar mengisi seluruh kotak
-                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp) // Atur ukuran kotak
+                        .padding(top = 15.dp)
+
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.home_img_4), // Ganti dengan nama foto
+                        contentDescription = "About Us Image",
+                        contentScale = ContentScale.Crop, // Memastikan gambar memenuhi kotak
+                        modifier = Modifier.fillMaxSize() // Gambar mengisi seluruh kotak
+                    )
+                }
             }
+
+
+            //spacing 1,21, font 28
+            Text(
+                text = "ABOUT US",
+                fontFamily = cormorantFontFamily,
+                fontWeight = FontWeight.Normal, // Use your custom font here
+                fontSize = 28.sp,
+                color = Color.Black,
+                textAlign = TextAlign.Center,
+                letterSpacing = 1.21.sp,
+                modifier = Modifier
+                    .padding(top = 25.dp)
+            )
+            //        //font 20, Line height, 31, align kiri
+            Text(
+                text = "Welcome to Stylo, where style meets creativity. Founded in 2024, our platform is dedicated to the art of mix and match, empowering you to curate outfits that reflect your unique personality.\n" +
+                        "\n" +
+                        "With our intuitive features, planning your wardrobe becomes a joyful experience, allowing you to effortlessly blend fashion with sustainability. Embrace your style journey with us and let your creativity shine!",
+                fontFamily = tenorFontFamily,
+                fontWeight = FontWeight.Normal, // Use your custom font here
+                fontSize = 20.sp,
+                color = Color.Black,
+                textAlign = TextAlign.Left,
+                lineHeight = 31.sp,
+                modifier = Modifier
+                    .padding(top = 15.dp)
+                    .padding(horizontal = 20.dp)
+            )
+
+            Text(
+                text = "REACH OUT",
+                fontFamily = tenorFontFamily,
+                fontWeight = FontWeight.Normal, // Use your custom font here
+                fontSize = 20.sp,
+                color = Color.Black,
+                textAlign = TextAlign.Left,
+                lineHeight = 31.sp,
+                modifier = Modifier
+                    .padding(top = 20.dp)
+                    .padding(horizontal = 20.dp)
+            )
+            //line height 35, spacing 1.21
+
+
+            ContactInfo()
+            CopyrightFooter()
         }
-
-
-        //spacing 1,21, font 28
-        Text(
-            text = "ABOUT US",
-            fontFamily = cormorantFontFamily, fontWeight = FontWeight.Normal, // Use your custom font here
-            fontSize = 28.sp,
-            color = Color.Black,
-            textAlign = TextAlign.Center,
-            letterSpacing = 1.21.sp,
-            modifier = Modifier
-                .padding(top = 25.dp)
-        )
-//        //font 20, Line height, 31, align kiri
-        Text(
-            text = "Welcome to Stylo, where style meets creativity. Founded in 2024, our platform is dedicated to the art of mix and match, empowering you to curate outfits that reflect your unique personality.\n" +
-                    "\n" +
-                    "With our intuitive features, planning your wardrobe becomes a joyful experience, allowing you to effortlessly blend fashion with sustainability. Embrace your style journey with us and let your creativity shine!",
-            fontFamily = tenorFontFamily, fontWeight = FontWeight.Normal, // Use your custom font here
-            fontSize = 20.sp,
-            color = Color.Black,
-            textAlign = TextAlign.Left,
-            lineHeight = 31.sp,
-            modifier = Modifier
-                .padding(top = 15.dp)
-                .padding(horizontal = 20.dp)
-        )
-
-        Text(
-            text = "REACH OUT",
-            fontFamily = tenorFontFamily, fontWeight = FontWeight.Normal, // Use your custom font here
-            fontSize = 20.sp,
-            color = Color.Black,
-            textAlign = TextAlign.Left,
-            lineHeight = 31.sp,
-            modifier = Modifier
-                .padding(top = 20.dp)
-                .padding(horizontal = 20.dp)
-        )
-        //line height 35, spacing 1.21
-
-
-        ContactInfo()
-        CopyrightFooter()
     }
 }
 
