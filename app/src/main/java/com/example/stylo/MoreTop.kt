@@ -160,10 +160,9 @@ fun ImageCard(imageUrl: String, context: Context) {
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-                    println("pressed top")
                     context.startActivity(
                         Intent(context, AIPhotosActivity::class.java)
-                            .putExtra("top_image_url", imageUrl)
+                            .putExtra("image_url", imageUrl)
                     )
                 }
                 .height(185.dp)

@@ -56,23 +56,23 @@ import kotlinx.coroutines.tasks.await
 class AIPhotosActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val top_image_url: String
+        val imageUrl: String
 
-        if (intent.getStringExtra("top_image_url").toString() != null){
-            top_image_url = intent.getStringExtra("top_image_url").toString()
+
+        if (intent.getStringExtra("image_url").toString() != "" || intent.getStringExtra("image_url").toString() != null){
+            imageUrl = intent.getStringExtra("image_url").toString()
         }else{
-            top_image_url = ""
+            imageUrl = ""
         }
 
         setContent {
-            AIPhotosScreen(top_image_url)
+            AIPhotosScreen(imageUrl)
         }
     }
 }
 
 @Composable
-fun AIPhotosScreen(top_image_url: String) {
-    println("Initial: " + top_image_url)
+fun AIPhotosScreen(imageUrl: String) {
     var top by remember { mutableStateOf<Bitmap?>(null) } //ini buat gambar yg ditunjukkin di screennya
     var bottom by remember { mutableStateOf<Bitmap?>(null) }
     var footwear by remember { mutableStateOf<Bitmap?>(null) }
@@ -88,18 +88,34 @@ fun AIPhotosScreen(top_image_url: String) {
     val clothingData = remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }
     var recsResponse by remember { mutableStateOf("") } // State to store the response
 
-    if(top_image_url != "") {
-        println("should be filled: " + top_image_url)
-        LaunchedEffect(top_image_url) {
-            top_image_url?.let {
-                val retrievedData = retrieveDataSuspend(it, top_image_url)
-                topData = retrievedData // Update the state with retrieved data
+    var typeData by remember { mutableStateOf("") } // State to store the response
+
+
+    if(imageUrl != ""){
+        LaunchedEffect(imageUrl) {
+            imageUrl?.let {
+                if (typeData.equals("top", ignoreCase = true)){
+                    topData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
+                }
+
+                if (typeData.equals("bottom", ignoreCase = true)){
+                    bottomData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
+                }
+
+                if (typeData.equals("footwear", ignoreCase = true)){
+                    footwearData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
+                }
+
+                if (typeData.equals("accessories", ignoreCase = true)){
+                    accessoriesData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
+                }
+
                 println(clothingData.value)
             } ?: Log.e("MoreTopScreen", "User  is not logged in")
         }
 
-        LaunchedEffect(top_image_url) {
-            top_image_url?.let {
+        LaunchedEffect(imageUrl) {
+            imageUrl?.let {
                 Glide.with(context)
                     .asBitmap()
                     .load(it)
@@ -108,7 +124,21 @@ fun AIPhotosScreen(top_image_url: String) {
                             resource: Bitmap,
                             transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
                         ) {
-                            top = resource
+                            if (typeData.equals("top", ignoreCase = true)){
+                                top = resource
+                            }
+
+                            if (typeData.equals("bottom", ignoreCase = true)){
+                                bottom = resource
+                            }
+
+                            if (typeData.equals("footwear", ignoreCase = true)){
+                                footwear = resource
+                            }
+
+                            if (typeData.equals("accessories", ignoreCase = true)){
+                                accessories = resource
+                            }
                         }
 
                         override fun onLoadCleared(placeholder: Drawable?) {
@@ -125,6 +155,46 @@ fun AIPhotosScreen(top_image_url: String) {
             }
         }
     }
+
+
+
+//    if(bottomImageUrl != "") {
+//        println("should be filled: " + bottomImageUrl)
+//        LaunchedEffect(bottomImageUrl) {
+//            bottomImageUrl?.let {
+//                val retrievedData = retrieveDataSuspend(it, bottomImageUrl)
+//                topData = retrievedData // Update the state with retrieved data
+//                println(clothingData.value)
+//            } ?: Log.e("MoreTopScreen", "User  is not logged in")
+//        }
+//
+//        LaunchedEffect(bottomImageUrl) {
+//            bottomImageUrl?.let {
+//                Glide.with(context)
+//                    .asBitmap()
+//                    .load(it)
+//                    .into(object : CustomTarget<Bitmap>() {
+//                        override fun onResourceReady(
+//                            resource: Bitmap,
+//                            transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
+//                        ) {
+//                            top = resource
+//                        }
+//
+//                        override fun onLoadCleared(placeholder: Drawable?) {
+//                            // Handle cleanup if needed
+//                        }
+//
+//                        override fun onLoadFailed(errorDrawable: Drawable?) {
+//                            Log.e(
+//                                "AIGeneratePhotos",
+//                                "Image load failed: ${errorDrawable?.toString()}"
+//                            )
+//                        }
+//                    })
+//            }
+//        }
+//    }
 
     Column(
         modifier = Modifier
@@ -256,11 +326,28 @@ fun AIPhotosScreen(top_image_url: String) {
                     modifier = Modifier
                         .fillMaxWidth()
                 ){
-                    Image(
+                    bottom?.let {
+                        Image(
+                            bitmap = it.asImageBitmap(),
+                            contentDescription = "Processed Image",
+                            modifier = Modifier
+                                .size(362.dp, 362.dp)
+                                .clickable {
+                                    context.startActivity(
+                                        Intent(context, MoreTopActivity::class.java)
+                                    )
+                                }
+                        )
+                    } ?: Image(
                         painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Right",
+                        contentDescription = "Camera Left",
                         modifier = Modifier
                             .fillMaxWidth()
+                            .clickable {
+                                context.startActivity(
+                                    Intent(context, MoreTopActivity::class.java)
+                                )
+                            }
                             .height(185.dp)
                     )
                     Box(
@@ -313,11 +400,28 @@ fun AIPhotosScreen(top_image_url: String) {
                     modifier = Modifier
                         .fillMaxWidth()
                 ){
-                    Image(
+                    footwear?.let {
+                        Image(
+                            bitmap = it.asImageBitmap(),
+                            contentDescription = "Processed Image",
+                            modifier = Modifier
+                                .size(362.dp, 362.dp)
+                                .clickable {
+                                    context.startActivity(
+                                        Intent(context, MoreTopActivity::class.java)
+                                    )
+                                }
+                        )
+                    } ?: Image(
                         painter = painterResource(id = R.drawable.foto_jas),
                         contentDescription = "Camera Left",
                         modifier = Modifier
                             .fillMaxWidth()
+                            .clickable {
+                                context.startActivity(
+                                    Intent(context, MoreTopActivity::class.java)
+                                )
+                            }
                             .height(185.dp)
                     )
                     Box(
@@ -363,11 +467,28 @@ fun AIPhotosScreen(top_image_url: String) {
                     modifier = Modifier
                         .fillMaxWidth()
                 ){
-                    Image(
+                    accessories?.let {
+                        Image(
+                            bitmap = it.asImageBitmap(),
+                            contentDescription = "Processed Image",
+                            modifier = Modifier
+                                .size(362.dp, 362.dp)
+                                .clickable {
+                                    context.startActivity(
+                                        Intent(context, MoreTopActivity::class.java)
+                                    )
+                                }
+                        )
+                    } ?: Image(
                         painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Right",
+                        contentDescription = "Camera Left",
                         modifier = Modifier
                             .fillMaxWidth()
+                            .clickable {
+                                context.startActivity(
+                                    Intent(context, MoreTopActivity::class.java)
+                                )
+                            }
                             .height(185.dp)
                     )
                     Box(
@@ -417,6 +538,7 @@ fun AIPhotosScreen(top_image_url: String) {
                     .width(370.dp)
                     .height(200.dp)
                     .background(Color.Transparent)
+                    .verticalScroll(rememberScrollState())
                     .border(
                         width = 1.dp,              // Border thickness
                         color = Color(0xFFDD8560), // Border color (orange)
@@ -516,6 +638,24 @@ suspend fun retrieveDataSuspend(userId: String, image_url: String): List<Map<Str
     } catch (e: Exception) {
         Log.w("FirebaseError", "Error retrieving documents", e)
         emptyList()
+    }
+}
+
+suspend fun retrieveTypeSuspend(userId: String, imageUrl: String): String {
+    val db = Firebase.firestore
+
+    return try {
+        val result = db.collection("clothes")
+            .whereEqualTo("userID", userId)
+            .whereEqualTo("imageurl", imageUrl)
+            .get()
+            .await() // Await the result using Kotlin Coroutines
+
+        // Get the "type" field from the first matching document
+        result.documents.firstOrNull()?.getString("type") ?: "No type found"
+    } catch (e: Exception) {
+        Log.w("FirebaseError", "Error retrieving documents", e)
+        "Error retrieving type"
     }
 }
 
