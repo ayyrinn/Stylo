@@ -130,7 +130,8 @@ fun AIGeneratePhotos(imageUri: String?) {
 
         Button(
             onClick = { coroutineScope.launch {
-                response = visionModelCall(context).toString() // Update the response state
+                response =
+                    bitmap?.let { visionModelCall(context, it).toString() }.toString() // Update the response state
             } },
             modifier = Modifier
                 .padding(top = 16.dp)
@@ -177,9 +178,9 @@ fun PreviewAIGenerate() {
     AIGeneratePhotos(imageUri = "https://firebasestorage.googleapis.com/v0/b/stylo-a5e01.appspot.com/o/images%2F22885c5c-608e-4594-9e94-c067215e6939.png?alt=media&token=ffb03c47-df08-47ab-bdd8-6443f5da36dc")
 }
 
-suspend fun visionModelCall(context: Context): String? {
-    val bitmap = AppCompatResources.getDrawable(context, R.drawable.foto_jas)?.toBitmap()
-    val imageData = bitmap!!
+suspend fun visionModelCall(context: Context, imageData: Bitmap): String? {
+//    val bitmap = AppCompatResources.getDrawable(context, R.drawable.foto_jas)?.toBitmap()
+//    val imageData = bitmap!!
 
     val generativeModel = GenerativeModel(
         modelName = "gemini-1.5-pro",
