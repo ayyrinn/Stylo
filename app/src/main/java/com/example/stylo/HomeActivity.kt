@@ -70,12 +70,7 @@ fun HomeScreen(context: HomeActivity, navController: NavController) {
         ReusableDrawer(navController = rememberNavController())
     }
 
-//        Row(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .background(Color(0xFFF3EEEA)), // Menambahkan latar belakang dengan warna F3EEEA
-//            horizontalArrangement = Arrangement.Center
-//        ) {
+//        c {
 //            Image(
 //                painter = painterResource(id = R.drawable.burger_icon),
 //                contentDescription = "Burger Icon",

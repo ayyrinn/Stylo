@@ -18,7 +18,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-
+import com.example.stylo.ui.theme.miamaFontFamily
 
 
 // Fungsi untuk Header Stylo dengan Burger Menu dan Teks
@@ -27,16 +27,17 @@ fun StyloTopBar(onMenuClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color(0xFFF3EEEA)) // Warna latar belakang
-            .padding(vertical = 8.dp, horizontal = 16.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .background(Color(0xFFF3EEEA)), // Menambahkan latar belakang dengan warna F3EEEA
+        horizontalArrangement = Arrangement.Center
     ) {
         // Burger Icon
         Image(
-            painter = painterResource(id = R.drawable.burger_icon), // Tambahkan icon ke drawable
+            painter = painterResource(id = R.drawable.burger_icon),
             contentDescription = "Burger Icon",
             modifier = Modifier
                 .size(50.dp)
+                .fillMaxSize()
+                .padding(top = 10.dp)
                 .clickable { onMenuClick() }
         )
 
@@ -46,8 +47,10 @@ fun StyloTopBar(onMenuClick: () -> Unit) {
         Text(
             text = "Stylo",
             fontSize = 45.sp,
-            color = Color(0xFF776B5D), // Warna teks Stylo
-            fontFamily = FontFamily.Serif // Gantilah dengan miamaFontFamily jika ada
+            color = Color(0xFF776B5D),
+            fontFamily = miamaFontFamily,
+            modifier = Modifier
+                .padding(end = 35.dp)
         )
 
         Spacer(modifier = Modifier.weight(1f)) // Spacer untuk keseimbangan kanan
@@ -105,15 +108,27 @@ fun ReusableDrawer(navController: NavController) {
                             .padding(16.dp)
                     ) {
                         Text(
-                            "Gallery", fontSize = 30.sp,
+                            "Profile", fontSize = 30.sp,
                             modifier = Modifier
-                                .clickable { /* Tambahkan navigasi ke Gallery */ }
+                                .clickable { /* Tambahkan navigasi ke Profile */ }
                                 .padding(8.dp)
                         )
                         Text(
-                            "Calendar", fontSize = 30.sp,
+                            "Gallery", fontSize = 30.sp,
                             modifier = Modifier
-                                .clickable { /* Tambahkan navigasi ke Calendar */ }
+                                .clickable {
+                                    navController.navigate("gallery") // Navigasi ke About Us
+                                    showMenu = false
+                                }
+                                .padding(8.dp)
+                        )
+                        Text(
+                            "Add Photo", fontSize = 30.sp,
+                            modifier = Modifier
+                                .clickable {
+                                    navController.navigate("add photo") // Navigasi ke About Us
+                                    showMenu = false
+                                }
                                 .padding(8.dp)
                         )
                         Text(
@@ -123,18 +138,6 @@ fun ReusableDrawer(navController: NavController) {
                                     navController.navigate("about") // Navigasi ke About Us
                                     showMenu = false
                                 }
-                                .padding(8.dp)
-                        )
-                        Text(
-                            "Settings", fontSize = 30.sp,
-                            modifier = Modifier
-                                .clickable { /* Tambahkan navigasi ke Settings */ }
-                                .padding(8.dp)
-                        )
-                        Text(
-                            "Profile", fontSize = 30.sp,
-                            modifier = Modifier
-                                .clickable { /* Tambahkan navigasi ke Profile */ }
                                 .padding(8.dp)
                         )
                     }
@@ -153,6 +156,8 @@ fun MainApp() {
     NavHost(navController = navController, startDestination = "home") {
         composable("home") { ReusableDrawer(navController) }
         composable("about") { AboutUsPage() }
+        composable("gallery") { SelectPhotos() }
+        composable("add photo") { PhotoActivity() }
         composable("homepage") {
             HomeScreen(
                 context = LocalContext.current as HomeActivity, // Cast context menjadi HomeActivity
