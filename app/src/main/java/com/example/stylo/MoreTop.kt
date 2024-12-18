@@ -40,13 +40,13 @@ class MoreTopActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MoreTopScreen(navController = rememberNavController())
+            MoreTopScreen()
         }
     }
 }
 
 @Composable
-fun MoreTopScreen(navController : NavController) {
+fun MoreTopScreen() {
     val clothingData = remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }
     val coroutineScope = rememberCoroutineScope()
     val auth = FirebaseAuth.getInstance()
@@ -171,5 +171,5 @@ suspend fun retrieveClothingDataSuspend(userId: String): List<Map<String, Any>> 
 @Preview(showBackground = true)
 @Composable
 fun PreviewMoreTop() {
-    MoreTopScreen(navController = rememberNavController())
+    MoreTopScreen()
 }

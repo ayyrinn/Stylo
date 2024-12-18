@@ -1,6 +1,8 @@
 package com.example.stylo
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -61,25 +63,28 @@ fun StyloTopBar(onMenuClick: () -> Unit) {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReusableDrawer(navController: NavController) {
+fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavController to Context
     var showMenu by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // TopBar Tetap
+        // TopBar
         Column {
             StyloTopBar(onMenuClick = { showMenu = !showMenu })
         }
 
-        // Overlay ketika menu aktif
+        // Overlay when the menu is active
         if (showMenu) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.6f)) // Warna hitam transparan
-                    .clickable { showMenu = false } // Tutup menu jika overlay ditekan
+                    .background(Color.Black.copy(alpha = 0.6f))
+                    .clickable {
+                        showMenu = false
+                        onDismiss()
+                    }
             )
 
-            // Menu Samping dengan Animasi
+            // Side Menu with Animation
             AnimatedVisibility(
                 visible = showMenu,
                 enter = slideInHorizontally(initialOffsetX = { -it }) + fadeIn(),
@@ -99,15 +104,17 @@ fun ReusableDrawer(navController: NavController) {
                         Text(
                             "Profile", fontSize = 30.sp,
                             modifier = Modifier
-                                .clickable { /* Tambahkan navigasi ke Profile */ }
+                                .clickable { /* Navigate to Profile */ }
                                 .padding(8.dp)
                         )
                         Text(
                             "Gallery", fontSize = 30.sp,
                             modifier = Modifier
                                 .clickable {
-                                    navController.navigate("gallery") // Navigasi ke About Us
+                                    val intent = Intent(context, SelectPhotosActivity::class.java) // Use Intent to navigate
+                                    context.startActivity(intent)
                                     showMenu = false
+                                    onDismiss()
                                 }
                                 .padding(8.dp)
                         )
@@ -115,7 +122,8 @@ fun ReusableDrawer(navController: NavController) {
                             "Add Photo", fontSize = 30.sp,
                             modifier = Modifier
                                 .clickable {
-                                    navController.navigate("add photo") // Navigasi ke About Us
+                                    val intent = Intent(context, AddPhotoActivity::class.java) // Use Intent to navigate
+                                    context.startActivity(intent)
                                     showMenu = false
                                 }
                                 .padding(8.dp)
@@ -124,7 +132,8 @@ fun ReusableDrawer(navController: NavController) {
                             "About Us", fontSize = 30.sp,
                             modifier = Modifier
                                 .clickable {
-                                    navController.navigate("about") // Navigasi ke About Us
+                                    val intent = Intent(context, AboutUsActivity::class.java) // Use Intent to navigate
+                                    context.startActivity(intent)
                                     showMenu = false
                                 }
                                 .padding(8.dp)
@@ -140,19 +149,10 @@ fun ReusableDrawer(navController: NavController) {
 // Fungsi Utama Aplikasi Stylo dengan Navigasi
 @Composable
 fun MainApp() {
-    val navController = rememberNavController()
+    val context = LocalContext.current // Get the current context
 
-    NavHost(navController = navController, startDestination = "home") {
-        composable("home") { ReusableDrawer(navController) }
-        composable("about") { AboutUsPage() }
-        composable("gallery") { MoreTopScreen(navController) }
-        composable("add photo") { PhotoActivity() }
-        composable("homepage") {
-            HomeScreen(
-                context = LocalContext.current as HomeActivity, // Cast context menjadi HomeActivity
-                navController = navController
-            )
-        }
+    Box(modifier = Modifier.fillMaxSize()) {
+        ReusableDrawer(context = context, onDismiss = {}) // Pass the context to ReusableDrawer
     }
 }
 

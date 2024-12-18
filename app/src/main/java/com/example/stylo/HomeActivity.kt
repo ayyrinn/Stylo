@@ -15,6 +15,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
@@ -43,377 +47,376 @@ class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navController = rememberNavController()
-            HomeScreen(context = this, navController = navController)
+            HomeScreen(context = this)
         }
     }
 }
 
 @Composable
-fun HomeScreen(context: HomeActivity, navController: NavController) {
-
+fun HomeScreen(context: HomeActivity) {
+    var showMenu by remember { mutableStateOf(false) }
     // Accept the context as a parameter
 //    val scrollState = rememberScrollState()
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState()),
-//            .verticalScroll(state = scrollState),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-
-    ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ){
-        ReusableDrawer(navController = rememberNavController())
-    }
-
-//        c {
-//            Image(
-//                painter = painterResource(id = R.drawable.burger_icon),
-//                contentDescription = "Burger Icon",
-//                modifier = Modifier
-//                    .size(50.dp)
-//                    .fillMaxSize()
-//                    .clickable { }
-//                    .padding(top = 10.dp)
-//            )
-//            Spacer(modifier = Modifier.weight(1f))
-//            Text(
-//                text = "Stylo",
-//                fontSize = 45.sp,
-//                color = Color(0xFF776B5D),
-//                fontFamily = miamaFontFamily,
-//                modifier = Modifier
-//                    .padding(end = 35.dp)
-//            )
-//            Spacer(modifier = Modifier.weight(1f))
-//        }
-
-
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Main content
         Column(
-
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .paint(
-                    painter = painterResource(id = R.drawable.home_img_1),
-                )
-        ) {
-
-            Column(
-                modifier = Modifier
-                    .padding(top = 200.dp)
-            ) {
-                Text(
-                    text = "SAY WHO\nYOU ARE WITHOUT\nSPEAKING",
-                    modifier = Modifier
-                        .padding(top = 100.dp)
-                        .fillMaxWidth(), // Adjust this to align text horizontally to the center
-                    fontSize = 30.sp,
-                    color = Color.White,
-                    textAlign = TextAlign.Center,
-                    fontFamily = cormorantFontFamily
-                )
-                Spacer(modifier = Modifier.height(100.dp))
-                Button(
-                    onClick = {
-                        val intent = Intent(context, AddPhotoActivity::class.java)
-                        context.startActivity(intent)
-                    },
-                    modifier = Modifier
-                        .padding(top = 50.dp) // Margin atas 50 dp
-                        .width(300.dp)        // Lebar tombol
-                        .height(50.dp)
-                        .align(Alignment.CenterHorizontally),          // Tinggi tombol
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFB0A695) // Warna background tombol
-                    )
-                ) {
-                    Text(
-                        text = "Discover your Style",
-                        color = Color.Black, // Warna teks tombol
-                        fontSize = 16.sp,
-                        fontFamily = TenorSansRegular
-                    )
-                }
-
-            }
-        }
-
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
-                .paint(
-                    painter = painterResource(id = R.drawable.home_img_2),
-                )
-        ){
-            Column(
-                horizontalAlignment = Alignment.End,
-                modifier = Modifier
-                    .fillMaxWidth()
-                ) {
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                        .height(70.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Absolute.Right
-                ){
-                    Text(
-                        text = "Your ",
-                        fontSize = 30.sp,
-                        color = Color.White,
-                        fontFamily = cormorantFontFamily
-                    )
-                    Text(
-                        text = "clothes",
-                        fontSize = 60.sp,
-                        color = Color.White,
-                        fontFamily = miamaFontFamily
-                    )
-                }
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                        .height(35.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Absolute.Right
-                ){
-                    Text(
-                        text = "Should",
-                        fontSize = 30.sp,
-                        color = Color.White,
-                        fontFamily = cormorantFontFamily
-                    )
-                }
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                        .height(35.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Absolute.Right
-                ){
-                    Text(
-                        text = "be an extension",
-                        fontSize = 30.sp,
-                        color = Color.White,
-                        fontFamily = cormorantFontFamily
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                        .height(75.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Absolute.Right
-                ){
-                    Text(
-                        text = "of your ",
-                        fontSize = 30.sp,
-                        color = Color.White,
-                        fontFamily = cormorantFontFamily
-                    )
-                    Text(
-                        text = "personality",
-                        fontSize = 50.sp,
-                        color = Color.White,
-                        fontFamily = miamaFontFamily
-                    )
-                }
-
-
-            }
-
-                Spacer(modifier = Modifier.height(50.dp))
-
-
-            Column (
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ){
-                 Row(modifier = Modifier.fillMaxWidth(),
-                     horizontalArrangement = Arrangement.SpaceEvenly) {
-                     Image(
-                         painter = painterResource(id = R.drawable.card_img),
-                         contentDescription = "Camera Left",
-                         modifier = Modifier
-                             .width(130.dp)
-                             .height(160.dp)
-                     )
-                     Image(
-                         painter = painterResource(id = R.drawable.card_img),
-                         contentDescription = "Camera Left",
-                         modifier = Modifier
-                             .width(130.dp)
-                             .height(160.dp)
-                     )
-                 }
-                Row(modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly) {
-                    Image(
-                        painter = painterResource(id = R.drawable.card_img),
-                        contentDescription = "Camera Left",
-                        modifier = Modifier
-                            .width(130.dp)
-                            .height(160.dp)
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.card_img),
-                        contentDescription = "Camera Left",
-                        modifier = Modifier
-                            .width(130.dp)
-                            .height(160.dp)
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            Column(
-                horizontalAlignment = Alignment.End,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 30.dp)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .width(75.dp)
-                        .height(104.dp)
-                        .background(
-                            color = Color.Transparent
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.next_icon),
-                            contentDescription = "more button",
-                            modifier = Modifier
-                                .width(75.dp)
-                                .height(80.dp)
-                        )
-
-                        Text(
-                            text = "More",
-                            color = Color.White,               // Adjust text color
-                            fontSize = 24.sp,                  // Adjust text size
-                            fontFamily = tenorFontFamily
-
-                        )
-                    }
-                }
-            }
-        }
-
-
-        Column(
+                .verticalScroll(rememberScrollState()),
+            //            .verticalScroll(state = scrollState),
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .height(800.dp)
-                .paint(
-                    painter = painterResource(id = R.drawable.home_img_5),
-                )
+            verticalArrangement = Arrangement.Center
+
         ) {
+
+            //        c {
+            //            Image(
+            //                painter = painterResource(id = R.drawable.burger_icon),
+            //                contentDescription = "Burger Icon",
+            //                modifier = Modifier
+            //                    .size(50.dp)
+            //                    .fillMaxSize()
+            //                    .clickable { }
+            //                    .padding(top = 10.dp)
+            //            )
+            //            Spacer(modifier = Modifier.weight(1f))
+            //            Text(
+            //                text = "Stylo",
+            //                fontSize = 45.sp,
+            //                color = Color(0xFF776B5D),
+            //                fontFamily = miamaFontFamily,
+            //                modifier = Modifier
+            //                    .padding(end = 35.dp)
+            //            )
+            //            Spacer(modifier = Modifier.weight(1f))
+            //        }
+
+            StyloTopBar(onMenuClick = { showMenu = !showMenu })
             Column(
+
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 50.dp)
+                    .paint(
+                        painter = painterResource(id = R.drawable.home_img_1),
+                    )
             ) {
+
                 Column(
-                    horizontalAlignment = Alignment.Start,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
+                        .padding(top = 200.dp)
                 ) {
-                    Row {
-                        Text(
-                            text = "plan your",
-                            fontSize = 30.sp,
-                            color = Color.White,
-                            fontFamily = cormorantFontFamily
+                    Text(
+                        text = "SAY WHO\nYOU ARE WITHOUT\nSPEAKING",
+                        modifier = Modifier
+                            .padding(top = 100.dp)
+                            .fillMaxWidth(), // Adjust this to align text horizontally to the center
+                        fontSize = 30.sp,
+                        color = Color.White,
+                        textAlign = TextAlign.Center,
+                        fontFamily = cormorantFontFamily
+                    )
+                    Spacer(modifier = Modifier.height(100.dp))
+                    Button(
+                        onClick = {
+                            val intent = Intent(context, AddPhotoActivity::class.java)
+                            context.startActivity(intent)
+                        },
+                        modifier = Modifier
+                            .padding(top = 50.dp) // Margin atas 50 dp
+                            .width(300.dp)        // Lebar tombol
+                            .height(50.dp)
+                            .align(Alignment.CenterHorizontally),          // Tinggi tombol
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFB0A695) // Warna background tombol
                         )
+                    ) {
                         Text(
-                            text = "Outfits",
-                            fontSize = 50.sp,
-                            color = Color.White,
-                            fontFamily = miamaFontFamily
+                            text = "Discover your Style",
+                            color = Color.Black, // Warna teks tombol
+                            fontSize = 16.sp,
+                            fontFamily = TenorSansRegular
                         )
                     }
+
                 }
+            }
+
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .paint(
+                        painter = painterResource(id = R.drawable.home_img_2),
+                    )
+            ) {
                 Column(
                     horizontalAlignment = Alignment.End,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
                 ) {
-                    Row {
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp)
+                            .height(70.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Absolute.Right
+                    ) {
                         Text(
-                            text = "slay your",
+                            text = "Your ",
                             fontSize = 30.sp,
                             color = Color.White,
                             fontFamily = cormorantFontFamily
                         )
                         Text(
-                            text = "Day",
+                            text = "clothes",
+                            fontSize = 60.sp,
+                            color = Color.White,
+                            fontFamily = miamaFontFamily
+                        )
+                    }
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp)
+                            .height(35.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Absolute.Right
+                    ) {
+                        Text(
+                            text = "Should",
+                            fontSize = 30.sp,
+                            color = Color.White,
+                            fontFamily = cormorantFontFamily
+                        )
+                    }
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp)
+                            .height(35.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Absolute.Right
+                    ) {
+                        Text(
+                            text = "be an extension",
+                            fontSize = 30.sp,
+                            color = Color.White,
+                            fontFamily = cormorantFontFamily
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp)
+                            .height(75.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Absolute.Right
+                    ) {
+                        Text(
+                            text = "of your ",
+                            fontSize = 30.sp,
+                            color = Color.White,
+                            fontFamily = cormorantFontFamily
+                        )
+                        Text(
+                            text = "personality",
                             fontSize = 50.sp,
                             color = Color.White,
                             fontFamily = miamaFontFamily
                         )
                     }
 
+
+                }
+
+                Spacer(modifier = Modifier.height(50.dp))
+
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceEvenly,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.card_img),
+                            contentDescription = "Camera Left",
+                            modifier = Modifier
+                                .width(130.dp)
+                                .height(160.dp)
+                        )
+                        Image(
+                            painter = painterResource(id = R.drawable.card_img),
+                            contentDescription = "Camera Left",
+                            modifier = Modifier
+                                .width(130.dp)
+                                .height(160.dp)
+                        )
+                    }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.card_img),
+                            contentDescription = "Camera Left",
+                            modifier = Modifier
+                                .width(130.dp)
+                                .height(160.dp)
+                        )
+                        Image(
+                            painter = painterResource(id = R.drawable.card_img),
+                            contentDescription = "Camera Left",
+                            modifier = Modifier
+                                .width(130.dp)
+                                .height(160.dp)
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                Column(
+                    horizontalAlignment = Alignment.End,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 30.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .width(75.dp)
+                            .height(104.dp)
+                            .background(
+                                color = Color.Transparent
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.next_icon),
+                                contentDescription = "more button",
+                                modifier = Modifier
+                                    .width(75.dp)
+                                    .height(80.dp)
+                            )
+
+                            Text(
+                                text = "More",
+                                color = Color.White,               // Adjust text color
+                                fontSize = 24.sp,                  // Adjust text size
+                                fontFamily = tenorFontFamily
+
+                            )
+                        }
+                    }
                 }
             }
 
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 5.dp)
+                    .height(800.dp)
+                    .paint(
+                        painter = painterResource(id = R.drawable.home_img_5),
+                    )
             ) {
-                Box(
-                    contentAlignment = Alignment.Center
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.todays_pick_frame),
-                        contentDescription = null,
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 50.dp)
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.Start,
                         modifier = Modifier
-                            .width(325.dp)
-                            .height(460.dp)
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.pick_image),
-                        contentDescription = "Today's pick",
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp)
+                    ) {
+                        Row {
+                            Text(
+                                text = "plan your",
+                                fontSize = 30.sp,
+                                color = Color.White,
+                                fontFamily = cormorantFontFamily
+                            )
+                            Text(
+                                text = "Outfits",
+                                fontSize = 50.sp,
+                                color = Color.White,
+                                fontFamily = miamaFontFamily
+                            )
+                        }
+                    }
+                    Column(
+                        horizontalAlignment = Alignment.End,
                         modifier = Modifier
-                            .width(300.dp)
-                            .height(400.dp)
-                            .padding(bottom = 45.dp)
-                    )
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp)
+                    ) {
+                        Row {
+                            Text(
+                                text = "slay your",
+                                fontSize = 30.sp,
+                                color = Color.White,
+                                fontFamily = cormorantFontFamily
+                            )
+                            Text(
+                                text = "Day",
+                                fontSize = 50.sp,
+                                color = Color.White,
+                                fontFamily = miamaFontFamily
+                            )
+                        }
+
+                    }
                 }
 
-            }
 
-            Box(
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 5.dp)
+                ) {
+                    Box(
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.todays_pick_frame),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .width(325.dp)
+                                .height(460.dp)
+                        )
+                        Image(
+                            painter = painterResource(id = R.drawable.pick_image),
+                            contentDescription = "Today's pick",
+                            modifier = Modifier
+                                .width(300.dp)
+                                .height(400.dp)
+                                .padding(bottom = 45.dp)
+                        )
+                    }
+
+                }
+
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(85.dp)
@@ -445,6 +448,10 @@ fun HomeScreen(context: HomeActivity, navController: NavController) {
                 }
 
 
+            }
+        }
+        if (showMenu) {
+            ReusableDrawer(context = context, onDismiss = { showMenu = false })
         }
     }
 
@@ -454,5 +461,5 @@ fun HomeScreen(context: HomeActivity, navController: NavController) {
 @Composable
 fun PreviewHome() {
     // You can pass a dummy context or remove context-related code in previews
-    HomeScreen(context = HomeActivity(), navController = rememberNavController()) // Just for preview, may not work directly
+    HomeScreen(context = HomeActivity()) // Just for preview, may not work directly
 }

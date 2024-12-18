@@ -1,4 +1,8 @@
 package com.example.stylo
+import android.content.Intent
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,19 +27,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import com.example.stylo.R
 import com.example.stylo.ui.theme.cormorantFontFamily
 import com.example.stylo.ui.theme.miamaFontFamily
 import com.example.stylo.ui.theme.tenorFontFamily
 
+class SelectPhotosActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            SelectPhotos()
+        }
+    }
+}
+
 @Composable
 fun SelectPhotos() {
-
+    val context = LocalContext.current
     //header stylo
     Column(
         modifier = Modifier
@@ -74,23 +89,13 @@ fun SelectPhotos() {
         Spacer(modifier = Modifier.height(30.dp))
 
         Text(
-            text = "CHOOSE YOUR\nCOLLECTIONS",
+            text = "GALLERY",
             color = Color.Black,
             fontSize = 28.sp,
             fontFamily = tenorFontFamily,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(start = 15.dp)
         )
-        Spacer(modifier = Modifier.height(50.dp))
-
-        Text(
-            text = "TOP",
-            color = Color(0xFF776B5D),
-            fontSize = 20.sp,
-            fontFamily = tenorFontFamily,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(start = 15.dp)
-        )
         Spacer(modifier = Modifier.height(25.dp))
 
 
@@ -102,50 +107,61 @@ fun SelectPhotos() {
             // Left Button
             Box(
                 modifier = Modifier
-                    .clickable {  }
+                    .clickable {
+                        val intent = Intent(context, MoreTopActivity::class.java)
+                        context.startActivity(intent)
+                    }
                     .width(155.dp)
                     .height(215.dp)
-                    .background(Color.Transparent, shape = RectangleShape) // Adjust shape if needed
+                    .background(Color.Transparent, shape = RectangleShape)
             ) {
-                Column (
+                Image(
+                    painter = painterResource(id = R.drawable.foto_jas),
+                    contentDescription = "Camera Left",
                     modifier = Modifier
                         .fillMaxWidth()
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Left",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(185.dp)
-                            .clip(RoundedCornerShape(40.dp))
-                    )
-
-                }
-
+                        .height(185.dp)
+                        .clip(RoundedCornerShape(40.dp))
+                        .align(Alignment.Center)
+                )
+                Text(
+                    text = "TOP",
+                    color = Color(0xFF776B5D),
+                    fontSize = 20.sp,
+                    fontFamily = tenorFontFamily,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(top = 10.dp)
+                )
             }
-
 
             Box(
                 modifier = Modifier
-                    .clickable {  }
+                    .clickable { }
                     .width(155.dp)
                     .height(215.dp)
-                    .background(Color.Transparent, shape = RectangleShape) // Adjust shape if needed
+                    .background(Color.Transparent, shape = RectangleShape)
             ) {
-                Column (
+                Image(
+                    painter = painterResource(id = R.drawable.foto_jas),
+                    contentDescription = "Camera Left",
                     modifier = Modifier
                         .fillMaxWidth()
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Right",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(185.dp)
-                            .clip(RoundedCornerShape(40.dp))
-                    )
-
-                }
+                        .height(185.dp)
+                        .clip(RoundedCornerShape(40.dp))
+                        .align(Alignment.Center)
+                )
+                Text(
+                    text = "BOTTOM",
+                    color = Color(0xFF776B5D),
+                    fontSize = 20.sp,
+                    fontFamily = tenorFontFamily,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(top = 10.dp)
+                )
             }
         }
         Row(modifier = Modifier
@@ -156,417 +172,61 @@ fun SelectPhotos() {
             // Left Button
             Box(
                 modifier = Modifier
-                    .clickable {  }
+                    .clickable { }
                     .width(155.dp)
                     .height(215.dp)
-                    .background(Color.Transparent, shape = RectangleShape) // Adjust shape if needed
+                    .background(Color.Transparent, shape = RectangleShape)
             ) {
-                Column (
+                Image(
+                    painter = painterResource(id = R.drawable.foto_jas),
+                    contentDescription = "Camera Left",
                     modifier = Modifier
                         .fillMaxWidth()
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Left",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(185.dp)
-                            .clip(RoundedCornerShape(40.dp))
-                    )
-
-                }
-
+                        .height(185.dp)
+                        .clip(RoundedCornerShape(40.dp))
+                        .align(Alignment.Center)
+                )
+                Text(
+                    text = "FOOTWEAR",
+                    color = Color(0xFF776B5D),
+                    fontSize = 20.sp,
+                    fontFamily = tenorFontFamily,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(top = 10.dp)
+                )
             }
 
 
             Box(
                 modifier = Modifier
-                    .clickable {  }
+                    .clickable { }
                     .width(155.dp)
                     .height(215.dp)
-                    .background(Color.Transparent, shape = RectangleShape) // Adjust shape if needed
+                    .background(Color.Transparent, shape = RectangleShape)
             ) {
-                Column (
+                Image(
+                    painter = painterResource(id = R.drawable.foto_jas),
+                    contentDescription = "Camera Left",
                     modifier = Modifier
                         .fillMaxWidth()
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Right",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(185.dp)
-                            .clip(RoundedCornerShape(40.dp))
-                    )
-
-                }
+                        .height(185.dp)
+                        .clip(RoundedCornerShape(40.dp))
+                        .align(Alignment.Center)
+                )
+                Text(
+                    text = "ACCESORIES",
+                    color = Color(0xFF776B5D),
+                    fontSize = 20.sp,
+                    fontFamily = tenorFontFamily,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(top = 10.dp)
+                )
             }
         }
-
-        Spacer(modifier = Modifier.height(50.dp))
-
-        Text(
-            text = "BOTTOM",
-            color = Color(0xFF776B5D),
-            fontSize = 20.sp,
-            fontFamily = tenorFontFamily,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(start = 15.dp)
-        )
-        Spacer(modifier = Modifier.height(25.dp))
-
-
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 1.dp),
-            horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally), // Centers and spaces items
-            verticalAlignment = Alignment.CenterVertically){
-            // Left Button
-            Box(
-                modifier = Modifier
-                    .clickable {  }
-                    .width(155.dp)
-                    .height(215.dp)
-                    .background(Color.Transparent, shape = RectangleShape) // Adjust shape if needed
-            ) {
-                Column (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Left",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(185.dp)
-                            .clip(RoundedCornerShape(40.dp))
-                    )
-
-                }
-
-            }
-
-
-            Box(
-                modifier = Modifier
-                    .clickable {  }
-                    .width(155.dp)
-                    .height(215.dp)
-                    .background(Color.Transparent, shape = RectangleShape) // Adjust shape if needed
-            ) {
-                Column (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Right",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(185.dp)
-                    )
-
-                }
-            }
-        }
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 1.dp),
-            horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally), // Centers and spaces items
-            verticalAlignment = Alignment.CenterVertically){
-            // Left Button
-            Box(
-                modifier = Modifier
-                    .clickable {  }
-                    .width(155.dp)
-                    .height(215.dp)
-                    .background(Color.Transparent, shape = RectangleShape) // Adjust shape if needed
-            ) {
-                Column (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Left",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(185.dp)
-                            .clip(RoundedCornerShape(40.dp))
-                    )
-
-                }
-
-            }
-
-
-            Box(
-                modifier = Modifier
-                    .clickable {  }
-                    .width(155.dp)
-                    .height(215.dp)
-                    .background(Color.Transparent, shape = RectangleShape) // Adjust shape if needed
-            ) {
-                Column (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Right",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(185.dp)
-                            .clip(RoundedCornerShape(40.dp))
-                    )
-
-                }
-            }
-        }
-        Spacer(modifier = Modifier.height(50.dp))
-
-        Text(
-            text = "ACCESSORIES",
-            color = Color(0xFF776B5D),
-            fontSize = 20.sp,
-            fontFamily = tenorFontFamily,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(start = 15.dp)
-        )
-        Spacer(modifier = Modifier.height(25.dp))
-
-
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 1.dp),
-            horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally), // Centers and spaces items
-            verticalAlignment = Alignment.CenterVertically){
-            // Left Button
-            Box(
-                modifier = Modifier
-                    .clickable {  }
-                    .width(155.dp)
-                    .height(215.dp)
-                    .background(Color.Transparent, shape = RectangleShape) // Adjust shape if needed
-            ) {
-                Column (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Left",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(185.dp)
-                            .clip(RoundedCornerShape(40.dp))
-                    )
-
-                }
-
-            }
-
-
-            Box(
-                modifier = Modifier
-                    .clickable {  }
-                    .width(155.dp)
-                    .height(215.dp)
-                    .background(Color.Transparent, shape = RectangleShape) // Adjust shape if needed
-            ) {
-                Column (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Right",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(185.dp)
-                            .clip(RoundedCornerShape(40.dp))
-                    )
-
-                }
-            }
-        }
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 1.dp),
-            horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally), // Centers and spaces items
-            verticalAlignment = Alignment.CenterVertically){
-            // Left Button
-            Box(
-                modifier = Modifier
-                    .clickable {  }
-                    .width(155.dp)
-                    .height(215.dp)
-                    .background(Color.Transparent, shape = RectangleShape) // Adjust shape if needed
-            ) {
-                Column (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Left",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(185.dp)
-                            .clip(RoundedCornerShape(40.dp))
-                    )
-
-                }
-
-            }
-
-
-            Box(
-                modifier = Modifier
-                    .clickable {  }
-                    .width(155.dp)
-                    .height(215.dp)
-                    .background(Color.Transparent, shape = RectangleShape) // Adjust shape if needed
-            ) {
-                Column (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Right",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(185.dp)
-                            .clip(RoundedCornerShape(40.dp))
-                    )
-
-                }
-            }
-        }
-        Spacer(modifier = Modifier.height(50.dp))
-
-        Text(
-            text = "FOOTWEAR",
-            color = Color(0xFF776B5D),
-            fontSize = 20.sp,
-            fontFamily = tenorFontFamily,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(start = 15.dp)
-        )
-        Spacer(modifier = Modifier.height(25.dp))
-
-
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 1.dp),
-            horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally), // Centers and spaces items
-            verticalAlignment = Alignment.CenterVertically){
-            // Left Button
-            Box(
-                modifier = Modifier
-                    .clickable {  }
-                    .width(155.dp)
-                    .height(215.dp)
-                    .background(Color.Transparent, shape = RectangleShape) // Adjust shape if needed
-            ) {
-                Column (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Left",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(185.dp)
-                            .clip(RoundedCornerShape(40.dp))
-                    )
-
-                }
-
-            }
-
-
-            Box(
-                modifier = Modifier
-                    .clickable {  }
-                    .width(155.dp)
-                    .height(215.dp)
-                    .background(Color.Transparent, shape = RectangleShape) // Adjust shape if needed
-            ) {
-                Column (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Right",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(185.dp)
-                            .clip(RoundedCornerShape(40.dp))
-                    )
-
-                }
-            }
-        }
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 1.dp),
-            horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally), // Centers and spaces items
-            verticalAlignment = Alignment.CenterVertically){
-            // Left Button
-            Box(
-                modifier = Modifier
-                    .clickable {  }
-                    .width(155.dp)
-                    .height(215.dp)
-                    .background(Color.Transparent, shape = RectangleShape) // Adjust shape if needed
-            ) {
-                Column (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Left",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(185.dp)
-                            .clip(RoundedCornerShape(40.dp))
-                    )
-
-                }
-
-            }
-
-
-            Box(
-                modifier = Modifier
-                    .clickable {  }
-                    .width(155.dp)
-                    .height(215.dp)
-                    .background(Color.Transparent, shape = RectangleShape) // Adjust shape if needed
-            ) {
-                Column (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Right",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(185.dp)
-                            .clip(RoundedCornerShape(40.dp))
-                    )
-
-                }
-            }
-        }
-
-
     }
 }
 

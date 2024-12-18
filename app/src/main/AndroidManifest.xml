@@ -28,6 +28,7 @@
             android:exported="false" />
         <activity android:name=".AddPhotoActivity" />
         <activity android:name=".MoreTopActivity" />
+        <activity android:name=".SelectPhotosActivity" />
         <activity android:name=".AboutUsActivity" />
         <activity android:name=".RemoveBackgroundActivity" />
         <activity android:name=".AIGenerateActivity" />
