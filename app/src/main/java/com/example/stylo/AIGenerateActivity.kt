@@ -1,5 +1,6 @@
 package com.example.stylo
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -56,6 +57,8 @@ import com.example.stylo.ui.theme.miamaFontFamily
 import com.example.stylo.ui.theme.tenorFontFamily
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonNull.content
@@ -87,8 +90,24 @@ class AIGenerateActivity : ComponentActivity() {
 fun AIGeneratePhotos(imageUri: String?) {
     val context = LocalContext.current
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
-    var response by remember { mutableStateOf("") } // State to store the response
+    var response by remember { mutableStateOf("") }// State to store the response
+    var displayResponse by remember { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
+    var saveResponse by remember { mutableStateOf<List<String>>(emptyList()) }
+
+
+    if (response != ""){
+        println("original string: " + response)
+
+        saveResponse = response.split("split")
+
+        println("desc: " + saveResponse[0])
+        println("category: " + saveResponse[1])
+        println("type: " + saveResponse[2])
+
+        displayResponse = saveResponse[0] + "\n" + saveResponse[1] + "\n" + saveResponse[2]
+
+    }
 
 
     // Load the image using Glide
@@ -157,7 +176,7 @@ fun AIGeneratePhotos(imageUri: String?) {
         )
 
         Text(
-            text = response,
+            text = displayResponse,
             fontSize = 20.sp,
             textAlign = TextAlign.Center,
             fontFamily = tenorFontFamily,
@@ -174,6 +193,8 @@ fun AIGeneratePhotos(imageUri: String?) {
 
         Button(
             onClick = {
+                databaseSave("test", saveResponse[0], saveResponse[1], saveResponse[2])
+
                 // Simpan hasil ke SharedPreferences
                 val sharedPreferences = context.getSharedPreferences("stylo_prefs", Context.MODE_PRIVATE)
                 sharedPreferences.edit().putString("saved_result", response).apply()
@@ -221,6 +242,29 @@ suspend fun visionModelCall(context: Context, imageData: Bitmap): String? {
     }
 
     return generativeModel.generateContent(inputContent).text
+}
+
+fun databaseSave(user: String, description: String, category: String, type: String) {
+    val db = Firebase.firestore
+
+    // Create a new thing ig
+    val clothing = hashMapOf(
+        "userID" to user,
+        "description" to description,
+        "category" to category,
+        "type" to type
+    )
+
+// Add a new document with a generated ID
+    println("adding to database")
+    db.collection("clothes")
+        .add(clothing)
+        .addOnSuccessListener { documentReference ->
+            Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+        }
+        .addOnFailureListener { e ->
+            Log.w(TAG, "Error adding document", e)
+        }
 }
 
 @GlideModule
