@@ -1,5 +1,6 @@
 package com.example.stylo
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,6 +13,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,6 +44,15 @@ class AIPhotosActivity : ComponentActivity() {
 
 @Composable
 fun AIPhotosScreen() {
+    var top by remember { mutableStateOf<Bitmap?>(null) } //ini buat gambar yg ditunjukkin di screennya
+    var bottom by remember { mutableStateOf<Bitmap?>(null) }
+    var footwear by remember { mutableStateOf<Bitmap?>(null) }
+    var accessories by remember { mutableStateOf<Bitmap?>(null) }
+
+
+
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -172,7 +186,7 @@ fun AIPhotosScreen() {
                             verticalAlignment = Alignment.CenterVertically
                         ){
                             Text(
-                                text = "Top",
+                                text = "Bottom",
                                 color = Color.Black,
                                 fontFamily = cormorantFontFamily,
                                 modifier = Modifier.align(Alignment.CenterVertically)
@@ -229,7 +243,7 @@ fun AIPhotosScreen() {
                             verticalAlignment = Alignment.CenterVertically
                         ){
                             Text(
-                                text = "Top",
+                                text = "Footwear",
                                 color = Color.Black,
                                 fontFamily = cormorantFontFamily,
                                 modifier = Modifier.align(Alignment.CenterVertically)
@@ -279,7 +293,7 @@ fun AIPhotosScreen() {
                             verticalAlignment = Alignment.CenterVertically
                         ){
                             Text(
-                                text = "Top",
+                                text = "Accessories",
                                 color = Color.Black,
                                 fontFamily = cormorantFontFamily,
                                 modifier = Modifier.align(Alignment.CenterVertically)
