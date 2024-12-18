@@ -225,7 +225,7 @@ fun ProfileScreen() {
                         ),
                         keyboardActions = KeyboardActions(
                             onDone = {
-                                // Aksi jika tombol "Done" ditekan
+                                // Aksi jika tombol "Done" ditekann
                             }
                         ),
                         modifier = Modifier
