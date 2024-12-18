@@ -163,7 +163,7 @@ fun ImageCard(imageUrl: String, context: Context) {
                     println("pressed top")
                     context.startActivity(
                         Intent(context, AIPhotosActivity::class.java)
-                            .putExtra("", imageUrl)
+                            .putExtra("top_image_url", imageUrl)
                     )
                 }
                 .height(185.dp)

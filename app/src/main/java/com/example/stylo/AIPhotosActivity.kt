@@ -13,7 +13,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,6 +40,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumptech.glide.Glide
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.target.CustomTarget
 import com.example.stylo.ui.theme.cormorantFontFamily
 import com.example.stylo.ui.theme.miamaFontFamily
@@ -68,6 +72,7 @@ class AIPhotosActivity : ComponentActivity() {
 
 @Composable
 fun AIPhotosScreen(top_image_url: String) {
+    println("Initial: " + top_image_url)
     var top by remember { mutableStateOf<Bitmap?>(null) } //ini buat gambar yg ditunjukkin di screennya
     var bottom by remember { mutableStateOf<Bitmap?>(null) }
     var footwear by remember { mutableStateOf<Bitmap?>(null) }
@@ -84,6 +89,7 @@ fun AIPhotosScreen(top_image_url: String) {
     var recsResponse by remember { mutableStateOf("") } // State to store the response
 
     if(top_image_url != "") {
+        println("should be filled: " + top_image_url)
         LaunchedEffect(top_image_url) {
             top_image_url?.let {
                 val retrievedData = retrieveDataSuspend(it, top_image_url)
@@ -123,6 +129,7 @@ fun AIPhotosScreen(top_image_url: String) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .background(color = Color(0xFFF3EEEA)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
@@ -524,4 +531,11 @@ suspend fun generateRecs(context: Context, clothingData: String): String? {
     }
 
     return generativeModel.generateContent(inputContent).text
+}
+
+
+@GlideModule
+class AIPhotosGlideModule : AppGlideModule() {
+    // Leave this empty for now
+    //what is this for?
 }
