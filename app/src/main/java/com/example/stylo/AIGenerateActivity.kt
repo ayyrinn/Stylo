@@ -152,7 +152,8 @@ fun AIGeneratePhotos(imageUri: String?) {
         Text(
             text = "RESULT:",
             fontSize = 20.sp,
-            fontFamily = tenorFontFamily
+            fontFamily = tenorFontFamily,
+            color = Color.Black
         )
 
         Text(
