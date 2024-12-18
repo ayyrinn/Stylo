@@ -110,11 +110,9 @@ fun AIPhotosScreen(imageUrl: String) {
                     accessoriesData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
                 }
 
-                println(clothingData.value)
             } ?: Log.e("MoreTopScreen", "User  is not logged in")
-        }
 
-        LaunchedEffect(imageUrl) {
+
             imageUrl?.let {
                 Glide.with(context)
                     .asBitmap()
@@ -345,7 +343,7 @@ fun AIPhotosScreen(imageUrl: String) {
                             .fillMaxWidth()
                             .clickable {
                                 context.startActivity(
-                                    Intent(context, MoreTopActivity::class.java)
+                                    Intent(context, MoreBottomActivity::class.java)
                                 )
                             }
                             .height(185.dp)
@@ -419,7 +417,7 @@ fun AIPhotosScreen(imageUrl: String) {
                             .fillMaxWidth()
                             .clickable {
                                 context.startActivity(
-                                    Intent(context, MoreTopActivity::class.java)
+                                    Intent(context, MoreFootwearActivity::class.java)
                                 )
                             }
                             .height(185.dp)
@@ -486,7 +484,7 @@ fun AIPhotosScreen(imageUrl: String) {
                             .fillMaxWidth()
                             .clickable {
                                 context.startActivity(
-                                    Intent(context, MoreTopActivity::class.java)
+                                    Intent(context, MoreAccessoriesActivity::class.java)
                                 )
                             }
                             .height(185.dp)
