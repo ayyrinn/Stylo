@@ -70,17 +70,6 @@ fun ReusableDrawer(navController: NavController) {
             StyloTopBar(onMenuClick = { showMenu = !showMenu })
         }
 
-        // Konten Utama
-//        Column(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .padding(top = 70.dp), // Offset agar top bar tidak tertutupi
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            verticalArrangement = Arrangement.Center
-//        ) {
-//            Text("Halaman Utama", fontSize = 24.sp)
-//        }
-
         // Overlay ketika menu aktif
         if (showMenu) {
             Box(
