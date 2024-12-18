@@ -33,6 +33,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -86,7 +87,9 @@ class AIGenerateActivity : ComponentActivity() {
 fun AIGeneratePhotos(imageUri: String?) {
     val context = LocalContext.current
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
-    var AIresponse by remember { mutableStateOf(" ") }
+    var response by remember { mutableStateOf("") } // State to store the response
+    val coroutineScope = rememberCoroutineScope()
+
 
     // Load the image using Glide
     LaunchedEffect(imageUri) {
@@ -122,7 +125,9 @@ fun AIGeneratePhotos(imageUri: String?) {
         } ?: Text("No image to display")
 
         Button(
-            onClick = { AIresponse = visionModelCall(context, bitmap) },
+            onClick = { coroutineScope.launch {
+                response = visionModelCall(context).toString() // Update the response state
+            } },
             modifier = Modifier
                 .padding(top = 16.dp)
                 .width(150.dp),
@@ -146,7 +151,7 @@ fun AIGeneratePhotos(imageUri: String?) {
         )
 
         Text(
-            text = AIresponse,
+            text = response,
             fontSize = 20.sp,
             textAlign = TextAlign.Center,
             fontFamily = tenorFontFamily,
@@ -168,13 +173,9 @@ fun PreviewAIGenerate() {
     AIGeneratePhotos(imageUri = null)
 }
 
-fun visionModelCall(context: Context, bitmap: Bitmap?): String {
-    // Ensure you handle the bitmap correctly
-    if (bitmap == null) {
-        return "No image provided"
-    }
-
-    var responseString = ""
+suspend fun visionModelCall(context: Context): String? {
+    val bitmap = AppCompatResources.getDrawable(context, R.drawable.foto_jas)?.toBitmap()
+    val imageData = bitmap!!
 
     val generativeModel = GenerativeModel(
         modelName = "gemini-1.5-pro",
@@ -182,18 +183,9 @@ fun visionModelCall(context: Context, bitmap: Bitmap?): String {
     )
 
     val inputContent = content {
-        image(bitmap) // Use the bitmap directly
-        text("Give a good description on what clothing this is, including the color as the clothing's title. Specify which category this is among casual/semi-formal/formal/business casual/smart casual/athleisure/evening wear/cocktail/loungewear/sportswear/other. And specify a tag according if this is a top/bottom/footwear/accessories. write your answer down as Clothing:... Category:... Tag:..., the answer for clothing should be a sentence while category and tag should be a few words")
+        image(imageData)
+        text("Give a somewhat detailed description on what clothing this is, including the color as the clothing's title. Specify which category this is among casual/semi-formal/formal/business casual/smart casual/athleisure/evening wear/cocktail/loungewear/sportswear/other. And specify a tag according if this is a top/bottom/footwear/accessories. write your answer down as (description)split(category)split(type). the answer for clothing should be a full sentence, while the answer for category and tag should be a few words, note that one clothing can be in multiple categories, seperate them with /")
     }
 
-    MainScope().launch {
-        val response = generativeModel.generateContent(inputContent)
-        responseString = response.toString()
-    }
-
-    // Wait for the response
-    while (responseString.isEmpty()) {
-        Thread.sleep( 1_000)
-    }
-    return responseString
+    return generativeModel.generateContent(inputContent).text
 }

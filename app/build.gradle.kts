@@ -84,5 +84,10 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.8.3")
     implementation(libs.kotlinx.serialization.json)
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
-
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.google.ai.client.generativeai:generativeai:0.7.0")
+    implementation("io.coil-kt:coil:2.2.2")
+    implementation("io.coil-kt:coil-compose:2.2.2")
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
 }
