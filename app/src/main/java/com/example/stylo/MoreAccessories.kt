@@ -125,7 +125,7 @@ fun MoreAccessoriesScreen() {
                         ) {
                             // Display the image if the URL is not null
                             imageUrl?.let {
-                                ImageCard(imageUrl = it)
+                                ImageCard(imageUrl = it, context)
                             }
                         }
                     }
