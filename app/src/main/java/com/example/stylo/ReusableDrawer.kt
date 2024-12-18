@@ -145,7 +145,7 @@ fun MainApp() {
     NavHost(navController = navController, startDestination = "home") {
         composable("home") { ReusableDrawer(navController) }
         composable("about") { AboutUsPage() }
-        composable("gallery") { SelectPhotos() }
+        composable("gallery") { MoreTopScreen(navController) }
         composable("add photo") { PhotoActivity() }
         composable("homepage") {
             HomeScreen(

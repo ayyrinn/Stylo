@@ -1,6 +1,7 @@
 package com.example.stylo
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -11,6 +12,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,21 +24,44 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberImagePainter
 import com.example.stylo.ui.theme.cormorantFontFamily
 import com.example.stylo.ui.theme.miamaFontFamily
 import com.example.stylo.ui.theme.tenorFontFamily
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class MoreTopActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MoreTopScreen()
+            MoreTopScreen(navController = rememberNavController())
         }
     }
 }
 
 @Composable
-fun MoreTopScreen() {
+fun MoreTopScreen(navController : NavController) {
+    val clothingData = remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }
+    val coroutineScope = rememberCoroutineScope()
+    val auth = FirebaseAuth.getInstance()
+    val userId = auth.currentUser ?.uid // Get the current user's ID
+
+    // Use LaunchedEffect to launch the coroutine
+    LaunchedEffect(userId) {
+        userId?.let {
+            val retrievedData = retrieveClothingDataSuspend(it)
+            clothingData.value = retrievedData // Update the state with retrieved data
+            println(clothingData.value)
+        } ?: Log.e("MoreTopScreen", "User  is not logged in")
+    }
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -82,21 +110,18 @@ fun MoreTopScreen() {
             contentPadding = PaddingValues(10.dp)
         ) {
             // Duplikat 10x item gambar kanan kiri
-            items(20) { _ ->
+            items(clothingData.value.size) { index ->
+                val clothingItem = clothingData.value[index]
+                val imageUrl = clothingItem["imageurl"] as? String // Assuming the image URL is stored under "imageurl"
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    // Kiri
-                    TopImageCard(
-                        imageResId = R.drawable.foto_jas,
-                        title = "JUDUL"
-                    )
-                    // Kanan
-                    TopImageCard(
-                        imageResId = R.drawable.foto_jas,
-                        title = "JUDUL"
-                    )
+                    // Display the image if the URL is not null
+                    imageUrl?.let {
+                        TopImageCard(imageUrl = it)
+                    }
                 }
             }
         }
@@ -104,7 +129,7 @@ fun MoreTopScreen() {
 }
 
 @Composable
-fun TopImageCard(imageResId: Int, title: String) {
+fun TopImageCard(imageUrl: String) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -112,25 +137,39 @@ fun TopImageCard(imageResId: Int, title: String) {
             .clickable { }
     ) {
         Image(
-            painter = painterResource(id = imageResId),
-            contentDescription = title,
+            painter = rememberImagePainter(imageUrl),
+            contentDescription = "Clothing Item",
             modifier = Modifier
                 .fillMaxWidth()
                 .height(185.dp)
                 .background(Color.Gray, shape = RoundedCornerShape(8.dp)),
             contentScale = ContentScale.Crop
         )
-        Text(
-            text = title,
-            color = Color.White,
-            fontFamily = cormorantFontFamily,
-            modifier = Modifier.padding(top = 5.dp)
-        )
+    }
+}
+
+suspend fun retrieveClothingDataSuspend(userId: String): List<Map<String, Any>> {
+    val db = Firebase.firestore
+    val clothingList = mutableListOf<Map<String, Any>>()
+
+    return try {
+        val result = db.collection("clothes")
+            .whereEqualTo("userID", userId)
+            .whereEqualTo("type", "top")
+            .get()
+            .await() // Await the result using Kotlin Coroutines
+        for (document in result) {
+            clothingList.add(document.data)
+        }
+        clothingList
+    } catch (e: Exception) {
+        Log.w("FirebaseError", "Error retrieving documents", e)
+        emptyList()
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewMoreTop() {
-    MoreTopScreen()
+    MoreTopScreen(navController = rememberNavController())
 }

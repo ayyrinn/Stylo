@@ -2,6 +2,7 @@ package com.example.stylo
 
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -58,6 +59,7 @@ import com.example.stylo.ui.theme.tenorFontFamily
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -143,7 +145,7 @@ fun AIGeneratePhotos(imageUri: String?) {
             Image(
                 bitmap = it.asImageBitmap(),
                 contentDescription = "Processed Image",
-                modifier = Modifier.size(362.dp, 529.dp)
+                modifier = Modifier.size(362.dp, 362.dp)
             )
         } ?: Text("No image to display")
 
@@ -193,15 +195,24 @@ fun AIGeneratePhotos(imageUri: String?) {
 
         Button(
             onClick = {
-                databaseSave("test", saveResponse[0], saveResponse[1], saveResponse[2])
+                // Check if the user is logged in
+                val auth = FirebaseAuth.getInstance()
+                if (auth.currentUser  == null) {
+                    // User is not logged in, handle accordingly (e.g., show a login screen)
+                    Log.e(TAG, "User  is not logged in")
+                    // Optionally, you can show a message to the user
+                } else {
+                    // Proceed with saving data
+                    databaseSave(saveResponse[0], saveResponse[1], saveResponse[2], imageUri)
 
-                // Simpan hasil ke SharedPreferences
-                val sharedPreferences = context.getSharedPreferences("stylo_prefs", Context.MODE_PRIVATE)
-                sharedPreferences.edit().putString("saved_result", response).apply()
+                    // Save the result to SharedPreferences
+                    val sharedPreferences = context.getSharedPreferences("stylo_prefs", Context.MODE_PRIVATE)
+                    sharedPreferences.edit().putString("saved_result", response).apply()
 
-                // Navigasi ke halaman berikutnya
-//                val intent = Intent(context, NextActivity::class.java)
-//                context.startActivity(intent)
+                    // Navigate to the next activity if needed
+                     val intent = Intent(context, HomeActivity::class.java)
+                     context.startActivity(intent)
+                }
             },
             modifier = Modifier
                 .padding(top = 16.dp)
@@ -244,15 +255,18 @@ suspend fun visionModelCall(context: Context, imageData: Bitmap): String? {
     return generativeModel.generateContent(inputContent).text
 }
 
-fun databaseSave(user: String, description: String, category: String, type: String) {
+fun databaseSave(description: String, category: String, type: String, imageUri: String?) {
     val db = Firebase.firestore
+    val auth = FirebaseAuth.getInstance()
+    val userId = auth.currentUser ?.uid ?: "unknown_user"
 
     // Create a new thing ig
     val clothing = hashMapOf(
-        "userID" to user,
+        "userID" to userId,
         "description" to description,
         "category" to category,
-        "type" to type
+        "type" to type,
+        "imageurl" to imageUri
     )
 
 // Add a new document with a generated ID
