@@ -1,5 +1,6 @@
 package com.example.stylo
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,22 +12,18 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,81 +59,72 @@ fun MoreTopScreen() {
     // Use LaunchedEffect to launch the coroutine
     LaunchedEffect(userId) {
         userId?.let {
-            val tops = retrieveClothingDataSuspend(it, "top")
-            clothingData.value = tops // Update the state with retrieved data
+            val retrievedData = retrieveClothingDataSuspend(it)
+            clothingData.value = retrievedData // Update the state with retrieved data
             println(clothingData.value)
         } ?: Log.e("MoreTopScreen", "User  is not logged in")
     }
 
-    var showMenu by remember { mutableStateOf(false) }
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = Color.Black),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // Top Bar
-            StyloTopBar(onMenuClick = { showMenu = !showMenu })
 
-            // Main Content
-            Text(
-                text = "TOP",
-                fontSize = 40.sp, // Ukuran font sesuai kebutuhan
-                color = Color.White, // Warna font putih
-                fontFamily = tenorFontFamily, // Font keluarga sesuai desain
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.Black),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Header
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            Image(
+                painter = painterResource(id = R.drawable.burger_icon),
+                contentDescription = "Burger Icon",
                 modifier = Modifier
-                    .padding(vertical = 8.dp)
+                    .size(50.dp)
+                    .fillMaxSize()
+                    .clickable { }
+                    .padding(top = 10.dp)
+                // .padding(start = 160.dp, top = 16.dp)
             )
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                text = "Stylo",
+                fontSize = 45.sp,
+                color = Color(0xFF776B5D),
+                fontFamily = miamaFontFamily,
+                //textAlign = TextAlign.Center,
+                modifier = Modifier.padding(end = 35.dp),
+            )
+            Spacer(modifier = Modifier.weight(1f))
+        }
 
-            // Check if clothing data is empty
-            if (clothingData.value.isEmpty()) {
-                // Display message and button
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = "You don't have this collection yet.",
-                        color = Color.White,
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Button(
-                        onClick = {
-                            // Navigate to AddPhotoActivity
-                            val intent = Intent(context, AddPhotoActivity::class.java)
-                            context.startActivity(intent)
-                        },
-                        modifier = Modifier.padding(top = 8.dp)
-                    ) {
-                        Text(text = "Add New Collection")
-                    }
-                }
-            } else {
-                // LazyColumn for scrollable content
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                    contentPadding = PaddingValues(10.dp)
-                ) {
-                    items(clothingData.value.size) { index ->
-                        val clothingItem = clothingData.value[index]
-                        val imageUrl = clothingItem["imageurl"] as? String // Assuming the image URL is stored under "imageurl"
+        Spacer(modifier = Modifier.height(10.dp))
+        Text(
+            text = "TOP",
+            fontSize = 40.sp, // Ukuran font sesuai kebutuhan
+            color = Color.White, // Warna font putih
+            fontFamily = tenorFontFamily, // Font keluarga sesuai desain
+            modifier = Modifier
+                .padding(vertical = 8.dp)
+        )
 
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            // Display the image if the URL is not null
-                            imageUrl?.let {
-                                ImageCard(imageUrl = it)
-                            }
-                        }
+
+        // LazyColumn untuk scrollable konten
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            contentPadding = PaddingValues(10.dp)
+        ) {
+            // Duplikat 10x item gambar kanan kiri
+            items(clothingData.value.size) { index ->
+                val clothingItem = clothingData.value[index]
+                val imageUrl = clothingItem["imageurl"] as? String // Assuming the image URL is stored under "imageurl"
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    // Display the image if the URL is not null
+                    imageUrl?.let {
+                        TopImageCard(imageUrl = it, context)
                     }
                 }
             }
@@ -145,7 +133,7 @@ fun MoreTopScreen() {
 }
 
 @Composable
-fun ImageCard(imageUrl: String) {
+fun TopImageCard(imageUrl: String, context: Context) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -157,6 +145,13 @@ fun ImageCard(imageUrl: String) {
             contentDescription = "Clothing Item",
             modifier = Modifier
                 .fillMaxWidth()
+                .clickable {
+                    println("pressed top")
+                    context.startActivity(
+                        Intent(context, RemoveBackgroundActivity::class.java)
+                            .putExtra("top_image_url", imageUrl)
+                    )
+                }
                 .height(185.dp)
                 .background(Color.Gray, shape = RoundedCornerShape(8.dp)),
             contentScale = ContentScale.Crop
@@ -164,14 +159,14 @@ fun ImageCard(imageUrl: String) {
     }
 }
 
-suspend fun retrieveClothingDataSuspend(userId: String, type: String): List<Map<String, Any>> {
+suspend fun retrieveClothingDataSuspend(userId: String): List<Map<String, Any>> {
     val db = Firebase.firestore
     val clothingList = mutableListOf<Map<String, Any>>()
 
     return try {
         val result = db.collection("clothes")
             .whereEqualTo("userID", userId)
-            .whereEqualTo("type", type)
+            .whereEqualTo("type", "top")
             .get()
             .await() // Await the result using Kotlin Coroutines
         for (document in result) {
