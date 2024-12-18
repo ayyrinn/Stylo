@@ -1,107 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/backround_login_register"
     tools:context=".MainActivity2">
 
-    <!--    begron-->
-
-    <!--logo stylo di atas-->
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/backround_login_register" />
-
+    <!-- Logo atau header di atas -->
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/logoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="6dp"
         android:fontFamily="@font/miama"
         android:text="Stylo"
         android:textColor="@color/white"
-        android:textSize="55sp" />
+        android:textSize="55sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/signUpTitle"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <!--tulisan sign up di atas field-->
     <TextView
+        android:id="@+id/signUpTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/cormorantunicase_medium"
         android:text="SIGN UP"
-        android:layout_marginTop="230dp"
-        android:layout_marginStart="30dp"
-        android:fontFamily="@font/cormorantunicase_medium"
+        android:textColor="@color/white"
         android:textSize="50sp"
-        android:textColor="@color/white"
-        />
+        app:layout_constraintTop_toBottomOf="@id/logoText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
 
-    <!--    text field email-->
+    <!-- Text field Email -->
     <com.google.android.material.textfield.MaterialAutoCompleteTextView
-        android:layout_width="350dp"
-        android:layout_height="38dp"
-        android:scaleType="centerInside"
-        android:background="@drawable/text_field"
-        android:layout_marginTop="290dp"
-        android:layout_centerHorizontal="true"
-        android:hint="  Email"
-        android:textColorHint="@color/black"
         android:id="@+id/emailField"
-        />
-
-    <!--    text field phone number-->
-    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-        android:layout_width="350dp"
-        android:layout_height="38dp"
-        android:scaleType="centerInside"
-        android:background="@drawable/text_field"
-        android:layout_marginTop="340dp"
-        android:layout_centerHorizontal="true"
-        android:hint="  Phone Number"
-        android:textColorHint="@color/black"
-        android:id="@+id/phoneNumField"
-        />
-
-    <!--    text field pass-->
-    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-        android:layout_width="350dp"
-        android:layout_height="38dp"
-        android:scaleType="centerInside"
-        android:background="@drawable/text_field"
-        android:layout_marginTop="390dp"
-        android:layout_centerHorizontal="true"
-        android:hint="  Password"
-        android:textColorHint="@color/black"
-        android:id="@+id/passField"
-        />
-
-    <!--    text field confirm pass-->
-    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-        android:layout_width="350dp"
-        android:layout_height="38dp"
-        android:scaleType="centerInside"
-        android:background="@drawable/text_field"
-        android:layout_marginTop="440dp"
-        android:layout_centerHorizontal="true"
-        android:hint="  Confirm Password"
-        android:textColorHint="@color/black"
-        android:id="@+id/confirmPassField"
-        />
-
-    <!--    sign in(up) button-->
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="360dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="530dp"
-        android:layout_centerHorizontal="true"
+        android:background="@drawable/text_field"
+        android:hint="Email"
         android:fontFamily="@font/cormorantunicase_medium"
-        android:text="Sign up"
+        android:paddingStart="16dp"
+        android:textColorHint="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/signUpTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9"
+        android:layout_marginTop="24dp" />
+
+    <!-- Text field Phone Number -->
+    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+        android:id="@+id/phoneNumField"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:background="@drawable/text_field"
+        android:hint="Phone Number"
+        android:fontFamily="@font/cormorantunicase_medium"
+        android:paddingStart="16dp"
+        android:textColorHint="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/emailField"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9"
+        android:layout_marginTop="16dp" />
+
+    <!-- Text field Password -->
+    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+        android:id="@+id/passField"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:background="@drawable/text_field"
+        android:hint="Password"
+        android:fontFamily="@font/cormorantunicase_medium"
+        android:paddingStart="16dp"
+        android:textColorHint="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/phoneNumField"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9"
+        android:layout_marginTop="16dp" />
+
+    <!-- Text field Confirm Password -->
+    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+        android:id="@+id/confirmPassField"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:background="@drawable/text_field"
+        android:hint="Confirm Password"
+        android:fontFamily="@font/cormorantunicase_medium"
+        android:paddingStart="16dp"
+        android:textColorHint="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/passField"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9"
+        android:layout_marginTop="16dp" />
+
+    <!-- Sign Up Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signUpButton"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
         android:background="@drawable/login_button"
-        android:textSize="20sp"
+        android:text="Sign up"
+        android:fontFamily="@font/cormorantunicase_medium"
         android:textColor="@color/white"
-        />
+        android:textSize="20sp"
+        android:elevation="4dp"
+        app:layout_constraintTop_toBottomOf="@id/confirmPassField"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9"
+        android:layout_marginTop="24dp" />
+
+    <!-- Teks OR -->
 
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/textOr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/cormorantunicase_medium"
+        android:text="OR"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signUpButton" />
+
+    <!-- Sign Up with Google Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/SignInGoogle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="96dp"
+        android:fontFamily="@font/cormorantunicase_medium"
+        android:text="Sign Up with Google"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:backgroundTint="@color/white"
+        app:icon="@drawable/googlelogo"
+        app:iconGravity="start"
+        app:iconPadding="4dp"
+        app:iconSize="20dp"
+        app:iconTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.9" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

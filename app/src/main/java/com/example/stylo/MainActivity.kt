@@ -1,5 +1,7 @@
 package com.example.stylo
 
+//import AppNavigation
+import ProfileScreen
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -8,7 +10,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import android.widget.Button as WidgetButton
 import com.example.stylo.ui.theme.StyloTheme
 import com.google.firebase.auth.FirebaseAuth
+
 
 class MainActivity : ComponentActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
@@ -48,4 +53,8 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+
 }
+
+

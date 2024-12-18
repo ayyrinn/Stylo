@@ -29,9 +29,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.stylo.ui.theme.cormorantFontFamily
 import com.example.stylo.ui.theme.miamaFontFamily
 import com.example.stylo.ui.theme.tenorFontFamily
+import com.example.stylo.ReusableDrawer
+
 
 
 
@@ -39,13 +43,16 @@ class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            HomeScreen(context = this) // Pass the context to HomeScreen
+            val navController = rememberNavController()
+            HomeScreen(context = this, navController = navController)
         }
     }
 }
 
 @Composable
-fun HomeScreen(context: HomeActivity) { // Accept the context as a parameter
+fun HomeScreen(context: HomeActivity, navController: NavController) {
+
+    // Accept the context as a parameter
 //    val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -56,36 +63,38 @@ fun HomeScreen(context: HomeActivity) { // Accept the context as a parameter
         verticalArrangement = Arrangement.Center
 
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFFF3EEEA)), // Menambahkan latar belakang dengan warna F3EEEA
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.burger_icon),
-                contentDescription = "Burger Icon",
-                modifier = Modifier
-                    .size(50.dp)
-                    .fillMaxSize()
-                    .clickable { }
-                    .padding(top = 10.dp)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = "Stylo",
-                fontSize = 45.sp,
-                color = Color(0xFF776B5D),
-                fontFamily = miamaFontFamily,
-                modifier = Modifier
-                    .padding(end = 35.dp)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-        }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ){
+        ReusableDrawer(navController = rememberNavController())
+    }
 
+//        c {
+//            Image(
+//                painter = painterResource(id = R.drawable.burger_icon),
+//                contentDescription = "Burger Icon",
+//                modifier = Modifier
+//                    .size(50.dp)
+//                    .fillMaxSize()
+//                    .clickable { }
+//                    .padding(top = 10.dp)
+//            )
+//            Spacer(modifier = Modifier.weight(1f))
+//            Text(
+//                text = "Stylo",
+//                fontSize = 45.sp,
+//                color = Color(0xFF776B5D),
+//                fontFamily = miamaFontFamily,
+//                modifier = Modifier
+//                    .padding(end = 35.dp)
+//            )
+//            Spacer(modifier = Modifier.weight(1f))
+//        }
 
 
         Column(
+
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .paint(
@@ -445,5 +454,5 @@ fun HomeScreen(context: HomeActivity) { // Accept the context as a parameter
 @Composable
 fun PreviewHome() {
     // You can pass a dummy context or remove context-related code in previews
-    HomeScreen(context = HomeActivity()) // Just for preview, may not work directly
+    HomeScreen(context = HomeActivity(), navController = rememberNavController()) // Just for preview, may not work directly
 }
