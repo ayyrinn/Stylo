@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.transition.Transition
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.content.res.AppCompatResources
@@ -46,6 +47,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
 import com.bumptech.glide.Glide
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.target.CustomTarget
 import com.example.stylo.ui.theme.StyloTheme
 import com.example.stylo.ui.theme.miamaFontFamily
@@ -62,18 +65,15 @@ class AIGenerateActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         // Retrieve the filename from SharedPreferences
-        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        val imageFileName = sharedPreferences.getString("imageFileName", null)
+        val imageUriString = intent.getStringExtra("imageUri")
+        val imageUri = Uri.parse(imageUriString)
 
-        // Construct the Firebase Storage URL
-        val imageUri = imageFileName?.let {
-            "https://firebasestorage.googleapis.com/v0/b/YOUR_PROJECT_ID.appspot.com/o/$it?alt=media"
-        }
+        Log.d("AIGenerateActivity", "Image URL: $imageUri")
         setContent {
             StyloTheme {
                 // Use Surface to define background color
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    AIGeneratePhotos(imageUri = imageUri)
+                    AIGeneratePhotos(imageUri = imageUri.toString())
                 }
             }
         }
@@ -101,6 +101,10 @@ fun AIGeneratePhotos(imageUri: String?) {
 
                     override fun onLoadCleared(placeholder: Drawable?) {
                         // Handle cleanup if needed
+                    }
+
+                    override fun onLoadFailed(errorDrawable: Drawable?) {
+                        Log.e("AIGeneratePhotos", "Image load failed: ${errorDrawable?.toString()}")
                     }
                 })
         }
@@ -165,7 +169,7 @@ fun AIGeneratePhotos(imageUri: String?) {
 @Composable
 fun PreviewAIGenerate() {
     // You can pass a dummy context or remove context-related code in previews
-    AIGeneratePhotos(imageUri = null)
+    AIGeneratePhotos(imageUri = "https://firebasestorage.googleapis.com/v0/b/stylo-a5e01.appspot.com/o/images%2F22885c5c-608e-4594-9e94-c067215e6939.png?alt=media&token=ffb03c47-df08-47ab-bdd8-6443f5da36dc")
 }
 
 fun visionModelCall(context: Context, bitmap: Bitmap?): String {
@@ -196,4 +200,9 @@ fun visionModelCall(context: Context, bitmap: Bitmap?): String {
         Thread.sleep( 1_000)
     }
     return responseString
+}
+
+@GlideModule
+class MyAppGlideModule : AppGlideModule() {
+    // Leave this empty for now
 }

@@ -89,7 +89,7 @@ class RemoveBackgroundActivity : ComponentActivity() {
                     // Save the filename or download URL to SharedPreferences
                     val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
                     with(sharedPreferences.edit()) {
-                        putString("imageFileName", fileName) // Save the filename
+                        putString("imageDownloadUrl", downloadUri.toString()) // Save the filename
                         apply()
                     }
                     navigateToAIGeneratePhotos(downloadUri)
@@ -100,9 +100,9 @@ class RemoveBackgroundActivity : ComponentActivity() {
             }
     }
 
-    private fun navigateToAIGeneratePhotos(imageUri: Uri) {
+    private fun navigateToAIGeneratePhotos(downloadUri: Uri) {
         val intent = Intent(this, AIGenerateActivity::class.java)
-        intent.putExtra("imageUri", imageUri.toString())
+        intent.putExtra("imageUri", downloadUri.toString())
         startActivity(intent)
     }
 }
