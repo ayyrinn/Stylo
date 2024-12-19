@@ -49,6 +49,7 @@ import com.example.stylo.ui.theme.tenorFontFamily
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.launch
@@ -68,13 +69,15 @@ class AIPhotosActivity : ComponentActivity() {
 @Composable
 fun AIPhotosScreen(imageUrl: String) {
     Log.d("check", "here")
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val auth = FirebaseAuth.getInstance()
+    val userId = auth.currentUser?.uid // Get the current user's ID
 
     var top by remember { mutableStateOf<Bitmap?>(null) } //ini buat gambar yg ditunjukkin di screennya
     var bottom by remember { mutableStateOf<Bitmap?>(null) }
     var footwear by remember { mutableStateOf<Bitmap?>(null) }
     var accessories by remember { mutableStateOf<Bitmap?>(null) }
-    val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
 
     var topData by remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }//buat deskripsi baju" yg dipilih user
     var bottomData by remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }
@@ -85,6 +88,11 @@ fun AIPhotosScreen(imageUrl: String) {
     var recsResponse by remember { mutableStateOf("") } // State to store the response
 
     var typeData by remember { mutableStateOf("") } // State to store the response
+
+    var clothingData by remember { mutableStateOf("") }
+
+    var wardrobeData by remember { mutableStateOf("") }
+//    val clothingData = listOfNotNull(top, bottom, footwear, accessories)
 
 
     if(imageUrl != ""){
@@ -162,51 +170,23 @@ fun AIPhotosScreen(imageUrl: String) {
                         "accessories" -> accessories = bitmap
                     }
                 }
+
+                if (typeData.equals("top", ignoreCase = true)){
+                    topData = retrieveDataSuspend(imageUrl) // Update the state with retrieved data
+                } else if (typeData.equals("bottom", ignoreCase = true)){
+                    bottomData = retrieveDataSuspend(imageUrl) // Update the state with retrieved data
+                }else if (typeData.equals("footwear", ignoreCase = true)){
+                    footwearData = retrieveDataSuspend(imageUrl) // Update the state with retrieved data
+                }else if (typeData.equals("accessories", ignoreCase = true)){
+                    accessoriesData = retrieveDataSuspend(imageUrl) // Update the state with retrieved data
+                }
+
             }
         }
 
 
     }
 
-
-
-//    if(bottomImageUrl != "") {
-//        println("should be filled: " + bottomImageUrl)
-//        LaunchedEffect(bottomImageUrl) {
-//            bottomImageUrl?.let {
-//                val retrievedData = retrieveDataSuspend(it, bottomImageUrl)
-//                topData = retrievedData // Update the state with retrieved data
-//                println(clothingData.value)
-//            } ?: Log.e("MoreTopScreen", "User  is not logged in")
-//        }
-//
-//        LaunchedEffect(bottomImageUrl) {
-//            bottomImageUrl?.let {
-//                Glide.with(context)
-//                    .asBitmap()
-//                    .load(it)
-//                    .into(object : CustomTarget<Bitmap>() {
-//                        override fun onResourceReady(
-//                            resource: Bitmap,
-//                            transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
-//                        ) {
-//                            top = resource
-//                        }
-//
-//                        override fun onLoadCleared(placeholder: Drawable?) {
-//                            // Handle cleanup if needed
-//                        }
-//
-//                        override fun onLoadFailed(errorDrawable: Drawable?) {
-//                            Log.e(
-//                                "AIGeneratePhotos",
-//                                "Image load failed: ${errorDrawable?.toString()}"
-//                            )
-//                        }
-//                    })
-//            }
-//        }
-//    }
 
     Column(
         modifier = Modifier
@@ -599,8 +579,15 @@ fun AIPhotosScreen(imageUrl: String) {
                         .clickable {
                             coroutineScope.launch {
                                 // Combine clothing data for recommendations
-                                val clothingData = listOfNotNull(top, bottom, footwear, accessories)
-                                recsResponse = generateRecs(context, clothingData) ?: "No recommendations available."
+                                clothingData = (topData + bottomData + footwearData + accessoriesData).toString()
+
+                                //get all wardrobe data
+                                wardrobeData =
+                                    userId?.let { retrieveWardrobeSuspend(it)}.toString()
+                                Log.d("wardrobe data", wardrobeData)
+
+                                //get response
+                                recsResponse = generateRecs(context, clothingData, wardrobeData) ?: "No recommendations available."
                             }
                         }
                         .background(
@@ -648,14 +635,33 @@ private fun loadImage(imageUrl: String, context: Context, onImageLoaded: (Bitmap
         })
 }
 
-suspend fun retrieveDataSuspend(userId: String, image_url: String): List<Map<String, Any>> {
+suspend fun retrieveDataSuspend(image_url: String): List<Map<String, Any>> {
+    val db = Firebase.firestore
+    val clothingList = mutableListOf<Map<String, Any>>()
+
+    return try {
+        val result = db.collection("clothes")
+            .whereEqualTo("imageurl", image_url)
+
+            .get()
+            .await() // Await the result using Kotlin Coroutines
+        for (document in result) {
+            clothingList.add(document.data)
+        }
+        clothingList
+    } catch (e: Exception) {
+        Log.w("FirebaseError", "Error retrieving documents", e)
+        emptyList()
+    }
+}
+
+suspend fun retrieveWardrobeSuspend(userId: String): List<Map<String, Any>> {
     val db = Firebase.firestore
     val clothingList = mutableListOf<Map<String, Any>>()
 
     return try {
         val result = db.collection("clothes")
             .whereEqualTo("userID", userId)
-            .whereEqualTo("imageurl", image_url)
 
             .get()
             .await() // Await the result using Kotlin Coroutines
@@ -700,18 +706,19 @@ suspend fun retrieveTypeSuspend(imageUrl: String): String {
     }
 }
 
-suspend fun generateRecs(context: Context, clothingData: List<Bitmap?>): String? {
+suspend fun generateRecs(context: Context, clothingData: String, wardrobeData: String): String? {
     // Convert the clothing data to a string representation for logging
-    val clothingDataString = clothingData.joinToString(", ") { it?.toString() ?: "null" }
+//    val clothingDataString = clothingData.joinToString(", ") { it?.toString() ?: "null" }
 
     // Log the clothing data being sent
-    Log.d("AIPhotosActivity", "Clothing Data: $clothingDataString")
+    Log.d("AIPhotosActivity", "Clothing Data: $clothingData")
 
     // Construct the prompt
     val prompt = "I'm going to give you some outfit(s), ignore the userID, 'MutableState', and 'value'. " +
             "Give a recommendation on what I should style it with, or how I should style this. " +
             "If I gave more than one outfit, then give me suggestions on how to style them together. " +
-            "The outfits are as follows: $clothingDataString"
+            "The outfits are as follows: " + clothingData +
+            "If possible, make an outfit with these clothes: " + wardrobeData
 
     // Log the prompt being sent to the AI
     Log.d("AIPhotosActivity", "Prompt sent to AI: $prompt")
