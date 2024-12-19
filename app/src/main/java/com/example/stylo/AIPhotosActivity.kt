@@ -580,11 +580,12 @@ fun AIPhotosScreen(imageUrl: String) {
                             coroutineScope.launch {
                                 // Combine clothing data for recommendations
                                 clothingData = (topData + bottomData + footwearData + accessoriesData).toString()
-
+                                println("clothing data: " + clothingData)
                                 //get all wardrobe data
                                 wardrobeData =
                                     userId?.let { retrieveWardrobeSuspend(it)}.toString()
-                                Log.d("wardrobe data", wardrobeData)
+//                                Log.d("wardrobe data", wardrobeData)
+                                println("wardrobe data: " + wardrobeData)
 
                                 //get response
                                 recsResponse = generateRecs(context, clothingData, wardrobeData) ?: "No recommendations available."
@@ -714,12 +715,14 @@ suspend fun generateRecs(context: Context, clothingData: String, wardrobeData: S
     Log.d("AIPhotosActivity", "Clothing Data: $clothingData")
 
     // Construct the prompt
-    val prompt = "I'm going to give you some outfit(s), ignore the userID, 'MutableState', and 'value'. " +
-            "Give a recommendation on what I should style it with, or how I should style this. " +
-            "If I gave more than one outfit, then give me suggestions on how to style them together. " +
-            "The outfits are as follows: " + clothingData +
-            "If possible, make an outfit with these clothes: " + wardrobeData
+    val prompt = "I'm going to give you a piece of clothing I want to wear, ignore the userID, 'MutableState', and 'value'. " +
+            "Give a recommendation on what I should style it with, or how I should style it. " +
+            "The clothing I want to wear is as follows: " + clothingData +
+            "If possible, make an outfit with these clothes in my wardrobe: " + wardrobeData +
+            "But be sure to include the clothing I wanted to wear, which are the clothing I gave first."
 
+
+//    "If I gave more than one clothing, then give me suggestions on how to style them together. " +
     // Log the prompt being sent to the AI
     Log.d("AIPhotosActivity", "Prompt sent to AI: $prompt")
 
