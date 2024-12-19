@@ -49,6 +49,7 @@ import com.example.stylo.ui.theme.tenorFontFamily
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -56,14 +57,7 @@ import kotlinx.coroutines.tasks.await
 class AIPhotosActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val imageUrl: String
-
-
-        if (intent.getStringExtra("image_url").toString() != "" || intent.getStringExtra("image_url").toString() != null){
-            imageUrl = intent.getStringExtra("image_url").toString()
-        }else{
-            imageUrl = ""
-        }
+        val imageUrl: String = intent.getStringExtra("image_url") ?: ""
 
         setContent {
             AIPhotosScreen(imageUrl)
@@ -73,6 +67,8 @@ class AIPhotosActivity : ComponentActivity() {
 
 @Composable
 fun AIPhotosScreen(imageUrl: String) {
+    Log.d("check", "here")
+
     var top by remember { mutableStateOf<Bitmap?>(null) } //ini buat gambar yg ditunjukkin di screennya
     var bottom by remember { mutableStateOf<Bitmap?>(null) }
     var footwear by remember { mutableStateOf<Bitmap?>(null) }
@@ -85,73 +81,91 @@ fun AIPhotosScreen(imageUrl: String) {
     var footwearData by remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }
     var accessoriesData by remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }
 
-    val clothingData = remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }
+//    val clothingData = remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }
     var recsResponse by remember { mutableStateOf("") } // State to store the response
 
     var typeData by remember { mutableStateOf("") } // State to store the response
 
 
     if(imageUrl != ""){
+        Log.w("check", "there is image url")
+
+//        LaunchedEffect(imageUrl) {
+//            imageUrl?.let {
+//
+//                typeData = retrieveTypeSuspend(it, imageUrl).toString()
+//
+//                Log.w("type data", typeData)
+//
+//                if (typeData.equals("top", ignoreCase = true)){
+//                    topData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
+//                } else if (typeData.equals("bottom", ignoreCase = true)){
+//                    bottomData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
+//                }else if (typeData.equals("footwear", ignoreCase = true)){
+//                    footwearData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
+//                }else if (typeData.equals("accessories", ignoreCase = true)){
+//                    accessoriesData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
+//                }
+//
+//                println(clothingData.value)
+//
+//                Glide.with(context)
+//                    .asBitmap()
+//                    .load(it)
+//                    .into(object : CustomTarget<Bitmap>() {
+//                        override fun onResourceReady(
+//                            resource: Bitmap,
+//                            transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
+//                        ) {
+//                            if (typeData.equals("top", ignoreCase = true)) {
+//                                top = resource
+//                            }
+//
+//                            if (typeData.equals("bottom", ignoreCase = true)) {
+//                                bottom = resource
+//                            }
+//
+//                            if (typeData.equals("footwear", ignoreCase = true)) {
+//                                footwear = resource
+//                            }
+//
+//                            if (typeData.equals("accessories", ignoreCase = true)) {
+//                                accessories = resource
+//                            }
+//                        }
+//
+//                        override fun onLoadCleared(placeholder: Drawable?) {
+//                            // Handle cleanup if needed
+//                        }
+//
+//                        override fun onLoadFailed(errorDrawable: Drawable?) {
+//                            Log.e(
+//                                "AIGeneratePhotos",
+//                                "Image load failed: ${errorDrawable?.toString()}"
+//                            )
+//                        }
+//                    })
+//            } ?: Log.e("MoreTopScreen", "User  is not logged in")
+//
+//
+//
+//        }
+
         LaunchedEffect(imageUrl) {
-            imageUrl?.let {
-                if (typeData.equals("top", ignoreCase = true)){
-                    topData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
+            if (imageUrl.isNotEmpty()) {
+                typeData = retrieveTypeSuspend(imageUrl)
+                loadImage(imageUrl, context) { bitmap ->
+                    when (typeData.lowercase()) {
+                        "top" -> top = bitmap
+                        "bottom" -> bottom = bitmap
+                        "footwear" -> footwear = bitmap
+                        "accessories" -> accessories = bitmap
+                    }
                 }
-
-                if (typeData.equals("bottom", ignoreCase = true)){
-                    bottomData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
-                }
-
-                if (typeData.equals("footwear", ignoreCase = true)){
-                    footwearData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
-                }
-
-                if (typeData.equals("accessories", ignoreCase = true)){
-                    accessoriesData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
-                }
-
-            } ?: Log.e("MoreTopScreen", "User  is not logged in")
-
-
-            imageUrl?.let {
-                Glide.with(context)
-                    .asBitmap()
-                    .load(it)
-                    .into(object : CustomTarget<Bitmap>() {
-                        override fun onResourceReady(
-                            resource: Bitmap,
-                            transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
-                        ) {
-                            if (typeData.equals("top", ignoreCase = true)){
-                                top = resource
-                            }
-
-                            if (typeData.equals("bottom", ignoreCase = true)){
-                                bottom = resource
-                            }
-
-                            if (typeData.equals("footwear", ignoreCase = true)){
-                                footwear = resource
-                            }
-
-                            if (typeData.equals("accessories", ignoreCase = true)){
-                                accessories = resource
-                            }
-                        }
-
-                        override fun onLoadCleared(placeholder: Drawable?) {
-                            // Handle cleanup if needed
-                        }
-
-                        override fun onLoadFailed(errorDrawable: Drawable?) {
-                            Log.e(
-                                "AIGeneratePhotos",
-                                "Image load failed: ${errorDrawable?.toString()}"
-                            )
-                        }
-                    })
             }
         }
+
+
     }
 
 
@@ -294,7 +308,7 @@ fun AIPhotosScreen(imageUrl: String) {
                             verticalAlignment = Alignment.CenterVertically
                         ){
                             Text(
-                                text = "Top",
+                                text = typeData,
                                 color = Color.Black,
                                 fontFamily = cormorantFontFamily,
                                 modifier = Modifier.align(Alignment.CenterVertically)
@@ -332,7 +346,7 @@ fun AIPhotosScreen(imageUrl: String) {
                                 .size(362.dp, 362.dp)
                                 .clickable {
                                     context.startActivity(
-                                        Intent(context, MoreTopActivity::class.java)
+                                        Intent(context, MoreBottomActivity::class.java)
                                     )
                                 }
                         )
@@ -406,7 +420,7 @@ fun AIPhotosScreen(imageUrl: String) {
                                 .size(362.dp, 362.dp)
                                 .clickable {
                                     context.startActivity(
-                                        Intent(context, MoreTopActivity::class.java)
+                                        Intent(context, MoreFootwearActivity::class.java)
                                     )
                                 }
                         )
@@ -473,7 +487,7 @@ fun AIPhotosScreen(imageUrl: String) {
                                 .size(362.dp, 362.dp)
                                 .clickable {
                                     context.startActivity(
-                                        Intent(context, MoreTopActivity::class.java)
+                                        Intent(context, MoreAccessoriesActivity::class.java)
                                     )
                                 }
                         )
@@ -584,12 +598,9 @@ fun AIPhotosScreen(imageUrl: String) {
                         .height(50.dp)
                         .clickable {
                             coroutineScope.launch {
-
-                                clothingData.value = topData + bottomData + footwearData + accessoriesData // Update the state with retrieved data
-
-                                println("Retrieved Data: $clothingData")
-
-                                recsResponse = generateRecs(context, clothingData.toString()).toString() // Update the response state
+                                // Combine clothing data for recommendations
+                                val clothingData = listOfNotNull(top, bottom, footwear, accessories)
+                                recsResponse = generateRecs(context, clothingData) ?: "No recommendations available."
                             }
                         }
                         .background(
@@ -618,13 +629,32 @@ fun Previews(){
 
 }
 
+private fun loadImage(imageUrl: String, context: Context, onImageLoaded: (Bitmap) -> Unit) {
+    Glide.with(context)
+        .asBitmap()
+        .load(imageUrl)
+        .into(object : CustomTarget<Bitmap>() {
+            override fun onResourceReady(resource: Bitmap, transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?) {
+                onImageLoaded(resource)
+            }
+
+            override fun onLoadCleared(placeholder: Drawable?) {
+                // Handle cleanup if needed
+            }
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                Log.e("AIPhotosActivity", "Image load failed: ${errorDrawable?.toString()}")
+            }
+        })
+}
+
 suspend fun retrieveDataSuspend(userId: String, image_url: String): List<Map<String, Any>> {
     val db = Firebase.firestore
     val clothingList = mutableListOf<Map<String, Any>>()
 
     return try {
         val result = db.collection("clothes")
-            .whereEqualTo("type", "top")
+            .whereEqualTo("userID", userId)
             .whereEqualTo("imageurl", image_url)
 
             .get()
@@ -639,33 +669,60 @@ suspend fun retrieveDataSuspend(userId: String, image_url: String): List<Map<Str
     }
 }
 
-suspend fun retrieveTypeSuspend(userId: String, imageUrl: String): String {
-    val db = Firebase.firestore
-
+//suspend fun retrieveTypeSuspend(userId: String, imageUrl: String): Any {
+//    val db = Firebase.firestore
+//    return try {
+//        val result = db.collection("clothes")
+//            .whereEqualTo("userID", userId)
+//            .whereEqualTo("imageurl", imageUrl)
+//            .get()
+//            .await() // Await the result using Kotlin Coroutines
+//
+//        // Get the "type" field from the first matching document
+//        result.get("type") as String ?: "No type found"
+//    } catch (e: Exception) {
+//        Log.w("FirebaseError", "Error retrieving documents", e)
+//        "Error retrieving type"
+//    }
+//}
+suspend fun retrieveTypeSuspend(imageUrl: String): String {
+    val db = FirebaseFirestore.getInstance()
     return try {
         val result = db.collection("clothes")
-            .whereEqualTo("userID", userId)
             .whereEqualTo("imageurl", imageUrl)
             .get()
-            .await() // Await the result using Kotlin Coroutines
+            .await()
 
-        // Get the "type" field from the first matching document
         result.documents.firstOrNull()?.getString("type") ?: "No type found"
     } catch (e: Exception) {
-        Log.w("FirebaseError", "Error retrieving documents", e)
+        Log.w("FirebaseError", "Error retrieving type", e)
         "Error retrieving type"
     }
 }
 
-suspend fun generateRecs(context: Context, clothingData: String): String? {
-    println("generatee")
+suspend fun generateRecs(context: Context, clothingData: List<Bitmap?>): String? {
+    // Convert the clothing data to a string representation for logging
+    val clothingDataString = clothingData.joinToString(", ") { it?.toString() ?: "null" }
+
+    // Log the clothing data being sent
+    Log.d("AIPhotosActivity", "Clothing Data: $clothingDataString")
+
+    // Construct the prompt
+    val prompt = "I'm going to give you some outfit(s), ignore the userID, 'MutableState', and 'value'. " +
+            "Give a recommendation on what I should style it with, or how I should style this. " +
+            "If I gave more than one outfit, then give me suggestions on how to style them together. " +
+            "The outfits are as follows: $clothingDataString"
+
+    // Log the prompt being sent to the AI
+    Log.d("AIPhotosActivity", "Prompt sent to AI: $prompt")
+
     val generativeModel = GenerativeModel(
         modelName = "gemini-1.5-pro",
         apiKey = "AIzaSyCKO7-qQBXsmPWHTn6f2aUzLRlX4-U6mnM"
     )
 
     val inputContent = content {
-        text("I'm giong to give you some outfit(s), ignore the userID, 'MutableState', and 'value'. Give a recomendation on what I should style it with, or how I should style this. If I gave more than one outfit, then give me suggestions on how to style them together. The outfits are as follows: " + clothingData)
+        text(prompt)
     }
 
     return generativeModel.generateContent(inputContent).text
