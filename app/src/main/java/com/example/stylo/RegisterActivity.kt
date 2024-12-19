@@ -15,10 +15,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -26,11 +28,15 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.stylo.ui.theme.miamaFontFamily
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -124,11 +130,13 @@ class RegisterActivity : ComponentActivity() {
 
 @Composable
 fun RegisterScreen(onGoogleSignInClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Background image
+        Image(
+            painter = painterResource(id = R.drawable.backround_login_register),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize()
+        )
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -136,117 +144,143 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            // Background Image
-            Image(
-                painter = painterResource(id = R.drawable.backround_login_register), // Replace with your image resource
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1f)
-            )
 
             // Logo
-            Text(
-                text = "Stylo",
-                fontSize = 55.sp,
-                color = Color.White,
-                fontFamily = FontFamily.Default,
-                modifier = Modifier.padding(top = 32.dp)
-            )
-
-            // Title
-            Text(
-                text = "SIGN IN",
-                fontSize = 50.sp,
-                color = Color.White,
-                fontFamily = FontFamily.Default,
-                modifier = Modifier.padding(top = 16.dp)
-            )
-
-            // Email Field
-            TextField(
-                value = "",
-                onValueChange = {},
-                placeholder = { Text("Email") },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.LightGray,
-                    unfocusedContainerColor = Color.White
-                ),
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp)
-            )
-
-            // Password Field
-            TextField(
-                value = "",
-                onValueChange = {},
-                placeholder = { Text("Password") },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.LightGray,
-                    unfocusedContainerColor = Color.White
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp)
-            )
-
-            // Forgot Password
-            Text(
-                text = "Forgot Password?",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-
-            // Remember Me Checkbox
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(top = 16.dp)
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Checkbox(
-                    checked = false,
-                    onCheckedChange = {},
-                    colors = CheckboxDefaults.colors(checkedColor = Color.White)
-                )
+                // Logo Text
                 Text(
-                    text = "Remember Me",
+                    text = "Stylo",
+                    fontFamily = miamaFontFamily,
+                    fontSize = 55.sp,
                     color = Color.White,
-                    fontSize = 18.sp
+                    modifier = Modifier.padding(top = 16.dp)
                 )
-            }
 
-            // Log In Button
-            Button(
-                onClick = { /* Handle Log In */ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 24.dp)
-            ) {
+                // Forgot Password Text
                 Text(
-                    text = "Log In",
+                    text = "SIGN IN",
+                    fontFamily = TenorSansRegular,
+                    fontSize = 40.sp,
+                    fontWeight = FontWeight.Medium,
                     color = Color.White,
-                    fontSize = 20.sp
+                    modifier = Modifier
+                        .align(Alignment.Start)
+                        .padding(start = 30.dp, top = 150.dp)
                 )
-            }
 
-            // OR Text
-            Text(
-                text = "OR",
-                color = Color.White,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(top = 32.dp)
-            )
+                Spacer(modifier = Modifier.height(20.dp))
 
-            // Sign In with Google Button
-            Button(
-                onClick = onGoogleSignInClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 16.dp)
-            ) {
-                Text("Sign in with Google")
+                // Email Field
+                TextField(
+                    value = "",
+                    onValueChange = {},
+                    placeholder = { Text("Email") },
+                    modifier = Modifier
+                        .padding(top = 20.dp)
+                        .fillMaxWidth(0.9f)
+                        .height(48.dp)
+                        .clip(RoundedCornerShape(50.dp))
+                        .background(Color(0xB0A695).copy(alpha = 0.9f)),
+
+                )
+
+
+                // Password Field
+                TextField(
+                    value = "",
+                    onValueChange = {},
+                    placeholder = { Text("Password") },
+                    modifier = Modifier
+                        .padding(top = 20.dp)
+                        .fillMaxWidth(0.9f)
+                        .height(48.dp)
+                        .clip(RoundedCornerShape(50.dp))
+                        .background(Color(0xB0A695).copy(alpha = 0.9f)),
+                )
+
+                // Remember Me Checkbox
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 20.dp, end = 16.dp, top = 1.dp)
+                ) {
+                    Text(
+                    text = "Forgot Password?",
+                    color = Color.White,
+                    fontSize = 15.sp,
+                    fontFamily = TenorSansRegular,
+                    modifier = Modifier.padding(top = 1.dp)
+                    )
+                    Spacer(modifier = Modifier.width(45.dp))
+                    Checkbox(
+                        checked = false,
+                        onCheckedChange = {},
+                        colors = CheckboxDefaults.colors(checkedColor = Color.White)
+                    )
+
+                    Text(
+                        text = "Remember me",
+                        color = Color.White,
+                        fontFamily = TenorSansRegular,
+                        fontSize = 15.sp
+                    )
+                }
+                Spacer(modifier = Modifier.height(30.dp))
+
+                // Log In Button
+                Button(
+                    onClick = { /*TODO: Forgot Password action*/ },
+                    modifier = Modifier
+                        .fillMaxWidth(0.9f)
+                        .height(48.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFDD8560) // Warna tombol
+                    )
+                ) {
+                    Text(
+                        text = "Log In",
+                        color = Color.White,
+                        fontSize = 20.sp
+                    )
+                }
+
+
+                // OR Text
+                Text(
+                    text = "OR",
+                    color = Color.White,
+                    fontSize = 20.sp,
+                    fontFamily = TenorSansRegular, // Terapkan font Tenor Sans
+                    modifier = Modifier
+                        .padding(top = 15.dp, bottom = 15.dp)
+                )
+
+                // Sign In with Google Button
+                Button(
+                    onClick = { /*TODO: Forgot Password action*/ },
+                    modifier = Modifier
+                        .fillMaxWidth(0.9f)
+                        .height(48.dp),
+//                        .padding(top = 10.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFDD8560) // Warna tombol
+                    )
+                ){
+                    Text("Sign in with Google")
+                }
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewRegisterScreen() {
+    RegisterScreen(onGoogleSignInClick = {})
 }
