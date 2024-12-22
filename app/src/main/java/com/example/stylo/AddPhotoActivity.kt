@@ -64,6 +64,7 @@ class AddPhotoActivity : ComponentActivity() {
 
 @Composable
 fun PhotoActivity() {
+    var showMenu by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
@@ -222,28 +223,10 @@ fun PhotoActivity() {
 
 
     }
+    StyloTopBar(onMenuClick = { showMenu = !showMenu })
 
-    Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-        Image(
-            painter = painterResource(id = R.drawable.burger_icon),
-            contentDescription = "Burger Icon",
-            modifier = Modifier
-                .size(50.dp)
-                .fillMaxSize()
-                .clickable { }
-                .padding(top = 10.dp)
-            // .padding(start = 160.dp, top = 16.dp)
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        Text(text = "Stylo",
-            fontSize = 45.sp,
-            color = Color(0xFF776B5D),
-            fontFamily = miamaFontFamily,
-            //textAlign = TextAlign.Center,
-            modifier = Modifier.padding(end = 35.dp),
-
-        )
-        Spacer(modifier = Modifier.weight(1f))
+    if (showMenu) {
+        ReusableDrawer(context = context, onDismiss = { showMenu = false })
     }
 
     Column(

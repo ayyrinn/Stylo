@@ -267,6 +267,9 @@ fun ProfileScreens() {
             }
 
         }
+        if (showMenu) {
+        ReusableDrawer(context = context, onDismiss = { showMenu = false })
+    }
     }
 }
 

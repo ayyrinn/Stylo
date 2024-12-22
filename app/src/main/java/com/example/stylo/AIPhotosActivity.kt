@@ -73,6 +73,8 @@ fun AIPhotosScreen(imageUrl: String) {
     val coroutineScope = rememberCoroutineScope()
     val auth = FirebaseAuth.getInstance()
     val userId = auth.currentUser?.uid // Get the current user's ID
+    var showMenu by remember { mutableStateOf(false) }
+
 
     var top by remember { mutableStateOf<Bitmap?>(null) } //ini buat gambar yg ditunjukkin di screennya
     var bottom by remember { mutableStateOf<Bitmap?>(null) }
@@ -97,67 +99,6 @@ fun AIPhotosScreen(imageUrl: String) {
 
     if(imageUrl != ""){
         Log.w("check", "there is image url")
-
-//        LaunchedEffect(imageUrl) {
-//            imageUrl?.let {
-//
-//                typeData = retrieveTypeSuspend(it, imageUrl).toString()
-//
-//                Log.w("type data", typeData)
-//
-//                if (typeData.equals("top", ignoreCase = true)){
-//                    topData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
-//                } else if (typeData.equals("bottom", ignoreCase = true)){
-//                    bottomData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
-//                }else if (typeData.equals("footwear", ignoreCase = true)){
-//                    footwearData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
-//                }else if (typeData.equals("accessories", ignoreCase = true)){
-//                    accessoriesData = retrieveDataSuspend(it, imageUrl) // Update the state with retrieved data
-//                }
-//
-//                println(clothingData.value)
-//
-//                Glide.with(context)
-//                    .asBitmap()
-//                    .load(it)
-//                    .into(object : CustomTarget<Bitmap>() {
-//                        override fun onResourceReady(
-//                            resource: Bitmap,
-//                            transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
-//                        ) {
-//                            if (typeData.equals("top", ignoreCase = true)) {
-//                                top = resource
-//                            }
-//
-//                            if (typeData.equals("bottom", ignoreCase = true)) {
-//                                bottom = resource
-//                            }
-//
-//                            if (typeData.equals("footwear", ignoreCase = true)) {
-//                                footwear = resource
-//                            }
-//
-//                            if (typeData.equals("accessories", ignoreCase = true)) {
-//                                accessories = resource
-//                            }
-//                        }
-//
-//                        override fun onLoadCleared(placeholder: Drawable?) {
-//                            // Handle cleanup if needed
-//                        }
-//
-//                        override fun onLoadFailed(errorDrawable: Drawable?) {
-//                            Log.e(
-//                                "AIGeneratePhotos",
-//                                "Image load failed: ${errorDrawable?.toString()}"
-//                            )
-//                        }
-//                    })
-//            } ?: Log.e("MoreTopScreen", "User  is not logged in")
-//
-//
-//
-//        }
 
         LaunchedEffect(imageUrl) {
             if (imageUrl.isNotEmpty()) {
@@ -196,28 +137,9 @@ fun AIPhotosScreen(imageUrl: String) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Image(
-                painter = painterResource(id = R.drawable.burger_icon),
-                contentDescription = "Burger Icon",
-                modifier = Modifier
-                    .size(50.dp)
-                    .fillMaxSize()
-                    .clickable {  }
-                    .padding(top = 10.dp),
 
-                   // .padding(start = 160.dp, top = 16.dp)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Text(text = "Stylo",
-                fontSize = 45.sp,
-                color = Color(0xFF776B5D),
-                fontFamily = miamaFontFamily,
-                modifier = Modifier
-                    .padding(end = 35.dp)
-                )
-            Spacer(modifier = Modifier.weight(1f))
-        }
+        StyloTopBar(onMenuClick = { showMenu = !showMenu })
+
         
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -264,7 +186,7 @@ fun AIPhotosScreen(imageUrl: String) {
                         )
                     } ?: Image(
                         painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Left",
+                        contentDescription = "More top",
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
@@ -288,7 +210,7 @@ fun AIPhotosScreen(imageUrl: String) {
                             verticalAlignment = Alignment.CenterVertically
                         ){
                             Text(
-                                text = typeData,
+                                text = "Top",
                                 color = Color.Black,
                                 fontFamily = cormorantFontFamily,
                                 modifier = Modifier.align(Alignment.CenterVertically)
@@ -332,7 +254,7 @@ fun AIPhotosScreen(imageUrl: String) {
                         )
                     } ?: Image(
                         painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Left",
+                        contentDescription = "More bottom",
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
@@ -406,7 +328,7 @@ fun AIPhotosScreen(imageUrl: String) {
                         )
                     } ?: Image(
                         painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Left",
+                        contentDescription = "More footwear",
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
@@ -473,7 +395,7 @@ fun AIPhotosScreen(imageUrl: String) {
                         )
                     } ?: Image(
                         painter = painterResource(id = R.drawable.foto_jas),
-                        contentDescription = "Camera Left",
+                        contentDescription = "More accessories",
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
@@ -607,6 +529,9 @@ fun AIPhotosScreen(imageUrl: String) {
             }
         }
 
+    }
+    if (showMenu) {
+        ReusableDrawer(context = context, onDismiss = { showMenu = false })
     }
 }
 

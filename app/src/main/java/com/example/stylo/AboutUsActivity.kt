@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.stylo.ui.theme.miamaFontFamily
@@ -56,6 +57,8 @@ class AboutUsActivity : ComponentActivity() {
 @Composable
 fun AboutUsPage(){
     var showMenu by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
     Box(modifier = Modifier.fillMaxSize()) {
         // Main content
         Column(
@@ -137,6 +140,9 @@ fun AboutUsPage(){
 
             ContactInfo()
             CopyrightFooter()
+        }
+        if (showMenu) {
+            ReusableDrawer(context = context, onDismiss = { showMenu = false })
         }
     }
 }

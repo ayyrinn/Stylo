@@ -22,6 +22,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,6 +55,8 @@ class SelectPhotosActivity : ComponentActivity() {
 @Composable
 fun SelectPhotos() {
     val context = LocalContext.current
+    var showMenu by remember { mutableStateOf(false) }
+
     //header stylo
     Column(
         modifier = Modifier
@@ -62,29 +68,11 @@ fun SelectPhotos() {
         verticalArrangement = Arrangement.Top
     ) {
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Image(
-                painter = painterResource(id = R.drawable.burger_icon),
-                contentDescription = "Burger Icon",
-                modifier = Modifier
-                    .size(50.dp)
-                    .fillMaxSize()
-                    .clickable { }
-                    .padding(top = 10.dp),
+        StyloTopBar(onMenuClick = { showMenu = !showMenu })
 
-                )
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = "Stylo",
-                fontSize = 45.sp,
-                color = Color(0xFF776B5D),
-                fontFamily = miamaFontFamily,
-                modifier = Modifier
-                    .padding(end = 35.dp)
-            )
-            Spacer(modifier = Modifier.weight(1f))
 
-        }
+
+
 
         Spacer(modifier = Modifier.height(30.dp))
 
@@ -236,6 +224,9 @@ fun SelectPhotos() {
                 )
             }
         }
+    }
+    if (showMenu) {
+        ReusableDrawer(context = context, onDismiss = { showMenu = false })
     }
 }
 

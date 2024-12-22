@@ -102,6 +102,17 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                             .padding(16.dp)
                     ) {
                         Text(
+                            "Home", fontSize = 30.sp,
+                            modifier = Modifier
+                                .clickable {
+                                    val intent = Intent(context, HomeActivity::class.java) // Use Intent to navigate
+                                    context.startActivity(intent)
+                                    showMenu = false
+                                    onDismiss()
+                                }
+                                .padding(8.dp)
+                        )
+                        Text(
                             "Profile", fontSize = 30.sp,
                             modifier = Modifier
                                 .clickable {

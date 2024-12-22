@@ -143,6 +143,9 @@ fun MoreTopScreen() {
                 }
             }
         }
+        if (showMenu) {
+            ReusableDrawer(context = context, onDismiss = { showMenu = false })
+        }
     }
 }
 

@@ -130,6 +130,9 @@ fun MoreFootwearScreen() {
                 }
             }
         }
+        if (showMenu) {
+            ReusableDrawer(context = context, onDismiss = { showMenu = false })
+        }
     }
 }
 
