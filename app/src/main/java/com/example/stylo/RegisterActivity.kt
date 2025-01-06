@@ -26,6 +26,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,6 +51,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : ComponentActivity() {
     private lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -66,7 +71,10 @@ class RegisterActivity : ComponentActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         setContent {
-            RegisterScreen { signInGoogle() }
+            RegisterScreen(
+                onGoogleSignInClick = { signInGoogle() },
+                onLoginClick = { email, password -> loginUser (email, password) }
+            )
         }
     }
 
@@ -105,8 +113,9 @@ class RegisterActivity : ComponentActivity() {
                 // Sign-in success
                 val user = firebaseAuth.currentUser
                 if (user != null) {
-                    SavedPreference.setEmail(this, user.email.toString())
-                    SavedPreference.setUsername(this, user.displayName.toString())
+//                    SavedPreference.setEmail(this, user.email.toString())
+//                    SavedPreference.setUsername(this, user.displayName.toString())
+                    saveUserProfile(user.uid, user.displayName ?: "User ", user.email ?: "user@example.com")
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -119,6 +128,72 @@ class RegisterActivity : ComponentActivity() {
         }
     }
 
+    private fun loginUser(email: String, password: String) {
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Login successful
+                    val user = firebaseAuth.currentUser
+                    if (user != null) {
+                        // Check if user profile exists in Firestore
+                        checkUserProfile(user.uid, user.displayName ?: "User ", user.email ?: "user@example.com")
+                    }
+                } else {
+                    // Login failed
+                    Log.w(TAG, "signInWithEmail:failure", task.exception)
+                    Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    private fun checkUserProfile(userId: String, username: String, email: String) {
+        val firestore = FirebaseFirestore.getInstance()
+        firestore.collection("users").document(userId).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    // User profile exists, proceed to HomeActivity
+                    val intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    // User profile does not exist, create it
+                    saveUserProfile(userId, username, email)
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error checking user profile: ${e.message}")
+            }
+    }
+
+
+    private fun saveUserProfile(userId: String, username: String, email: String) {
+        val firestore = FirebaseFirestore.getInstance()
+
+        val userProfileData = hashMapOf(
+            "username" to username,
+            "email" to email,
+            "gender" to "", // Default value or leave empty
+            "birthdate" to "", // Default value or leave empty
+            "height" to "", // Default value or leave empty
+            "weight" to "", // Default value or leave empty
+            "profileImageUri" to "" // Default value or leave empty
+        )
+
+        firestore.collection("users").document(userId) // Use userId as the document ID
+            .set(userProfileData)
+            .addOnSuccessListener {
+                // Successfully saved user profile data
+                Log.d("Firestore", "User  profile created for $username")
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            .addOnFailureListener { e ->
+                // Handle the error
+                Log.e("Firestore", "Error saving user profile: ${e.message}")
+            }
+    }
+
     override fun onStart() {
         super.onStart()
         if (GoogleSignIn.getLastSignedInAccount(this) != null) {
@@ -129,7 +204,9 @@ class RegisterActivity : ComponentActivity() {
 }
 
 @Composable
-fun RegisterScreen(onGoogleSignInClick: () -> Unit) {
+fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, String) -> Unit) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     Box(modifier = Modifier.fillMaxSize()) {
         // Background image
         Image(
@@ -235,7 +312,7 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit) {
 
                 // Log In Button
                 Button(
-                    onClick = { /*TODO: Forgot Password action*/ },
+                    onClick = { onLoginClick(email, password) },
                     modifier = Modifier
                         .fillMaxWidth(0.9f)
                         .height(48.dp),
@@ -263,7 +340,7 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit) {
 
                 // Sign In with Google Button
                 Button(
-                    onClick = { /*TODO: Forgot Password action*/ },
+                    onClick = { onGoogleSignInClick() },
                     modifier = Modifier
                         .fillMaxWidth(0.9f)
                         .height(48.dp),
@@ -282,5 +359,11 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewRegisterScreen() {
-    RegisterScreen(onGoogleSignInClick = {})
+    RegisterScreen(
+        onGoogleSignInClick = {},
+        onLoginClick = { email, password ->
+            // Simulate login action
+            println("Email: $email, Password: $password")
+        }
+    )
 }

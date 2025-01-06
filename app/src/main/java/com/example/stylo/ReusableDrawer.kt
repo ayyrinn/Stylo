@@ -21,6 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.stylo.ui.theme.miamaFontFamily
+import com.example.stylo.ui.theme.tenorFontFamily
 
 
 // Fungsi untuk Header Stylo dengan Burger Menu dan Teks
@@ -101,8 +102,22 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                             .fillMaxSize()
                             .padding(16.dp)
                     ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            // Teks "Stylo" di Tengah
+                            Text(
+                                text = "Stylo",
+                                fontSize = 45.sp,
+                                color = Color(0xFF776B5D),
+                                fontFamily = miamaFontFamily,
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
                         Text(
-                            "Home", fontSize = 30.sp,
+                            "Home", fontSize = 30.sp, fontFamily = tenorFontFamily,
                             modifier = Modifier
                                 .clickable {
                                     val intent = Intent(context, HomeActivity::class.java) // Use Intent to navigate
@@ -113,7 +128,7 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                                 .padding(8.dp)
                         )
                         Text(
-                            "Profile", fontSize = 30.sp,
+                            "Profile", fontSize = 30.sp, fontFamily = tenorFontFamily,
                             modifier = Modifier
                                 .clickable {
                                     val intent = Intent(context, UserProfileActivity::class.java) // Use Intent to navigate
@@ -124,10 +139,10 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                                 .padding(8.dp)
                         )
                         Text(
-                            "Generate Outfit", fontSize = 30.sp,
+                            "Generate Outfit", fontSize = 30.sp, fontFamily = tenorFontFamily,
                             modifier = Modifier
                                 .clickable {
-                                    val intent = Intent(context, AIPhotosActivity::class.java) // Use Intent to navigate
+                                    val intent = Intent(context, SelectCategoriesActivity::class.java) // Use Intent to navigate
                                     context.startActivity(intent)
                                     showMenu = false
                                     onDismiss()
@@ -135,7 +150,7 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                                 .padding(8.dp)
                         )
                         Text(
-                            "Gallery", fontSize = 30.sp,
+                            "Gallery", fontSize = 30.sp, fontFamily = tenorFontFamily,
                             modifier = Modifier
                                 .clickable {
                                     val intent = Intent(context, SelectPhotosActivity::class.java) // Use Intent to navigate
@@ -146,7 +161,7 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                                 .padding(8.dp)
                         )
                         Text(
-                            "Add Photo", fontSize = 30.sp,
+                            "Add Photo", fontSize = 30.sp, fontFamily = tenorFontFamily,
                             modifier = Modifier
                                 .clickable {
                                     val intent = Intent(context, AddPhotoActivity::class.java) // Use Intent to navigate
@@ -157,7 +172,7 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                                 .padding(8.dp)
                         )
                         Text(
-                            "About Us", fontSize = 30.sp,
+                            "About Us", fontSize = 30.sp, fontFamily = tenorFontFamily,
                             modifier = Modifier
                                 .clickable {
                                     val intent = Intent(context, AboutUsActivity::class.java) // Use Intent to navigate
