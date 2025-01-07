@@ -5,15 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import com.example.stylo.ui.theme.cormorantFontFamily
 import com.example.stylo.ui.theme.tenorFontFamily
 //import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,7 +19,9 @@ import androidx.compose.foundation.layout.height
 //import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,12 +36,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.stylo.ui.theme.miamaFontFamily
-//import com.android.volley.Header
+
 
 class AboutUsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -122,6 +121,38 @@ fun AboutUsPage(){
                     .padding(top = 15.dp)
                     .padding(horizontal = 20.dp)
             )
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "DEVELOPERS",
+                fontFamily = cormorantFontFamily,
+                fontWeight = FontWeight.Normal,
+                fontSize = 23.sp,
+                color = Color.Black,
+                textAlign = TextAlign.Center,
+                letterSpacing = 1.21.sp,
+                modifier = Modifier
+                    .padding(top = 25.dp)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Row untuk menampilkan 5 box foto developer
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()  // Agar column mengambil lebar penuh
+                    .padding(horizontal = 16.dp), // Menambahkan padding horizontal jika diperlukan
+                verticalArrangement = Arrangement.spacedBy(16.dp) // Menambahkan jarak antar elemen secara vertikal
+            ) {
+                BoxItemWithLabel(R.drawable.devkezia, "Kezia Angeline Santoso\n2602097542")
+                BoxItemWithLabel(R.drawable.devannisa, "Annisa'u Rahma\n2602181603")
+                BoxItemWithLabel(R.drawable.devtania, "Kristania Yohana Tumilaar\n2602182436")
+                BoxItemWithLabel(R.drawable.devnaomi, "Angelica Naomi\n2602079836")
+                BoxItemWithLabel(R.drawable.devapril, "Aprillia Chandra Dewi\n2602181383")
+            }
+
+
+            Spacer(modifier = Modifier.height(26.dp))
 
             Text(
                 text = "REACH OUT",
@@ -146,6 +177,51 @@ fun AboutUsPage(){
         }
     }
 }
+
+
+
+
+@Composable
+fun BoxItemWithLabel(imageRes: Int, label: String) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally, // Center secara horizontal
+        modifier = Modifier
+            .wrapContentHeight()
+            .fillMaxWidth()// Pastikan kolom ini tidak memaksa foto ke bawah
+    ) {
+        Box(
+            modifier = Modifier
+                .size(150.dp) // Ukuran kotak untuk gambar
+                .clip(CircleShape) // Membuat gambar berbentuk lingkaran
+                .background(Color.White) // Placeholder background
+                .padding(4.dp) // Memberi jarak antar gambar
+                .align(Alignment.CenterHorizontally) // Center gambar secara horizontal
+        ) {
+            Image(
+                painter = painterResource(id = imageRes), // Menampilkan gambar
+                contentDescription = label,
+                modifier = Modifier
+                    .fillMaxSize() // Gambar memenuhi ukuran box
+                    .clip(CircleShape), // Bentuk gambar lingkaran
+                contentScale = ContentScale.Crop // Menjaga rasio gambar
+            )
+        }
+        Text(
+            text = label,
+            fontFamily = tenorFontFamily,
+            fontWeight = FontWeight.Normal,
+            fontSize = 16.sp,
+            color = Color.Black,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+    }
+}
+
+
+
 
 
 @Composable
