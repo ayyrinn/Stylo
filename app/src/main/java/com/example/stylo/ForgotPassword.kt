@@ -88,7 +88,7 @@ fun ForgotPasswordScreen() {
             OutlinedTextField(
                 value = "",
                 onValueChange = {},
-                label = { Text("Password") },
+                label = { Text("Password", fontSize = 15.sp, fontFamily = TenorSansRegular) },
                 modifier = Modifier
                     .padding(top = 20.dp)
                     .fillMaxWidth(0.9f)
@@ -105,7 +105,7 @@ fun ForgotPasswordScreen() {
             OutlinedTextField(
                 value = "",
                 onValueChange = {},
-                label = { Text("Confirm Password") },
+                label = { Text("Confirm Password", fontSize = 15.sp, fontFamily = TenorSansRegular) },
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
                     .height(48.dp)
@@ -128,7 +128,7 @@ fun ForgotPasswordScreen() {
             ) {
                 Text(
                     text = "Forgot Password",
-                    fontSize = 20.sp,
+                    fontSize = 18.sp,
                     fontFamily = TenorSansRegular,
                     color = Color.White
                 )

@@ -255,7 +255,11 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
                 TextField(
                     value = "",
                     onValueChange = {},
-                    placeholder = { Text("Email") },
+                    placeholder = { Text(
+                        "Email",
+                        fontFamily = TenorSansRegular,
+                        fontSize = 15.sp
+                        ) },
                     modifier = Modifier
                         .padding(top = 20.dp)
                         .fillMaxWidth(0.9f)
@@ -270,7 +274,11 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
                 TextField(
                     value = "",
                     onValueChange = {},
-                    placeholder = { Text("Password") },
+                    placeholder = { Text(
+                        "Password",
+                        fontFamily = TenorSansRegular,
+                        fontSize = 15.sp
+                    ) },
                     modifier = Modifier
                         .padding(top = 20.dp)
                         .fillMaxWidth(0.9f)
@@ -321,9 +329,10 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
                     )
                 ) {
                     Text(
-                        text = "Log In",
+                        text = "Sign In",
                         color = Color.White,
-                        fontSize = 20.sp
+                        fontFamily = TenorSansRegular,
+                        fontSize = 18.sp
                     )
                 }
 
@@ -349,7 +358,10 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
                         containerColor = Color(0xFFDD8560) // Warna tombol
                     )
                 ){
-                    Text("Sign in with Google")
+                    Text(
+                        text = "Sign In With Google",
+                        fontFamily = TenorSansRegular
+                    )
                 }
             }
         }
