@@ -252,7 +252,7 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
                 Spacer(modifier = Modifier.height(20.dp))
 
                 // Email Field
-                OutlinedTextField(
+                TextField(
                     value = "",
                     onValueChange = {},
                     placeholder = { Text(
@@ -271,7 +271,7 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
 
 
                 // Password Field
-                OutlinedTextField(
+                TextField(
                     value = "",
                     onValueChange = {},
                     placeholder = { Text(
