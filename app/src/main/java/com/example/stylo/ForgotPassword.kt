@@ -138,6 +138,6 @@ fun ForgotPasswordScreen() {
 }
 @Preview
 @Composable
-fun Previews1(){
+fun PreviewForgotPassword(){
     ForgotPasswordScreen()
 }

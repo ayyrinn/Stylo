@@ -147,7 +147,7 @@ fun AIGeneratePhotos(imageUri: String?) {
                 contentDescription = "Processed Image",
                 modifier = Modifier.size(362.dp, 362.dp)
             )
-        } ?: Text("No image to display")
+        } ?: Text("No image to display", fontFamily = TenorSansRegular)
 
         Button(
             onClick = { coroutineScope.launch {

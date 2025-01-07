@@ -106,7 +106,7 @@ fun HomeScreen(context: HomeActivity) {
                         )
                     ) {
                         Text(
-                            text = "Discover your Style",
+                            text = "Discover Your Style",
                             color = Color.Black, // Warna teks tombol
                             fontSize = 16.sp,
                             fontFamily = TenorSansRegular
