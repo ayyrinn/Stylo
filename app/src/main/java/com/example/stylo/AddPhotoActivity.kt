@@ -183,7 +183,8 @@ fun PhotoActivity() {
                             Text(
                                 text = "Choose image",
                                 color = Color.Gray,
-                                fontSize = 14.sp
+                                fontSize = 14.sp,
+                                fontFamily = TenorSansRegular
                             )
                         }
                     }
@@ -275,7 +276,8 @@ fun PhotoActivity() {
                         )
                         Text(
                             text = "Camera",
-                            color = Color.Black
+                            color = Color.Black,
+                            fontFamily = TenorSansRegular
                         )
                     }
                     Spacer(modifier = Modifier.width(80.dp))
@@ -292,7 +294,8 @@ fun PhotoActivity() {
                         )
                         Text(
                             text = "Gallery",
-                            color = Color.Black
+                            color = Color.Black,
+                            fontFamily = TenorSansRegular
                         )
                     }
                 }
