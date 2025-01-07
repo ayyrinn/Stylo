@@ -335,12 +335,13 @@ fun ProfileScreens() {
                             if (showGenderDialog) {
                                 AlertDialog(
                                     onDismissRequest = { showGenderDialog = false },
-                                    title = { Text("Select Gender") },
+                                    title = { Text("Select Gender", fontFamily = TenorSansRegular) },
                                     text = {
                                         Column {
                                             listOf("Male", "Female").forEach { option ->
                                                 Text(
                                                     text = option,
+                                                    fontFamily = tenorFontFamily,
                                                     modifier = Modifier
                                                         .fillMaxWidth()
                                                         .clickable {
@@ -353,8 +354,16 @@ fun ProfileScreens() {
                                         }
                                     },
                                     confirmButton = {
-                                        Button(onClick = { showGenderDialog = false }) {
-                                            Text("Close")
+                                        Button(
+                                            onClick = { showGenderDialog = false },
+                                            colors = ButtonDefaults.buttonColors(
+                                                containerColor = Color(0xFFDD8560) // Warna tombol
+                                            )
+                                        ) {
+                                            Text(
+                                                "Close",
+                                                fontFamily = tenorFontFamily
+                                            )
                                         }
                                     }
                                 )
@@ -605,10 +614,15 @@ fun ProfileScreens() {
                 if (showSuccessPopup) {
                     AlertDialog(
                         onDismissRequest = { showSuccessPopup = false },
-                        title = { Text("Success") },
-                        text = { Text("Profile updated successfully!") },
+                        title = { Text("Success", fontFamily = TenorSansRegular) },
+                        text = { Text("Profile updated successfully!", fontFamily = TenorSansRegular) },
                         confirmButton = {
-                            Button(onClick = { showSuccessPopup = false }) {
+                            Button(
+                                onClick = { showSuccessPopup = false },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFFDD8560) // Warna tombol
+                                )
+                            ) {
                                 Text("OK")
                             }
                         }
