@@ -26,10 +26,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -114,6 +119,9 @@ fun RemoveBackground(
     onRetakeClick: () -> Unit
 ) {
 
+    var showMenu by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
     //header stylo
     Column(
         modifier = Modifier
@@ -123,30 +131,7 @@ fun RemoveBackground(
         verticalArrangement = Arrangement.Top
     ) {
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Image(
-                painter = painterResource(id = R.drawable.burger_icon),
-                contentDescription = "Burger Icon",
-                modifier = Modifier
-                    .size(50.dp)
-                    .fillMaxSize()
-                    .clickable { }
-                    .padding(top = 10.dp),
-
-                )
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = "Stylo",
-                fontSize = 45.sp,
-                color = Color(0xFF776B5D),
-                fontFamily = miamaFontFamily,
-                modifier = Modifier
-                    .padding(end = 35.dp)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-
-        }
-
+        StyloTopBar(onMenuClick = { showMenu = !showMenu })
 
         // box remove background
         Column(
@@ -236,6 +221,10 @@ fun RemoveBackground(
             }
 
         }
+
+    }
+    if (showMenu) {
+        ReusableDrawer(context = context, onDismiss = { showMenu = false })
 
     }
 }
