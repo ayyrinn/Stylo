@@ -360,7 +360,8 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
                 ){
                     Text(
                         text = "Sign In With Google",
-                        fontFamily = TenorSansRegular
+                        fontFamily = TenorSansRegular,
+                        fontSize = 15.sp
                     )
                 }
             }
