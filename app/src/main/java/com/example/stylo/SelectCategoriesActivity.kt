@@ -214,8 +214,12 @@ fun SelectCategories(
                 }
             }
         }
+        if (showMenu) {
+            ReusableDrawer(context = context, onDismiss = { showMenu = false })
+        }
     }
 }
+
 
 @Preview
 @Composable
