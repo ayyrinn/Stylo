@@ -253,7 +253,7 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
 
                 // Email Field
                 OutlinedTextField(
-                    value = "",
+                    value = email,
                     onValueChange = {},
                     placeholder = { Text(
                         "Email",
@@ -272,7 +272,7 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
 
                 // Password Field
                 OutlinedTextField(
-                    value = "",
+                    value = password,
                     onValueChange = {},
                     placeholder = { Text(
                         "Password",
