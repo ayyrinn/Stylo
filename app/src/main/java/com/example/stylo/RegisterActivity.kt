@@ -16,10 +16,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -35,8 +40,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -251,34 +259,54 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
 
                 Spacer(modifier = Modifier.height(20.dp))
 
+
                 // Email Field
                 OutlinedTextField(
                     value = email,
-                    onValueChange = {},
-                    placeholder = { Text(
-                        "Email",
-                        fontFamily = TenorSansRegular,
+                    onValueChange = { email = it },
+                    placeholder = {
+                        Text(
+                            "Email",
+                            fontFamily = TenorSansRegular,
+                            fontSize = 15.sp
+                        )
+                    },
+                    textStyle = TextStyle(
+                        fontFamily = TenorSansRegular, // Font sesuai aplikasi
                         fontSize = 15.sp
-                        ) },
+                    ),
                     modifier = Modifier
                         .padding(top = 20.dp)
                         .fillMaxWidth(0.9f)
                         .height(48.dp)
                         .clip(RoundedCornerShape(50.dp))
                         .background(Color(0xB0A695).copy(alpha = 0.9f)),
-
                 )
 
+// Password Field
+                var passwordVisible by remember { mutableStateOf(false) }
 
-                // Password Field
                 OutlinedTextField(
                     value = password,
-                    onValueChange = {},
-                    placeholder = { Text(
-                        "Password",
-                        fontFamily = TenorSansRegular,
+                    onValueChange = { password = it },
+                    placeholder = {
+                        Text(
+                            "Password",
+                            fontFamily = TenorSansRegular,
+                            fontSize = 15.sp
+                        )
+                    },
+                    textStyle = TextStyle(
+                        fontFamily = TenorSansRegular, // Font sesuai aplikasi
                         fontSize = 15.sp
-                    ) },
+                    ),
+                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    trailingIcon = {
+                        IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                            val image = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff
+                            Icon(imageVector = image, contentDescription = null)
+                        }
+                    },
                     modifier = Modifier
                         .padding(top = 20.dp)
                         .fillMaxWidth(0.9f)
@@ -286,6 +314,7 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
                         .clip(RoundedCornerShape(50.dp))
                         .background(Color(0xB0A695).copy(alpha = 0.9f)),
                 )
+
 
                 // Remember Me Checkbox
                 Row(

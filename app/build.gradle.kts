@@ -100,4 +100,5 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
     implementation("androidx.activity:activity-compose:1.4.0")
+    implementation ("androidx.compose.material:material-icons-extended:1.5.0")
 }
