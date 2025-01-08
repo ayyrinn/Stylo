@@ -183,22 +183,29 @@ fun SelectCategories(
                 Button(
                     onClick = {
                         // Determine the final category to use
-                        val finalCategory = if (selectedCategory == "OTHER") customCategory else selectedCategory
+                        val finalCategory = if (selectedCategory == "OTHER") customCategory else if (selectedCategory.isEmpty()) "Not specified" else selectedCategory
 
                         // Check if a category is selected or if a custom category is provided
-                        if (finalCategory.isNotEmpty()) {
-                            // Save the selected category to Shared Preferences
-                            saveSelectedCategory(context, finalCategory)
+//                        if (finalCategory.isNotEmpty()) {
+//
+//                        } else {
+//
+//
+//                            // Save the selected category to Shared Preferences
+//                            saveSelectedCategory(context, "Not specified")
+//                        }
+                        // sebug message
+                        Log.d("SelectCategoriesActivity", selectedCategory)
 
-                            // Navigate to AIPhotosActivity with the selected category
-                            val intent = Intent(context, AIPhotosActivity::class.java).apply {
-                                putExtra("selected_category", finalCategory)
-                            }
-                            context.startActivity(intent)
-                        } else {
-                            // Optionally show a message if no category is selected
-                            Log.d("SelectCategoriesActivity", "No category selected")
+                        // Save the selected category to Shared Preferences
+                        saveSelectedCategory(context, finalCategory)
+
+                        // Navigate to AIPhotosActivity with the selected category
+                        val intent = Intent(context, AIPhotosActivity::class.java).apply {
+                            putExtra("selected_category", "Not specified")
                         }
+                        context.startActivity(intent)
+
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFDD8560)),
                     modifier = Modifier

@@ -121,26 +121,72 @@ fun MoreTopScreen() {
                 }
             } else {
                 // LazyColumn for scrollable content
-                LazyColumn(
+                Row(
                     modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                    contentPadding = PaddingValues(10.dp)
+                    horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    items(clothingData.value.size) { index ->
-                        val clothingItem = clothingData.value[index]
-                        val imageUrl = clothingItem["imageurl"] as? String // Assuming the image URL is stored under "imageurl"
+                    LazyColumn(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                        contentPadding = PaddingValues(10.dp)
+                    ) {
+                        items(clothingData.value.size / 2) { index ->
+                            val clothingItem = clothingData.value[index]
+                            val imageUrl = clothingItem["imageurl"] as? String // Assuming the image URL is stored under "imageurl"
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceEvenly
+                            ) {
+                                imageUrl?.let {
+                                    ImageCard(imageUrl = it, context)
+                                }
+                            }
+                        }
+                    }
 
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            // Display the image if the URL is not null
-                            imageUrl?.let {
-                                ImageCard(imageUrl = it, context)
+                    LazyColumn(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                        contentPadding = PaddingValues(10.dp)
+                    ) {
+                        items(clothingData.value.size / 2) { index ->
+                            val clothingItem = clothingData.value[clothingData.value.size / 2 + index]
+                            val imageUrl = clothingItem["imageurl"] as? String
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceEvenly
+                            ) {
+                                imageUrl?.let {
+                                    ImageCard(imageUrl = it, context)
+                                }
                             }
                         }
                     }
                 }
+
+//                LazyColumn(
+//                    modifier = Modifier.fillMaxSize(),
+//                    verticalArrangement = Arrangement.spacedBy(10.dp),
+//                    contentPadding = PaddingValues(10.dp)
+//                ) {
+//                    items(clothingData.value.size) { index ->
+//                        val clothingItem = clothingData.value[index]
+//                        val imageUrl = clothingItem["imageurl"] as? String // Assuming the image URL is stored under "imageurl"
+//                        Row(
+//                            modifier = Modifier.fillMaxWidth(),
+//                            horizontalArrangement = Arrangement.SpaceEvenly
+//                        ) {
+//                            // Display the image if the URL is not null
+//                            imageUrl?.let {
+//                                ImageCard(imageUrl = it, context)
+//                            }
+//                        }
+//                    }
+//                }
             }
         }
         if (showMenu) {
@@ -188,6 +234,7 @@ suspend fun retrieveClothingDataSuspend(userId: String, type: String): List<Map<
         for (document in result) {
             clothingList.add(document.data)
         }
+        Log.d("result", clothingList.toString());
         clothingList
     } catch (e: Exception) {
         Log.w("FirebaseError", "Error retrieving documents", e)

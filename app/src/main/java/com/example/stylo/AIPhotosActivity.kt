@@ -607,13 +607,14 @@ suspend fun generateRecs(context: Context, clothingData: String, wardrobeData: S
     Log.d("AIPhotosActivity", "Clothing Data: $clothingData")
     Log.d("AIPhotosScreen", "Selected category in AIPhotosScreen: $selectedCategory")
 
+// temp in case i need it again: ${selectedCategory ?: "No category selected"}
 
     // Construct the prompt
     val prompt = """
         I want you to help me style some clothing items. 
         Here are the clothing items I want to wear: $clothingData.
         Additionally, here are the items in my wardrobe: $wardrobeData.
-        The selected category is: ${selectedCategory ?: "No category selected"}.
+        The selected category is: $selectedCategory.
         Here are some additional information: height is $height cm, weight is $weight kg, and gender is $gender.
         
         Please provide recommendations on how to style the clothing items I want to wear, 

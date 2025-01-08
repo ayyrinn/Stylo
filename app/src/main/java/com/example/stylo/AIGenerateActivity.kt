@@ -249,7 +249,7 @@ suspend fun visionModelCall(context: Context, imageData: Bitmap): String? {
 
     val inputContent = content {
         image(imageData)
-        text("Give a somewhat detailed description on what clothing this is, including the color as the clothing's title. Specify which category this is among casual/semi-formal/formal/business casual/smart casual/athleisure/evening wear/cocktail/loungewear/sportswear/other. And specify a tag according if this is a top/bottom/footwear/accessories. write your answer down as (description)split(category)split(type). the answer for clothing should be a full sentence, while the answer for category and tag should be a few words, note that one clothing can be in multiple categories, seperate them with /")
+        text("Give a somewhat detailed description on what clothing this is, including the color as the clothing's title. Specify which category this is among casual/semi-formal/formal/business casual/smart casual/athleisure/evening wear/cocktail/loungewear/sportswear/other. And specify a tag according if this is a top/bottom/footwear/accessories, make sure the tags are without spaces, and all in lowercase. write your answer down as (description)split(category)split(type). the answer for clothing should be a full sentence, while the answer for category and tag should be a few words, note that one clothing can be in multiple categories, seperate them with /")
     }
 
     return generativeModel.generateContent(inputContent).text
