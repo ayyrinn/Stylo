@@ -125,6 +125,7 @@ fun MoreTopScreen() {
                     modifier = Modifier.fillMaxSize(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
+                    // First LazyColumn
                     LazyColumn(
                         modifier = Modifier
                             .weight(1f)
@@ -132,7 +133,8 @@ fun MoreTopScreen() {
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                         contentPadding = PaddingValues(10.dp)
                     ) {
-                        items(clothingData.value.size / 2) { index ->
+                        val firstColumnItems = clothingData.value.size / 2 + clothingData.value.size % 2 // Handle odd numbers
+                        items(firstColumnItems) { index ->
                             val clothingItem = clothingData.value[index]
                             val imageUrl = clothingItem["imageurl"] as? String // Assuming the image URL is stored under "imageurl"
                             Row(
@@ -146,6 +148,7 @@ fun MoreTopScreen() {
                         }
                     }
 
+                    // Second LazyColumn
                     LazyColumn(
                         modifier = Modifier
                             .weight(1f)
@@ -153,8 +156,9 @@ fun MoreTopScreen() {
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                         contentPadding = PaddingValues(10.dp)
                     ) {
-                        items(clothingData.value.size / 2) { index ->
-                            val clothingItem = clothingData.value[clothingData.value.size / 2 + index]
+                        val secondColumnStart = clothingData.value.size / 2 + clothingData.value.size % 2
+                        items(clothingData.value.size - secondColumnStart) { index ->
+                            val clothingItem = clothingData.value[secondColumnStart + index]
                             val imageUrl = clothingItem["imageurl"] as? String
                             Row(
                                 modifier = Modifier.fillMaxWidth(),

@@ -198,7 +198,7 @@ fun PhotoActivity() {
                         .align(Alignment.End)
                         .clickable {
                             bitmap?.let { image ->
-                                removeBackground(image, "B7NooV34KQa7QPFek39afMRR") { result ->
+                                removeBackground(image, "9HUaFr9GnVAGhARzMNmriJDJ") { result ->
                                     if (result != null) {
                                         resultBitmap = result
                                         val imageUri = saveBitmapToFile(context, result)

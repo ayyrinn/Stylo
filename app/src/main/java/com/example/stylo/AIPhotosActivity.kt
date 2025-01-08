@@ -100,15 +100,15 @@ fun AIPhotosScreen(imageUrl: String, selectedCategory: String?) {
     val auth = FirebaseAuth.getInstance()
     val userId = auth.currentUser?.uid // Get the current user's ID
 
-    var top by remember { mutableStateOf<Bitmap?>(null) } //ini buat gambar yg ditunjukkin di screennya
-    var bottom by remember { mutableStateOf<Bitmap?>(null) }
-    var footwear by remember { mutableStateOf<Bitmap?>(null) }
-    var accessories by remember { mutableStateOf<Bitmap?>(null) }
+    var selectedClothing by remember { mutableStateOf<Bitmap?>(null) } //ini buat gambar yg ditunjukkin di screennya
+//    var bottom by remember { mutableStateOf<Bitmap?>(null) }
+//    var footwear by remember { mutableStateOf<Bitmap?>(null) }
+//    var accessories by remember { mutableStateOf<Bitmap?>(null) }
 
-    var topData by remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }//buat deskripsi baju" yg dipilih user
-    var bottomData by remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }
-    var footwearData by remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }
-    var accessoriesData by remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }
+    var selectedClothingData by remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }//buat deskripsi baju" yg dipilih user
+//    var bottomData by remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }
+//    var footwearData by remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }
+//    var accessoriesData by remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }
 
     var recsResponse by remember { mutableStateOf("") } // State to store the response
     var loading by remember { mutableStateOf(false) }
@@ -141,23 +141,27 @@ fun AIPhotosScreen(imageUrl: String, selectedCategory: String?) {
             if (imageUrl.isNotEmpty()) {
                 typeData = retrieveTypeSuspend(imageUrl)
                 loadImage(imageUrl, context) { bitmap ->
-                    when (typeData.lowercase()) {
-                        "top" -> top = bitmap
-                        "bottom" -> bottom = bitmap
-                        "footwear" -> footwear = bitmap
-                        "accessories" -> accessories = bitmap
-                    }
+                    selectedClothing = bitmap
+//                    when (typeData.lowercase()) {
+//                        "top" -> clothing = bitmap
+//                        "bottom" -> bottom = bitmap
+//                        "footwear" -> footwear = bitmap
+//                        "accessories" -> accessories = bitmap
+//                    }
                 }
 
-                if (typeData.equals("top", ignoreCase = true)){
-                    topData = retrieveDataSuspend(imageUrl) // Update the state with retrieved data
-                } else if (typeData.equals("bottom", ignoreCase = true)){
-                    bottomData = retrieveDataSuspend(imageUrl) // Update the state with retrieved data
-                }else if (typeData.equals("footwear", ignoreCase = true)){
-                    footwearData = retrieveDataSuspend(imageUrl) // Update the state with retrieved data
-                }else if (typeData.equals("accessories", ignoreCase = true)){
-                    accessoriesData = retrieveDataSuspend(imageUrl) // Update the state with retrieved data
-                }
+                    selectedClothingData = retrieveDataSuspend(imageUrl) // Update the state with retrieved data
+
+
+//                if (typeData.equals("top", ignoreCase = true)){
+//                    topData = retrieveDataSuspend(imageUrl) // Update the state with retrieved data
+//                } else if (typeData.equals("bottom", ignoreCase = true)){
+//                    bottomData = retrieveDataSuspend(imageUrl) // Update the state with retrieved data
+//                }else if (typeData.equals("footwear", ignoreCase = true)){
+//                    footwearData = retrieveDataSuspend(imageUrl) // Update the state with retrieved data
+//                }else if (typeData.equals("accessories", ignoreCase = true)){
+//                    accessoriesData = retrieveDataSuspend(imageUrl) // Update the state with retrieved data
+//                }
 
             }
         }
@@ -221,7 +225,7 @@ fun AIPhotosScreen(imageUrl: String, selectedCategory: String?) {
                             modifier = Modifier
                                 .fillMaxWidth()
                         ) {
-                            top?.let {
+                            selectedClothing?.let {
                                 Image(
                                     bitmap = it.asImageBitmap(),
                                     contentDescription = "Processed Image",
@@ -240,7 +244,7 @@ fun AIPhotosScreen(imageUrl: String, selectedCategory: String?) {
                                     .fillMaxWidth()
                                     .clickable {
                                         context.startActivity(
-                                            Intent(context, MoreTopActivity::class.java)
+                                            Intent(context, SelectPhotosActivity::class.java)
                                         )
                                     }
                                     .height(185.dp)
@@ -259,7 +263,7 @@ fun AIPhotosScreen(imageUrl: String, selectedCategory: String?) {
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(
-                                        text = "Top",
+                                        text = "Choose clothing",
                                         color = Color.Black,
                                         fontFamily = cormorantFontFamily,
                                         modifier = Modifier.align(Alignment.CenterVertically)
@@ -275,76 +279,6 @@ fun AIPhotosScreen(imageUrl: String, selectedCategory: String?) {
                             }
                         }
 
-                    }
-
-
-                    Box(
-                        modifier = Modifier
-                            .clickable { }
-                            .width(155.dp)
-                            .height(215.dp)
-                            .background(
-                                Color.Transparent,
-                                shape = RectangleShape
-                            ) // Adjust shape if needed
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        ) {
-                            bottom?.let {
-                                Image(
-                                    bitmap = it.asImageBitmap(),
-                                    contentDescription = "Processed Image",
-                                    modifier = Modifier
-                                        .size(362.dp, 362.dp)
-                                        .clickable {
-                                            context.startActivity(
-                                                Intent(context, MoreBottomActivity::class.java)
-                                            )
-                                        }
-                                )
-                            } ?: Image(
-                                painter = painterResource(id = R.drawable.foto_jas),
-                                contentDescription = "Camera Left",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clickable {
-                                        context.startActivity(
-                                            Intent(context, MoreBottomActivity::class.java)
-                                        )
-                                    }
-                                    .height(185.dp)
-                            )
-                            Box(
-                                modifier = Modifier
-                                    .background(Color(0xFFFCDFD2))
-                                    .fillMaxWidth()
-                                    .height(30.dp)
-                            ) {
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(horizontal = 10.dp), // Optional: Adds horizontal padding
-                                    horizontalArrangement = Arrangement.SpaceBetween, // Space between Text and Image
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Text(
-                                        text = "Bottom",
-                                        color = Color.Black,
-                                        fontFamily = cormorantFontFamily,
-                                        modifier = Modifier.align(Alignment.CenterVertically)
-                                    )
-                                    Image(
-                                        painter = painterResource(id = R.drawable.outline_photo_library_24),
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .height(30.dp)
-                                            .align(Alignment.CenterVertically)
-                                    )
-                                }
-                            }
-                        }
                     }
                 }
                 Spacer(modifier = Modifier.height(5.dp)) // Adjust this value for top padding
@@ -422,38 +356,18 @@ fun AIPhotosScreen(imageUrl: String, selectedCategory: String?) {
                         horizontalArrangement = Arrangement.SpaceBetween, // Space between Text and Image
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-//                        // Send a Message Box
-//                        Box(
-//                            modifier = Modifier
-//                                .width(250.dp)
-//                                .height(50.dp)
-//                                .background(Color.Transparent)
-//                                .border(
-//                                    width = 1.dp,              // Border thickness
-//                                    color = Color(0xFFDD8560), // Border color (orange)
-//                                    shape = RoundedCornerShape(45.dp)  // Adjust corner radius here
-//                                ) // Thin orange outline
-//                                .padding(16.dp)
-//                        ) {
-//                            Text(
-//                                text = "Send a message",
-//                                color = Color.Gray,               // Adjust text color
-//                                fontSize = 14.sp,                  // Adjust text size
-//                                fontFamily = tenorFontFamily      // Optional: Change to a specific font family
-//                            )
-//                        }
 
                         // Submit Button
                         Button(
                             onClick = {
                                 // Check if any clothing items are selected
-                                if (topData.isEmpty() && bottomData.isEmpty()) {
+                                if (selectedClothingData.isEmpty()) {
                                     showErrorDialog = true
                                 } else {
                                     loading = true // Show loading indicator
                                     coroutineScope.launch {
                                         // Combine clothing data for recommendations
-                                        val clothingData = (topData + bottomData + footwearData + accessoriesData).toString()
+                                        val clothingData = selectedClothingData.toString()
                                         println("clothing data: $clothingData")
                                         // Get all wardrobe data
                                         val wardrobeData = userId?.let { retrieveWardrobeSuspend(it) }.toString()
@@ -465,6 +379,24 @@ fun AIPhotosScreen(imageUrl: String, selectedCategory: String?) {
                                         loading = false // Hide loading indicator after response
                                     }
                                 }
+//                                if (topData.isEmpty() && bottomData.isEmpty()) {
+//                                    showErrorDialog = true
+//                                } else {
+//                                    loading = true // Show loading indicator
+//                                    coroutineScope.launch {
+//                                        // Combine clothing data for recommendations
+//                                        val clothingData = (topData + bottomData + footwearData + accessoriesData).toString()
+//                                        println("clothing data: $clothingData")
+//                                        // Get all wardrobe data
+//                                        val wardrobeData = userId?.let { retrieveWardrobeSuspend(it) }.toString()
+//                                        println("wardrobe data: $wardrobeData")
+//
+//                                        // Get response
+//                                        recsResponse = generateRecs(context, clothingData, wardrobeData, selectedCategory, height, weight, gender)
+//                                            ?: "No recommendations available."
+//                                        loading = false // Hide loading indicator after response
+//                                    }
+//                                }
                             },
                             modifier = Modifier
                                 .width(370.dp)
@@ -490,7 +422,7 @@ fun AIPhotosScreen(imageUrl: String, selectedCategory: String?) {
         AlertDialog(
             onDismissRequest = { showErrorDialog = false },
             title = { Text("Error") },
-            text = { Text ("Please select at least one clothing item (Top or Bottom).") },
+            text = { Text ("Please select at least one clothing item.") },
             confirmButton = {
                 Button(
                     onClick = { showErrorDialog = false }
