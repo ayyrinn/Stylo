@@ -1,5 +1,6 @@
 package com.example.stylo
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -43,16 +44,30 @@ import com.example.stylo.TenorSansRegular
 import com.example.stylo.ui.theme.cormorantFontFamily
 import com.example.stylo.ui.theme.miamaFontFamily
 import com.example.stylo.ui.theme.tenorFontFamily
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Calendar
 
 class UserProfileActivity : ComponentActivity() {
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ProfileScreens()
         }
+
+        // Initialize Firebase Auth
+        firebaseAuth = FirebaseAuth.getInstance()
+
+        // Configure Google Sign-In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
     }
 }
 
@@ -126,10 +141,10 @@ fun ProfileScreens() {
                     .fillMaxWidth()
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.End // Align to the end
+                horizontalArrangement = Arrangement.Start // Align to the end
             ) {
                 // Profile Image
-                if (profileImageUri != null) {
+                if (profileImageUri != null && profileImageUri.toString().isNotEmpty()) {
                     Image(
                         painter = rememberImagePainter(profileImageUri),
                         contentDescription = "Profile Picture",
@@ -147,14 +162,15 @@ fun ProfileScreens() {
                             .size(120.dp)
                             .clip(RoundedCornerShape(50.dp))
                             .clickable { launcher.launch("image/*") } // Launch image picker
-                            .background(Color.LightGray, shape = RoundedCornerShape(30.dp)) // Optional: background color
+                            .background(Color.LightGray, shape = RoundedCornerShape(50.dp)) // Optional: background color
                     )
                 }
-                Spacer(modifier = Modifier.weight(1f)) // Space between image and text
+                Spacer(modifier = Modifier.width(16.dp)) // Space between image and text
 
                 // Greeting Text
                 Column(
-                    horizontalAlignment = Alignment.End
+                    horizontalAlignment = Alignment.End,
+                    modifier = Modifier.weight(1f)
                 ) {
                     Text(
                         text = "Hi,",
@@ -170,12 +186,13 @@ fun ProfileScreens() {
                         fontFamily = tenorFontFamily,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black,
-                        textAlign = TextAlign.End
+                        textAlign = TextAlign.End,
+                        modifier = Modifier.widthIn(max = 200.dp)
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(30.dp))
             // Background Container
             Box(
                 modifier = Modifier
@@ -634,8 +651,16 @@ fun ProfileScreens() {
                 // Tombol Log Out
                 Button(
                     onClick = {
+                        // Sign out from Firebase
                         auth.signOut()
-                        context.startActivity(Intent(context, MainActivity::class.java))
+
+                        // Sign out from Google
+                        val googleSignInClient = GoogleSignIn.getClient(context, GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        googleSignInClient.signOut().addOnCompleteListener {
+                            // Optionally, navigate to the main activity or show a message
+                            context.startActivity(Intent(context, MainActivity::class.java))
+                            // Optionally finish the current activity (context as? Activity)?.finish()
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth(0.9f)
