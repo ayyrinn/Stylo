@@ -60,13 +60,15 @@ class MainActivity : ComponentActivity() {
             finish() // Close MainActivity so the user can't go back to it
         } else {
             // If the user is not logged in, show the main screen (login/register)
-            Log.d("MainActivity", "User  is not logged in, showing MainScreen.")
+            Log.d("MainActivity", "User is not logged in, showing MainScreen.")
             setContent {
-                MainScreen {
-                    // Navigate to RegisterActivity when button is clicked
-                    val intent = Intent(this, RegisterActivity::class.java)
-                    startActivity(intent)
-                }
+                MainScreen(
+                    onButtonClick = {
+                        // Navigate to RegisterActivity when button is clicked
+                        val intent = Intent(this, RegisterActivity::class.java)
+                        startActivity(intent)
+                    }
+                )
             }
         }
     }

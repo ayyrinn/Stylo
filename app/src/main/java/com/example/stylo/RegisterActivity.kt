@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,9 +17,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -123,10 +121,8 @@ class RegisterActivity : ComponentActivity() {
                 if (user != null) {
 //                    SavedPreference.setEmail(this, user.email.toString())
 //                    SavedPreference.setUsername(this, user.displayName.toString())
-                    saveUserProfile(user.uid, user.displayName ?: "User ", user.email ?: "user@example.com")
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
+//                    saveUserProfile(user.uid, user.displayName ?: "User ", user.email ?: "user@example.com")
+                    navigateToHome()
                 }
             } else {
                 // Sign-in failed
@@ -160,9 +156,7 @@ class RegisterActivity : ComponentActivity() {
             .addOnSuccessListener { document ->
                 if (document.exists()) {
                     // User profile exists, proceed to HomeActivity
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    navigateToHome()
                 } else {
                     // User profile does not exist, create it
                     saveUserProfile(userId, username, email)
@@ -192,9 +186,7 @@ class RegisterActivity : ComponentActivity() {
             .addOnSuccessListener {
                 // Successfully saved user profile data
                 Log.d("Firestore", "User  profile created for $username")
-                val intent = Intent(this, HomeActivity::class.java)
-                startActivity(intent)
-                finish()
+                navigateToHome()
             }
             .addOnFailureListener { e ->
                 // Handle the error
@@ -202,11 +194,16 @@ class RegisterActivity : ComponentActivity() {
             }
     }
 
+    private fun navigateToHome() {
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     override fun onStart() {
         super.onStart()
-        if (GoogleSignIn.getLastSignedInAccount(this) != null) {
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
+        if (firebaseAuth.currentUser  != null) {
+            navigateToHome()
         }
     }
 }
@@ -302,10 +299,13 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
                     ),
                     visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
-                        IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                            val image = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff
-                            Icon(imageVector = image, contentDescription = null)
-                        }
+                        Text(
+                            text = if (passwordVisible) "Hide" else "Show",
+                            color = Color.Gray,
+                            modifier = Modifier
+                                .clickable { passwordVisible = !passwordVisible }
+                                .padding(end = 8.dp)
+                        )
                     },
                     modifier = Modifier
                         .padding(top = 20.dp)
