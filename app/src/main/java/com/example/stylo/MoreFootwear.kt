@@ -137,7 +137,7 @@ fun MoreFootwearScreen() {
                                 horizontalArrangement = Arrangement.SpaceEvenly
                             ) {
                                 imageUrl?.let {
-                                    ImageCard(imageUrl = it, context)
+//                                    ImageCard(imageUrl = it, context)
                                 }
                             }
                         }
@@ -160,7 +160,7 @@ fun MoreFootwearScreen() {
                                 horizontalArrangement = Arrangement.SpaceEvenly
                             ) {
                                 imageUrl?.let {
-                                    ImageCard(imageUrl = it, context)
+//                                    ImageCard(imageUrl = it, context)
                                 }
                             }
                         }

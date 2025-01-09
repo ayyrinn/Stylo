@@ -28,7 +28,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -96,7 +98,7 @@ fun AIGeneratePhotos(imageUri: String?) {
     var displayResponse by remember { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
     var saveResponse by remember { mutableStateOf<List<String>>(emptyList()) }
-
+    var isLoading by remember { mutableStateOf(false) }
 
     if (response != ""){
         println("original string: " + response)
@@ -150,10 +152,14 @@ fun AIGeneratePhotos(imageUri: String?) {
         } ?: Text("No image to display", fontFamily = TenorSansRegular)
 
         Button(
-            onClick = { coroutineScope.launch {
-                response =
-                    bitmap?.let { visionModelCall(context, it).toString() }.toString() // Update the response state
-            } },
+            onClick = {
+                isLoading = true
+                coroutineScope.launch {
+                    response =
+                        bitmap?.let { visionModelCall(context, it).toString() }.toString() // Update the response state
+                    isLoading = false
+                }
+            },
             modifier = Modifier
                 .padding(top = 16.dp)
                 .width(150.dp),
@@ -170,65 +176,83 @@ fun AIGeneratePhotos(imageUri: String?) {
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "RESULT:",
-            fontSize = 20.sp,
-            fontFamily = tenorFontFamily,
-            color = Color.Black
-        )
+        if (isLoading) {
+            // Show loading indicator
+            CircularProgressIndicator(
+                modifier = Modifier.size(64.dp),
+                color = MaterialTheme.colorScheme.secondary,
+                trackColor = MaterialTheme.colorScheme.surfaceVariant
+            )
+        } else {
+            // Show results if available
+            if (response.isNotEmpty()) {
+                Text(
+                    text = "RESULT:",
+                    fontSize = 20.sp,
+                    fontFamily = tenorFontFamily,
+                    color = Color.Black
+                )
 
-        Text(
-            text = displayResponse,
-            fontSize = 20.sp,
-            textAlign = TextAlign.Center,
-            fontFamily = tenorFontFamily,
-            color = Color.Black,
-            modifier = Modifier.padding(16.dp)
-        )
-        Divider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            color = Color.Black,
-            thickness = 1.dp
-        )
+                // Process the response to display
+                val saveResponse = response.split("split")
+                displayResponse = saveResponse.joinToString("\n")
 
-        Button(
-            onClick = {
-                // Check if the user is logged in
-                val auth = FirebaseAuth.getInstance()
-                if (auth.currentUser  == null) {
-                    // User is not logged in, handle accordingly (e.g., show a login screen)
-                    Log.e(TAG, "User  is not logged in")
-                    // Optionally, you can show a message to the user
-                } else {
-                    // Proceed with saving data
-                    databaseSave(saveResponse[0], saveResponse[1], saveResponse[2], imageUri)
+                Text(
+                    text = displayResponse,
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Center,
+                    fontFamily = tenorFontFamily,
+                    color = Color.Black,
+                    modifier = Modifier.padding(16.dp)
+                )
 
-                    // Save the result to SharedPreferences
-                    val sharedPreferences = context.getSharedPreferences("stylo_prefs", Context.MODE_PRIVATE)
-                    sharedPreferences.edit().putString("saved_result", response).apply()
+                Divider(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    color = Color.Black,
+                    thickness = 1.dp
+                )
 
-                    // Navigate to the next activity if needed
-                     val intent = Intent(context, HomeActivity::class.java)
-                     context.startActivity(intent)
+
+
+                Button(
+                    onClick = {
+                        // Check if the user is logged in
+                        val auth = FirebaseAuth.getInstance()
+                        if (auth.currentUser  == null) {
+                            // User is not logged in, handle accordingly (e.g., show a login screen)
+                            Log.e(TAG, "User  is not logged in")
+                            // Optionally, you can show a message to the user
+                        } else {
+                            // Proceed with saving data
+                            databaseSave(saveResponse[0], saveResponse[1], saveResponse[2], imageUri)
+
+                            // Save the result to SharedPreferences
+                            val sharedPreferences = context.getSharedPreferences("stylo_prefs", Context.MODE_PRIVATE)
+                            sharedPreferences.edit().putString("saved_result", response).apply()
+
+                            // Navigate to the next activity if needed
+                             val intent = Intent(context, HomeActivity::class.java)
+                             context.startActivity(intent)
+                        }
+                    },
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .width(150.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFDD8560),
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(
+                        text = "SAVE",
+                        fontSize = 16.sp,
+                        fontFamily = tenorFontFamily
+                    )
                 }
-            },
-            modifier = Modifier
-                .padding(top = 16.dp)
-                .width(150.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFDD8560),
-                contentColor = Color.White
-            )
-        ) {
-            Text(
-                text = "SAVE",
-                fontSize = 16.sp,
-                fontFamily = tenorFontFamily
-            )
+            }
         }
-
     }
 }
 @Preview

@@ -139,7 +139,7 @@ fun MoreAccessoriesScreen() {
                                 horizontalArrangement = Arrangement.SpaceEvenly
                             ) {
                                 imageUrl?.let {
-                                    ImageCard(imageUrl = it, context)
+//                                    ImageCard(imageUrl = it, context)
                                 }
                             }
                         }
@@ -162,7 +162,7 @@ fun MoreAccessoriesScreen() {
                                 horizontalArrangement = Arrangement.SpaceEvenly
                             ) {
                                 imageUrl?.let {
-                                    ImageCard(imageUrl = it, context)
+//                                    ImageCard(imageUrl = it, context)
                                 }
                             }
                         }

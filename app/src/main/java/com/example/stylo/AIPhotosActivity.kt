@@ -388,24 +388,6 @@ fun AIPhotosScreen(imageUrl: String, selectedCategory: String?) {
                                         loading = false // Hide loading indicator after response
                                     }
                                 }
-//                                if (topData.isEmpty() && bottomData.isEmpty()) {
-//                                    showErrorDialog = true
-//                                } else {
-//                                    loading = true // Show loading indicator
-//                                    coroutineScope.launch {
-//                                        // Combine clothing data for recommendations
-//                                        val clothingData = (topData + bottomData + footwearData + accessoriesData).toString()
-//                                        println("clothing data: $clothingData")
-//                                        // Get all wardrobe data
-//                                        val wardrobeData = userId?.let { retrieveWardrobeSuspend(it) }.toString()
-//                                        println("wardrobe data: $wardrobeData")
-//
-//                                        // Get response
-//                                        recsResponse = generateRecs(context, clothingData, wardrobeData, selectedCategory, height, weight, gender)
-//                                            ?: "No recommendations available."
-//                                        loading = false // Hide loading indicator after response
-//                                    }
-//                                }
                             },
                             modifier = Modifier
                                 .width(370.dp)

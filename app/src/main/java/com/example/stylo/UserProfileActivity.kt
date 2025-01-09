@@ -149,8 +149,8 @@ fun ProfileScreens() {
                         painter = rememberImagePainter(profileImageUri),
                         contentDescription = "Profile Picture",
                         modifier = Modifier
-                            .size(60.dp)
-                            .clip(RoundedCornerShape(30.dp))
+                            .size(120.dp)
+                            .clip(RoundedCornerShape(50.dp))
                             .clickable { launcher.launch("image/*") } // Launch image picker
                     )
                 } else {

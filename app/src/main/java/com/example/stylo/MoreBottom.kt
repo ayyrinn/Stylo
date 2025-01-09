@@ -138,7 +138,7 @@ fun MoreBottomScreen() {
                                 horizontalArrangement = Arrangement.SpaceEvenly
                             ) {
                                 imageUrl?.let {
-                                    ImageCard(imageUrl = it, context)
+//                                    ImageCard(imageUrl = it, context)
                                 }
                             }
                         }
@@ -161,7 +161,7 @@ fun MoreBottomScreen() {
                                 horizontalArrangement = Arrangement.SpaceEvenly
                             ) {
                                 imageUrl?.let {
-                                    ImageCard(imageUrl = it, context)
+//                                    ImageCard(imageUrl = it, context)
                                 }
                             }
                         }
