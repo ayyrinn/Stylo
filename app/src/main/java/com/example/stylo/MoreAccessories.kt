@@ -95,6 +95,7 @@ fun MoreAccessoriesScreen() {
                         text = "You don't have this collection yet.",
                         color = Color.White,
                         fontSize = 20.sp,
+                        fontFamily = tenorFontFamily,
                         textAlign = TextAlign.Center
                     )
                     Spacer(modifier = Modifier.height(16.dp))
@@ -109,7 +110,10 @@ fun MoreAccessoriesScreen() {
                         ),
                         modifier = Modifier.padding(top = 8.dp)
                     ) {
-                        Text(text = "Add New Collection")
+                        Text(
+                            text = "Add New Collection",
+                            fontFamily = tenorFontFamily
+                        )
                     }
                 }
             } else {
