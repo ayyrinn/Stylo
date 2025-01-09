@@ -311,7 +311,9 @@ fun AIPhotosScreen(imageUrl: String, selectedCategory: String?) {
                                 if (loading) {
                                     item {
                                         Box(
-                                            modifier = Modifier.fillMaxSize(),
+                                            modifier = Modifier
+                                                .width(370.dp)
+                                                .height(340.dp),
                                             contentAlignment = Alignment.Center
                                         ) {
                                             CircularProgressIndicator(
@@ -332,15 +334,22 @@ fun AIPhotosScreen(imageUrl: String, selectedCategory: String?) {
                                     item {
                                         // Center the message if the response is empty
                                         Box(
-                                            modifier = Modifier.fillMaxSize(),
+                                            modifier = Modifier
+                                                .width(370.dp)
+                                                .height(340.dp),
                                             contentAlignment = Alignment.Center // Center the message
                                         ) {
                                             Text(
                                                 text = "Choose one clothing item to start generating outfit.",
                                                 color = Color.Gray,
+                                                textAlign = TextAlign.Justify,
                                                 fontFamily = tenorFontFamily,
                                                 fontSize = 14.sp,
-                                                modifier = Modifier.padding(8.dp)
+                                                modifier = Modifier
+                                                    .padding(16.dp)
+                                                    .align(Alignment.Center)
+//                                                    .wrapContentHeight(align = Alignment.CenterVertically)
+//                                                    .fillMaxSize()
                                             )
                                         }
                                     }
