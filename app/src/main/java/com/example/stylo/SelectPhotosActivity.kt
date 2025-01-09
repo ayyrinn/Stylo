@@ -60,7 +60,7 @@ fun SelectPhotos() {
     //header stylo
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .background(color = Color(0xFFF3EEEA)),
 
