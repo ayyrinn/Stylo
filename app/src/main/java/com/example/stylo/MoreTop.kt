@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -114,6 +115,9 @@ fun MoreTopScreen() {
                             val intent = Intent(context, AddPhotoActivity::class.java)
                             context.startActivity(intent)
                         },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFDD8560) // Warna tombol
+                        ),
                         modifier = Modifier.padding(top = 8.dp)
                     ) {
                         Text(text = "Add New Collection")
