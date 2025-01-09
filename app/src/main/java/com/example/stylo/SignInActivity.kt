@@ -21,13 +21,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,12 +32,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,10 +52,9 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.FirebaseFirestore
 
-class RegisterActivity : ComponentActivity() {
+class SignInActivity : ComponentActivity() {
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private val Req_Code: Int = 123
     private lateinit var firebaseAuth: FirebaseAuth
@@ -79,13 +74,15 @@ class RegisterActivity : ComponentActivity() {
         setContent {
             RegisterScreen(
                 onGoogleSignInClick = { signInGoogle() },
-                onLoginClick = { email, password -> loginUser (email, password) }
+                onLoginClick = { email, password -> loginUser (email, password) },
+                onSignUpClick = { navigateToSignUp() },
+                onForgotPasswordClick = { navigateToForgotPassword() }
             )
         }
     }
 
     private fun signInGoogle() {
-        Log.d("RegisterActivity", "Starting Google Sign-In")
+        Log.d("SignInActivity", "Starting Google Sign-In")
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, Req_Code)
     }
@@ -93,7 +90,7 @@ class RegisterActivity : ComponentActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Req_Code) {
-            Log.d("RegisterActivity", "Received sign-in result")
+            Log.d("SignInActivity", "Received sign-in result")
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleResult(task)
         }
@@ -103,11 +100,11 @@ class RegisterActivity : ComponentActivity() {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null) {
-                Log.d("RegisterActivity", "Sign-in successful: ${account.email}")
+                Log.d("SignInActivity", "Sign-in successful: ${account.email}")
                 updateUI(account)
             }
         } catch (e: ApiException) {
-            Log.w("RegisterActivity", "Sign-in failed: ${e.statusCode}")
+            Log.w("SignInActivity", "Sign-in failed: ${e.statusCode}")
             Toast.makeText(this, "Sign-in failed: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
@@ -122,7 +119,7 @@ class RegisterActivity : ComponentActivity() {
 //                    SavedPreference.setEmail(this, user.email.toString())
 //                    SavedPreference.setUsername(this, user.displayName.toString())
 //                    saveUserProfile(user.uid, user.displayName ?: "User ", user.email ?: "user@example.com")
-                    navigateToHome()
+                    checkUserProfile(user.uid)
                 }
             } else {
                 // Sign-in failed
@@ -140,7 +137,7 @@ class RegisterActivity : ComponentActivity() {
                     val user = firebaseAuth.currentUser
                     if (user != null) {
                         // Check if user profile exists in Firestore
-                        checkUserProfile(user.uid, user.displayName ?: "User ", user.email ?: "user@example.com")
+                        checkUserProfile(user.uid)
                     }
                 } else {
                     // Login failed
@@ -150,7 +147,7 @@ class RegisterActivity : ComponentActivity() {
             }
     }
 
-    private fun checkUserProfile(userId: String, username: String, email: String) {
+    private fun checkUserProfile(userId: String) {
         val firestore = FirebaseFirestore.getInstance()
         firestore.collection("users").document(userId).get()
             .addOnSuccessListener { document ->
@@ -158,8 +155,8 @@ class RegisterActivity : ComponentActivity() {
                     // User profile exists, proceed to HomeActivity
                     navigateToHome()
                 } else {
-                    // User profile does not exist, create it
-                    saveUserProfile(userId, username, email)
+                    // User profile does not exist, navigate to SignUpActivity
+                    navigateToSignUp()
                 }
             }
             .addOnFailureListener { e ->
@@ -167,37 +164,20 @@ class RegisterActivity : ComponentActivity() {
             }
     }
 
-
-    private fun saveUserProfile(userId: String, username: String, email: String) {
-        val firestore = FirebaseFirestore.getInstance()
-
-        val userProfileData = hashMapOf(
-            "username" to username,
-            "email" to email,
-            "gender" to "", // Default value or leave empty
-            "birthdate" to "", // Default value or leave empty
-            "height" to "", // Default value or leave empty
-            "weight" to "", // Default value or leave empty
-            "profileImageUri" to "" // Default value or leave empty
-        )
-
-        firestore.collection("users").document(userId) // Use userId as the document ID
-            .set(userProfileData)
-            .addOnSuccessListener {
-                // Successfully saved user profile data
-                Log.d("Firestore", "User  profile created for $username")
-                navigateToHome()
-            }
-            .addOnFailureListener { e ->
-                // Handle the error
-                Log.e("Firestore", "Error saving user profile: ${e.message}")
-            }
-    }
-
     private fun navigateToHome() {
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun navigateToSignUp() {
+        val intent = Intent(this, SignUpActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToForgotPassword() {
+        val intent = Intent(this, ForgotPassword::class.java)
+        startActivity(intent)
     }
 
     override fun onStart() {
@@ -209,7 +189,7 @@ class RegisterActivity : ComponentActivity() {
 }
 
 @Composable
-fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, String) -> Unit) {
+fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, String) -> Unit, onSignUpClick: () -> Unit, onForgotPasswordClick: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     Box(modifier = Modifier.fillMaxSize()) {
@@ -217,7 +197,8 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
         Image(
             painter = painterResource(id = R.drawable.backround_login_register),
             contentDescription = null,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
         )
         Column(
             modifier = Modifier
@@ -301,6 +282,7 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
                     trailingIcon = {
                         Text(
                             text = if (passwordVisible) "Hide" else "Show",
+                            fontFamily = TenorSansRegular,
                             color = Color.Gray,
                             modifier = Modifier
                                 .clickable { passwordVisible = !passwordVisible }
@@ -316,7 +298,7 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
                 )
 
 
-                // Remember Me Checkbox
+                // Forgot Password
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -329,20 +311,9 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
                     color = Color.White,
                     fontSize = 15.sp,
                     fontFamily = TenorSansRegular,
-                    modifier = Modifier.padding(top = 1.dp)
-                    )
-                    Spacer(modifier = Modifier.width(45.dp))
-                    Checkbox(
-                        checked = false,
-                        onCheckedChange = {},
-                        colors = CheckboxDefaults.colors(checkedColor = Color.White)
-                    )
-
-                    Text(
-                        text = "Remember me",
-                        color = Color.White,
-                        fontFamily = TenorSansRegular,
-                        fontSize = 15.sp
+                    modifier = Modifier
+                        .padding(top = 1.dp)
+                        .clickable { onForgotPasswordClick() }
                     )
                 }
                 Spacer(modifier = Modifier.height(30.dp))
@@ -382,17 +353,44 @@ fun RegisterScreen(onGoogleSignInClick: () -> Unit, onLoginClick: (String, Strin
                     modifier = Modifier
                         .fillMaxWidth(0.9f)
                         .height(48.dp),
-//                        .padding(top = 10.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFDD8560) // Warna tombol
+                        containerColor = Color.White // Background color of the button
                     )
-                ){
-                    Text(
-                        text = "Sign In With Google",
-                        fontFamily = TenorSansRegular,
-                        fontSize = 15.sp
-                    )
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start // Align items to the start
+                    ) {
+                        // Google Logo
+                        Image(
+                            painter = painterResource(id = R.drawable.googlelogo), // Replace with your Google logo resource
+                            contentDescription = "Google Logo",
+                            modifier = Modifier
+                                .size(30.dp) // Adjust size as needed
+                                .padding(end = 8.dp) // Space between logo and text
+                        )
+                        // Text
+                        Text(
+                            text = "Sign In With Google",
+                            fontFamily = TenorSansRegular,
+                            fontSize = 15.sp,
+                            color = Color.Black // Set text color to white
+                        )
+                    }
                 }
+
+                // Sign Up Button
+                Spacer(modifier = Modifier.height(20.dp))
+                Text(
+                    text = "Don't have an account? Create one!",
+                    color = Color.LightGray,
+                    fontFamily = TenorSansRegular,
+                    fontSize = 15.sp,
+                    textDecoration = TextDecoration.Underline,
+                    modifier = Modifier
+                        .clickable { onSignUpClick() }
+                        .padding(top = 10.dp)
+                )
             }
         }
     }
@@ -406,6 +404,8 @@ fun PreviewRegisterScreen() {
         onLoginClick = { email, password ->
             // Simulate login action
             println("Email: $email, Password: $password")
-        }
+        },
+        onSignUpClick = {},
+        onForgotPasswordClick = {}
     )
 }

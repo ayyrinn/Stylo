@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -65,7 +66,7 @@ class MainActivity : ComponentActivity() {
                 MainScreen(
                     onButtonClick = {
                         // Navigate to RegisterActivity when button is clicked
-                        val intent = Intent(this, RegisterActivity::class.java)
+                        val intent = Intent(this, SignInActivity::class.java)
                         startActivity(intent)
                     }
                 )
@@ -82,8 +83,8 @@ fun MainScreen(onButtonClick: () -> Unit) {
         Image(
             painter = painterResource(id = R.drawable.home_img_1),
             contentDescription = null,
-            modifier = Modifier
-                .fillMaxSize() // Ensures the image covers the full size of the screen
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
         )
 
         Column(
