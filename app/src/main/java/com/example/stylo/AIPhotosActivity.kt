@@ -425,6 +425,9 @@ fun AIPhotosScreen(imageUrl: String, selectedCategory: String?) {
                 }
             }
         }
+        if (showMenu) {
+            ReusableDrawer(context = context, onDismiss = { showMenu = false })
+        }
     }
     // Error Dialog
     if (showErrorDialog) {
