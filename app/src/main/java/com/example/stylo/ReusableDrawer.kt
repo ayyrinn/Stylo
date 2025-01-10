@@ -117,7 +117,7 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                         }
                         Spacer(modifier = Modifier.height(10.dp))
                         Text(
-                            "Home", fontSize = 30.sp, color = Color.Black, fontFamily = tenorFontFamily,
+                            "Home", fontSize = 25.sp, color = Color.Black, fontFamily = tenorFontFamily,
                             modifier = Modifier
                                 .clickable {
                                     val intent = Intent(context, HomeActivity::class.java) // Use Intent to navigate
@@ -128,7 +128,7 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                                 .padding(8.dp)
                         )
                         Text(
-                            "Profile", fontSize = 30.sp, color = Color.Black, fontFamily = tenorFontFamily,
+                            "Profile", fontSize = 25.sp, color = Color.Black, fontFamily = tenorFontFamily,
                             modifier = Modifier
                                 .clickable {
                                     val intent = Intent(context, UserProfileActivity::class.java) // Use Intent to navigate
@@ -139,7 +139,7 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                                 .padding(8.dp)
                         )
                         Text(
-                            "Generate Outfit", fontSize = 30.sp, color = Color.Black, fontFamily = tenorFontFamily,
+                            "Generate Outfit", fontSize = 25.sp, color = Color.Black, fontFamily = tenorFontFamily,
                             modifier = Modifier
                                 .clickable {
                                     val intent = Intent(context, SelectCategoriesActivity::class.java) // Use Intent to navigate
@@ -150,7 +150,7 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                                 .padding(8.dp)
                         )
                         Text(
-                            "Gallery", fontSize = 30.sp, color = Color.Black, fontFamily = tenorFontFamily,
+                            "Gallery", fontSize = 25.sp, color = Color.Black, fontFamily = tenorFontFamily,
                             modifier = Modifier
                                 .clickable {
                                     val intent = Intent(context, SelectPhotosActivity::class.java) // Use Intent to navigate
@@ -161,7 +161,7 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                                 .padding(8.dp)
                         )
                         Text(
-                            "Add Photo", fontSize = 30.sp, color = Color.Black, fontFamily = tenorFontFamily,
+                            "Add Photo", fontSize = 25.sp, color = Color.Black, fontFamily = tenorFontFamily,
                             modifier = Modifier
                                 .clickable {
                                     val intent = Intent(context, AddPhotoActivity::class.java) // Use Intent to navigate
@@ -172,7 +172,7 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                                 .padding(8.dp)
                         )
                         Text(
-                            "About Us", fontSize = 30.sp, color = Color.Black, fontFamily = tenorFontFamily,
+                            "About Us", fontSize = 25.sp, color = Color.Black, fontFamily = tenorFontFamily,
                             modifier = Modifier
                                 .clickable {
                                     val intent = Intent(context, AboutUsActivity::class.java) // Use Intent to navigate
