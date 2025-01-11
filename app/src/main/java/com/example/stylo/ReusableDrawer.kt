@@ -7,6 +7,13 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddAPhoto
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Photo
+import androidx.compose.material.icons.filled.Style
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
@@ -116,72 +123,184 @@ fun ReusableDrawer(context: Context, onDismiss : () -> Unit) { // Change NavCont
                             )
                         }
                         Spacer(modifier = Modifier.height(10.dp))
-                        Text(
-                            "Home", fontSize = 25.sp, color = Color.Black, fontFamily = tenorFontFamily,
+                        Row(
                             modifier = Modifier
                                 .clickable {
-                                    val intent = Intent(context, HomeActivity::class.java) // Use Intent to navigate
+                                    val intent = Intent(context, HomeActivity::class.java)
                                     context.startActivity(intent)
                                     showMenu = false
                                     onDismiss()
                                 }
-                                .padding(8.dp)
-                        )
-                        Text(
-                            "Profile", fontSize = 25.sp, color = Color.Black, fontFamily = tenorFontFamily,
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                Icons.Filled.Home,
+                                contentDescription = null,
+                                modifier = Modifier.padding(end = 8.dp)
+                            )
+                            Text(
+                                "Home",
+                                fontSize = 25.sp,
+                                color = Color.Black,
+                                fontFamily = tenorFontFamily,
+                                modifier = Modifier
+                                    .clickable {
+                                        val intent = Intent(
+                                            context,
+                                            HomeActivity::class.java
+                                        ) // Use Intent to navigate
+                                        context.startActivity(intent)
+                                        showMenu = false
+                                        onDismiss()
+                                    }
+                                    .padding(8.dp)
+                            )
+                        }
+                        Row(
                             modifier = Modifier
                                 .clickable {
-                                    val intent = Intent(context, UserProfileActivity::class.java) // Use Intent to navigate
+                                    val intent = Intent(context, HomeActivity::class.java)
                                     context.startActivity(intent)
                                     showMenu = false
                                     onDismiss()
                                 }
-                                .padding(8.dp)
-                        )
-                        Text(
-                            "Generate Outfit", fontSize = 25.sp, color = Color.Black, fontFamily = tenorFontFamily,
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(Icons.Filled.Person, contentDescription = null, modifier = Modifier.padding(end = 8.dp))
+                            Text(
+                                "Profile",
+                                fontSize = 25.sp,
+                                color = Color.Black,
+                                fontFamily = tenorFontFamily,
+                                modifier = Modifier
+                                    .clickable {
+                                        val intent = Intent(
+                                            context,
+                                            UserProfileActivity::class.java
+                                        ) // Use Intent to navigate
+                                        context.startActivity(intent)
+                                        showMenu = false
+                                        onDismiss()
+                                    }
+                                    .padding(8.dp)
+                            )
+                        }
+                        Row(
                             modifier = Modifier
                                 .clickable {
-                                    val intent = Intent(context, SelectCategoriesActivity::class.java) // Use Intent to navigate
+                                    val intent = Intent(context, HomeActivity::class.java)
                                     context.startActivity(intent)
                                     showMenu = false
                                     onDismiss()
                                 }
-                                .padding(8.dp)
-                        )
-                        Text(
-                            "Gallery", fontSize = 25.sp, color = Color.Black, fontFamily = tenorFontFamily,
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(Icons.Filled.Style, contentDescription = null, modifier = Modifier.padding(end = 8.dp))
+                            Text(
+                                "Generate Outfit", fontSize = 25.sp, color = Color.Black, fontFamily = tenorFontFamily,
+                                modifier = Modifier
+                                    .clickable {
+                                        val intent = Intent(context, SelectCategoriesActivity::class.java) // Use Intent to navigate
+                                        context.startActivity(intent)
+                                        showMenu = false
+                                        onDismiss()
+                                    }
+                                    .padding(8.dp)
+                            )
+                        }
+                        Row(
                             modifier = Modifier
                                 .clickable {
-                                    val intent = Intent(context, SelectPhotosActivity::class.java) // Use Intent to navigate
+                                    val intent = Intent(context, HomeActivity::class.java)
                                     context.startActivity(intent)
                                     showMenu = false
                                     onDismiss()
                                 }
-                                .padding(8.dp)
-                        )
-                        Text(
-                            "Add Photo", fontSize = 25.sp, color = Color.Black, fontFamily = tenorFontFamily,
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(Icons.Filled.Photo, contentDescription = null, modifier = Modifier.padding(end = 8.dp))
+                            Text(
+                                "Gallery",
+                                fontSize = 25.sp,
+                                color = Color.Black,
+                                fontFamily = tenorFontFamily,
+                                modifier = Modifier
+                                    .clickable {
+                                        val intent = Intent(
+                                            context,
+                                            SelectPhotosActivity::class.java
+                                        ) // Use Intent to navigate
+                                        context.startActivity(intent)
+                                        showMenu = false
+                                        onDismiss()
+                                    }
+                                    .padding(8.dp)
+                            )
+                        }
+                        Row(
                             modifier = Modifier
                                 .clickable {
-                                    val intent = Intent(context, AddPhotoActivity::class.java) // Use Intent to navigate
+                                    val intent = Intent(context, HomeActivity::class.java)
                                     context.startActivity(intent)
                                     showMenu = false
                                     onDismiss()
                                 }
-                                .padding(8.dp)
-                        )
-                        Text(
-                            "About Us", fontSize = 25.sp, color = Color.Black, fontFamily = tenorFontFamily,
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(Icons.Filled.AddAPhoto, contentDescription = null, modifier = Modifier.padding(end = 8.dp))
+                            Text(
+                                "Add Photo",
+                                fontSize = 25.sp,
+                                color = Color.Black,
+                                fontFamily = tenorFontFamily,
+                                modifier = Modifier
+                                    .clickable {
+                                        val intent = Intent(
+                                            context,
+                                            AddPhotoActivity::class.java
+                                        ) // Use Intent to navigate
+                                        context.startActivity(intent)
+                                        showMenu = false
+                                        onDismiss()
+                                    }
+                                    .padding(8.dp)
+                            )
+                        }
+                        Row(
                             modifier = Modifier
                                 .clickable {
-                                    val intent = Intent(context, AboutUsActivity::class.java) // Use Intent to navigate
+                                    val intent = Intent(context, HomeActivity::class.java)
                                     context.startActivity(intent)
                                     showMenu = false
                                     onDismiss()
                                 }
-                                .padding(8.dp)
-                        )
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(Icons.Filled.Info, contentDescription = null, modifier = Modifier.padding(end = 8.dp))
+                            Text(
+                                "About Us",
+                                fontSize = 25.sp,
+                                color = Color.Black,
+                                fontFamily = tenorFontFamily,
+                                modifier = Modifier
+                                    .clickable {
+                                        val intent = Intent(
+                                            context,
+                                            AboutUsActivity::class.java
+                                        ) // Use Intent to navigate
+                                        context.startActivity(intent)
+                                        showMenu = false
+                                        onDismiss()
+                                    }
+                                    .padding(8.dp)
+                            )
+                        }
                     }
                 }
             }
